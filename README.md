@@ -2,6 +2,8 @@
 
 A rough calculation of planetary motion - to test ReGIS graphics and floating point solutions
 
+[![Geocentric Planetary Motion](https://github.com/feilipu/planet-motion/blob/master/doc/planets.png)](https://youtu.be/6jvx__AgN_k "Planetary Motion using ReGIS RC2014 and APU Module.")
+
 # Purpose
 
 To test various floating point packages available for the RC2014 and other z88dk supported targets.
