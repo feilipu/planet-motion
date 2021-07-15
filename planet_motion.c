@@ -140,7 +140,7 @@ int main()
         draw_circle( &mywindow, (uint16_t)(theSun.au*48) );
 
         draw_abs( &mywindow, sun_x, sun_y );                                                    // draw sun
-        draw_circle_fill( &mywindow, 20 );
+        draw_circle_fill( &mywindow, 18 );
 
         thePlanet.day = d;
         planetEclipticCartesianCoordinates( &thePlanet, &moon );
@@ -190,7 +190,7 @@ int main()
         draw_circle( &mywindow, (uint16_t)(thePlanet.au*48) );
 
         draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*48), 240+(int16_t)(thePlanet.y*48) );    // draw jupiter
-        draw_circle_fill( &mywindow, 24 );
+        draw_circle_fill( &mywindow, 16 );
 
         window_write( &mywindow );              // write out window to screen
         window_close( &mywindow );              // close command list
