@@ -22,9 +22,9 @@
 #include "planet_motion.h"
 #include "multi_apu.h"
 
-// pragmas
+#pragma printf = "%s %c %d"     // enables %s, %c, %d only
 
-#pragma printf = "%s %c %d %f"     // enables %s, %c, %d, %f only
+#define SCALE_AU            48
 
 // planetary constants
 
@@ -117,83 +117,96 @@ cartesian_coordinates_t theSun, thePlanet;
 
 int main()
 {
-    FLOAT d;
+    uint16_t d;
     FLOAT sun_x;
     FLOAT sun_y;
 
-    for (d = 7865.0; d < (7865.0+(2*365.25)); d+=1.0)
+    for (d = 7671; d < (7868+(4*365)+1); ++d)                                       // January 1st, 2021 + 4 years
     {
-        window_new( &mywindow, 768, 480 );
+        window_new( &mywindow, 768, 480 );                                          // open command list
 
-        theSun.day = d;
+        theSun.day = (float)d;
 
         sunEclipticCartesianCoordinates ( &theSun);
 
-        sun_x = 384+(int16_t)(theSun.x*48);
-        sun_y = 240+(int16_t)(theSun.y*48);
+        sun_x = 384+(int16_t)(theSun.x*SCALE_AU);
+        sun_y = 240-(int16_t)(theSun.y*SCALE_AU);
 
-        draw_abs( &mywindow, 384, 240 );                                                        // draw earth
+        draw_abs( &mywindow, 384, 240 );
         draw_intensity( &mywindow, B );
-        draw_circle_fill( &mywindow, 8 );
+        draw_circle_fill( &mywindow, 8 );                                           // draw earth
 
-        draw_intensity( &mywindow, Y );                                                         // draw sun orbit around earth
-        draw_circle( &mywindow, (uint16_t)(theSun.au*48) );
+        draw_intensity( &mywindow, Y );
+        draw_circle( &mywindow, (uint16_t)(theSun.au*SCALE_AU) );                   // draw sun orbit around earth
 
-        draw_abs( &mywindow, sun_x, sun_y );                                                    // draw sun
-        draw_circle_fill( &mywindow, 18 );
+        draw_abs( &mywindow, sun_x, sun_y );
+        draw_circle_fill( &mywindow, 18 );                                          // draw sun
 
         thePlanet.day = d;
         planetEclipticCartesianCoordinates( &thePlanet, &moon );
 
-        draw_abs( &mywindow, 384, 240 );;                                                       // draw moon orbit
-        draw_intensity( &mywindow, W );
-        draw_circle( &mywindow, (uint16_t)(thePlanet.au*4800) );
+        draw_abs( &mywindow, 384, 240 );
+        draw_intensity( &mywindow, W );                                             // draw moon orbit
+        draw_circle( &mywindow, (uint16_t)(thePlanet.au*(100*SCALE_AU)) );
 
-        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*4800), 240+(int16_t)(thePlanet.y*4800) );// draw moon
-        draw_circle_fill( &mywindow, 3 );
+        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*(100*SCALE_AU)), 240-(int16_t)(thePlanet.y*(100*SCALE_AU)) );
+        draw_circle_fill( &mywindow, 3 );                                           // draw moon
 
         planetEclipticCartesianCoordinates( &thePlanet, &mercury );
         addCartesianCoordinates( &thePlanet, &theSun );
 
-        draw_abs( &mywindow, sun_x, sun_y );                                                    // draw mercury orbit
+        draw_abs( &mywindow, sun_x, sun_y );
         draw_intensity( &mywindow, R );
-        draw_circle( &mywindow, (uint16_t)(thePlanet.au*48) );
+        draw_circle( &mywindow, (uint16_t)(thePlanet.au*SCALE_AU) );                // draw mercury orbit
 
-        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*48), 240+(int16_t)(thePlanet.y*48) );    // draw mercury
-        draw_circle_fill( &mywindow, 4 );
+        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*SCALE_AU), 240-(int16_t)(thePlanet.y*SCALE_AU) );
+        draw_circle_fill( &mywindow, 4 );                                           // draw mercury
 
         planetEclipticCartesianCoordinates( &thePlanet, &venus );
         addCartesianCoordinates( &thePlanet, &theSun );
 
-        draw_abs( &mywindow, sun_x, sun_y );                                                    // draw venus orbit
+        draw_abs( &mywindow, sun_x, sun_y );
         draw_intensity( &mywindow, C );
-        draw_circle( &mywindow, (uint16_t)(thePlanet.au*48) );
+        draw_circle( &mywindow, (uint16_t)(thePlanet.au*SCALE_AU) );                // draw venus orbit
 
-        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*48), 240+(int16_t)(thePlanet.y*48) );    // draw venus
-        draw_circle_fill( &mywindow, 8 );
+        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*SCALE_AU), 240-(int16_t)(thePlanet.y*SCALE_AU) );
+        draw_circle_fill( &mywindow, 8 );                                           // draw venus
 
         planetEclipticCartesianCoordinates( &thePlanet, &mars );
         addCartesianCoordinates( &thePlanet, &theSun );
 
-        draw_abs( &mywindow, sun_x, sun_y );                                                    // draw mars orbit
+        draw_abs( &mywindow, sun_x, sun_y );
         draw_intensity( &mywindow, R );
-        draw_circle( &mywindow, (uint16_t)(thePlanet.au*48) );
+        draw_circle( &mywindow, (uint16_t)(thePlanet.au*SCALE_AU) );                // draw mars orbit
 
-        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*48), 240+(int16_t)(thePlanet.y*48) );    // draw mars
-        draw_circle_fill( &mywindow, 6 );
+        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*SCALE_AU), 240-(int16_t)(thePlanet.y*SCALE_AU) );
+        draw_circle_fill( &mywindow, 6 );                                           // draw mars
 
         planetEclipticCartesianCoordinates( &thePlanet, &jupiter );
         addCartesianCoordinates( &thePlanet, &theSun );
 
-        draw_abs( &mywindow, sun_x, sun_y );                                                    // draw jupiter orbit
-        draw_intensity( &mywindow, Y );
-        draw_circle( &mywindow, (uint16_t)(thePlanet.au*48) );
+        draw_abs( &mywindow, sun_x, sun_y );
+        draw_intensity( &mywindow, C );
+        draw_circle( &mywindow, (uint16_t)(thePlanet.au*SCALE_AU) );                // draw jupiter orbit
 
-        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*48), 240+(int16_t)(thePlanet.y*48) );    // draw jupiter
-        draw_circle_fill( &mywindow, 16 );
+        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*SCALE_AU), 240-(int16_t)(thePlanet.y*SCALE_AU) );
+        draw_circle_fill( &mywindow, 16 );                                          // draw jupiter
 
-        window_write( &mywindow );              // write out window to screen
-        window_close( &mywindow );              // close command list
+        planetEclipticCartesianCoordinates( &thePlanet, &saturn );
+        addCartesianCoordinates( &thePlanet, &theSun );
+
+        draw_abs( &mywindow, sun_x, sun_y );
+        draw_intensity( &mywindow, W );
+        draw_circle( &mywindow, (uint16_t)(thePlanet.au*SCALE_AU) );                // draw saturn orbit
+
+        draw_abs( &mywindow, 384+(int16_t)(thePlanet.x*SCALE_AU), 240-(int16_t)(thePlanet.y*SCALE_AU) );
+        draw_circle_fill( &mywindow, 12 );                                          // draw saturn
+        draw_circle( &mywindow, 14 );                                               // draw saturn's rings
+        draw_circle( &mywindow, 16 );
+        draw_circle( &mywindow, 18 );
+
+        window_write( &mywindow );                                                  // write out window to screen
+        window_close( &mywindow );                                                  // close command list
     }
     return 0;
 }
