@@ -120,6 +120,7 @@ int main()
     uint16_t d;
     FLOAT sun_x;
     FLOAT sun_y;
+    char s[10];
 
     for (d = 7671; d < (7868+(4*365)+1); ++d)                                       // January 1st, 2021 + 4 years
     {
@@ -204,6 +205,10 @@ int main()
         draw_circle( &mywindow, 14 );                                               // draw saturn's rings
         draw_circle( &mywindow, 16 );
         draw_circle( &mywindow, 18 );
+
+        sprintf(s, "Day: %.4d", d);
+        draw_abs( &mywindow, 10, 450 );
+        draw_text( &mywindow, s, 2);                                                // draw date
 
         window_write( &mywindow );                                                  // write out window to screen
         window_close( &mywindow );                                                  // close command list
