@@ -10,6 +10,11 @@ To test various floating point packages available for the RC2014 and other z88dk
 
 # Usage
 
+This planetary motion visualisation requires the ReGIS library to be installed in z88dk.<br>
+For instructions on how to do this, and to enable xterm to support ReGIS [please read here](https://github.com/feilipu/z88dk-libraries/tree/master/regis).
+
+Once ReGIS library is available then one of the below compilation lines can be used to prepare the motion binary.
+
 ```sh
     zcc +rc2014 -subtype=cpm -clib=new -v -m --list -O2 -lm -llib/rc2014/regis @planet_motion.lst -o motionnew_cpm -create-app
 
