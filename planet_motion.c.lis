@@ -1,0 +1,1694 @@
+1     0000              MODULE planet_motion_c
+2     0000              LINE 0, "planet_motion.c"
+0     0000              
+1     0000              ;--------------------------------------------------------
+2     0000              ; File Created by SDCC : free open source ANSI-C Compiler
+3     0000              ; Version 4.1.6 #12419 (Linux)
+4     0000              ;--------------------------------------------------------
+5     0000              ; Processed by Z88DK
+6     0000              ;--------------------------------------------------------
+7     0000              
+8     0000              	EXTERN __divschar
+9     0000              	EXTERN __divschar_callee
+10    0000              	EXTERN __divsint
+11    0000              	EXTERN __divsint_callee
+12    0000              	EXTERN __divslong
+13    0000              	EXTERN __divslong_callee
+14    0000              	EXTERN __divslonglong
+15    0000              	EXTERN __divslonglong_callee
+16    0000              	EXTERN __divsuchar
+17    0000              	EXTERN __divsuchar_callee
+18    0000              	EXTERN __divuchar
+19    0000              	EXTERN __divuchar_callee
+20    0000              	EXTERN __divuint
+21    0000              	EXTERN __divuint_callee
+22    0000              	EXTERN __divulong
+23    0000              	EXTERN __divulong_callee
+24    0000              	EXTERN __divulonglong
+25    0000              	EXTERN __divulonglong_callee
+26    0000              	EXTERN __divuschar
+27    0000              	EXTERN __divuschar_callee
+28    0000              	EXTERN __modschar
+29    0000              	EXTERN __modschar_callee
+30    0000              	EXTERN __modsint
+31    0000              	EXTERN __modsint_callee
+32    0000              	EXTERN __modslong
+33    0000              	EXTERN __modslong_callee
+34    0000              	EXTERN __modslonglong
+35    0000              	EXTERN __modslonglong_callee
+36    0000              	EXTERN __modsuchar
+37    0000              	EXTERN __modsuchar_callee
+38    0000              	EXTERN __moduchar
+39    0000              	EXTERN __moduchar_callee
+40    0000              	EXTERN __moduint
+41    0000              	EXTERN __moduint_callee
+42    0000              	EXTERN __modulong
+43    0000              	EXTERN __modulong_callee
+44    0000              	EXTERN __modulonglong
+45    0000              	EXTERN __modulonglong_callee
+46    0000              	EXTERN __moduschar
+47    0000              	EXTERN __moduschar_callee
+48    0000              	EXTERN __mulint
+49    0000              	EXTERN __mulint_callee
+50    0000              	EXTERN __mullong
+51    0000              	EXTERN __mullong_callee
+52    0000              	EXTERN __mullonglong
+53    0000              	EXTERN __mullonglong_callee
+54    0000              	EXTERN __mulschar
+55    0000              	EXTERN __mulschar_callee
+56    0000              	EXTERN __mulsuchar
+57    0000              	EXTERN __mulsuchar_callee
+58    0000              	EXTERN __muluchar
+59    0000              	EXTERN __muluchar_callee
+60    0000              	EXTERN __muluschar
+61    0000              	EXTERN __muluschar_callee
+62    0000              	EXTERN __rlslonglong
+63    0000              	EXTERN __rlslonglong_callee
+64    0000              	EXTERN __rlulonglong
+65    0000              	EXTERN __rlulonglong_callee
+66    0000              	EXTERN __rrslonglong
+67    0000              	EXTERN __rrslonglong_callee
+68    0000              	EXTERN __rrulonglong
+69    0000              	EXTERN __rrulonglong_callee
+70    0000              	EXTERN ___sdcc_call_hl
+71    0000              	EXTERN ___sdcc_call_iy
+72    0000              	EXTERN ___sdcc_enter_ix
+73    0000              	EXTERN banked_call
+74    0000              	EXTERN _banked_ret
+75    0000              	EXTERN ___fs2schar
+76    0000              	EXTERN ___fs2schar_callee
+77    0000              	EXTERN ___fs2sint
+78    0000              	EXTERN ___fs2sint_callee
+79    0000              	EXTERN ___fs2slong
+80    0000              	EXTERN ___fs2slong_callee
+81    0000              	EXTERN ___fs2slonglong
+82    0000              	EXTERN ___fs2slonglong_callee
+83    0000              	EXTERN ___fs2uchar
+84    0000              	EXTERN ___fs2uchar_callee
+85    0000              	EXTERN ___fs2uint
+86    0000              	EXTERN ___fs2uint_callee
+87    0000              	EXTERN ___fs2ulong
+88    0000              	EXTERN ___fs2ulong_callee
+89    0000              	EXTERN ___fs2ulonglong
+90    0000              	EXTERN ___fs2ulonglong_callee
+91    0000              	EXTERN ___fsadd
+92    0000              	EXTERN ___fsadd_callee
+93    0000              	EXTERN ___fsdiv
+94    0000              	EXTERN ___fsdiv_callee
+95    0000              	EXTERN ___fseq
+96    0000              	EXTERN ___fseq_callee
+97    0000              	EXTERN ___fsgt
+98    0000              	EXTERN ___fsgt_callee
+99    0000              	EXTERN ___fslt
+100   0000              	EXTERN ___fslt_callee
+101   0000              	EXTERN ___fsmul
+102   0000              	EXTERN ___fsmul_callee
+103   0000              	EXTERN ___fsneq
+104   0000              	EXTERN ___fsneq_callee
+105   0000              	EXTERN ___fssub
+106   0000              	EXTERN ___fssub_callee
+107   0000              	EXTERN ___schar2fs
+108   0000              	EXTERN ___schar2fs_callee
+109   0000              	EXTERN ___sint2fs
+110   0000              	EXTERN ___sint2fs_callee
+111   0000              	EXTERN ___slong2fs
+112   0000              	EXTERN ___slong2fs_callee
+113   0000              	EXTERN ___slonglong2fs
+114   0000              	EXTERN ___slonglong2fs_callee
+115   0000              	EXTERN ___uchar2fs
+116   0000              	EXTERN ___uchar2fs_callee
+117   0000              	EXTERN ___uint2fs
+118   0000              	EXTERN ___uint2fs_callee
+119   0000              	EXTERN ___ulong2fs
+120   0000              	EXTERN ___ulong2fs_callee
+121   0000              	EXTERN ___ulonglong2fs
+122   0000              	EXTERN ___ulonglong2fs_callee
+123   0000              	EXTERN ____sdcc_2_copy_src_mhl_dst_deix
+124   0000              	EXTERN ____sdcc_2_copy_src_mhl_dst_bcix
+125   0000              	EXTERN ____sdcc_4_copy_src_mhl_dst_deix
+126   0000              	EXTERN ____sdcc_4_copy_src_mhl_dst_bcix
+127   0000              	EXTERN ____sdcc_4_copy_src_mhl_dst_mbc
+128   0000              	EXTERN ____sdcc_4_ldi_nosave_bc
+129   0000              	EXTERN ____sdcc_4_ldi_save_bc
+130   0000              	EXTERN ____sdcc_4_push_hlix
+131   0000              	EXTERN ____sdcc_4_push_mhl
+132   0000              	EXTERN ____sdcc_lib_setmem_hl
+133   0000              	EXTERN ____sdcc_ll_add_de_bc_hl
+134   0000              	EXTERN ____sdcc_ll_add_de_bc_hlix
+135   0000              	EXTERN ____sdcc_ll_add_de_hlix_bc
+136   0000              	EXTERN ____sdcc_ll_add_de_hlix_bcix
+137   0000              	EXTERN ____sdcc_ll_add_deix_bc_hl
+138   0000              	EXTERN ____sdcc_ll_add_deix_hlix
+139   0000              	EXTERN ____sdcc_ll_add_hlix_bc_deix
+140   0000              	EXTERN ____sdcc_ll_add_hlix_deix_bc
+141   0000              	EXTERN ____sdcc_ll_add_hlix_deix_bcix
+142   0000              	EXTERN ____sdcc_ll_asr_hlix_a
+143   0000              	EXTERN ____sdcc_ll_asr_mbc_a
+144   0000              	EXTERN ____sdcc_ll_copy_src_de_dst_hlix
+145   0000              	EXTERN ____sdcc_ll_copy_src_de_dst_hlsp
+146   0000              	EXTERN ____sdcc_ll_copy_src_deix_dst_hl
+147   0000              	EXTERN ____sdcc_ll_copy_src_deix_dst_hlix
+148   0000              	EXTERN ____sdcc_ll_copy_src_deixm_dst_hlsp
+149   0000              	EXTERN ____sdcc_ll_copy_src_desp_dst_hlsp
+150   0000              	EXTERN ____sdcc_ll_copy_src_hl_dst_de
+151   0000              	EXTERN ____sdcc_ll_copy_src_hlsp_dst_de
+152   0000              	EXTERN ____sdcc_ll_copy_src_hlsp_dst_deixm
+153   0000              	EXTERN ____sdcc_ll_lsl_hlix_a
+154   0000              	EXTERN ____sdcc_ll_lsl_mbc_a
+155   0000              	EXTERN ____sdcc_ll_lsr_hlix_a
+156   0000              	EXTERN ____sdcc_ll_lsr_mbc_a
+157   0000              	EXTERN ____sdcc_ll_push_hlix
+158   0000              	EXTERN ____sdcc_ll_push_mhl
+159   0000              	EXTERN ____sdcc_ll_sub_de_bc_hl
+160   0000              	EXTERN ____sdcc_ll_sub_de_bc_hlix
+161   0000              	EXTERN ____sdcc_ll_sub_de_hlix_bc
+162   0000              	EXTERN ____sdcc_ll_sub_de_hlix_bcix
+163   0000              	EXTERN ____sdcc_ll_sub_deix_bc_hl
+164   0000              	EXTERN ____sdcc_ll_sub_deix_hlix
+165   0000              	EXTERN ____sdcc_ll_sub_hlix_bc_deix
+166   0000              	EXTERN ____sdcc_ll_sub_hlix_deix_bc
+167   0000              	EXTERN ____sdcc_ll_sub_hlix_deix_bcix
+168   0000              	EXTERN ____sdcc_load_debc_deix
+169   0000              	EXTERN ____sdcc_load_dehl_deix
+170   0000              	EXTERN ____sdcc_load_debc_mhl
+171   0000              	EXTERN ____sdcc_load_hlde_mhl
+172   0000              	EXTERN ____sdcc_store_dehl_bcix
+173   0000              	EXTERN ____sdcc_store_debc_hlix
+174   0000              	EXTERN ____sdcc_store_debc_mhl
+175   0000              	EXTERN ____sdcc_cpu_pop_ei
+176   0000              	EXTERN ____sdcc_cpu_pop_ei_jp
+177   0000              	EXTERN ____sdcc_cpu_push_di
+178   0000              	EXTERN ____sdcc_outi
+179   0000              	EXTERN ____sdcc_outi_128
+180   0000              	EXTERN ____sdcc_outi_256
+181   0000              	EXTERN ____sdcc_ldi
+182   0000              	EXTERN ____sdcc_ldi_128
+183   0000              	EXTERN ____sdcc_ldi_256
+184   0000              	EXTERN ____sdcc_4_copy_srcd_hlix_dst_deix
+185   0000              	EXTERN ____sdcc_4_and_src_mbc_mhl_dst_deix
+186   0000              	EXTERN ____sdcc_4_or_src_mbc_mhl_dst_deix
+187   0000              	EXTERN ____sdcc_4_xor_src_mbc_mhl_dst_deix
+188   0000              	EXTERN ____sdcc_4_or_src_dehl_dst_bcix
+189   0000              	EXTERN ____sdcc_4_xor_src_dehl_dst_bcix
+190   0000              	EXTERN ____sdcc_4_and_src_dehl_dst_bcix
+191   0000              	EXTERN ____sdcc_4_xor_src_mbc_mhl_dst_debc
+192   0000              	EXTERN ____sdcc_4_or_src_mbc_mhl_dst_debc
+193   0000              	EXTERN ____sdcc_4_and_src_mbc_mhl_dst_debc
+194   0000              	EXTERN ____sdcc_4_cpl_src_mhl_dst_debc
+195   0000              	EXTERN ____sdcc_4_xor_src_debc_mhl_dst_debc
+196   0000              	EXTERN ____sdcc_4_or_src_debc_mhl_dst_debc
+197   0000              	EXTERN ____sdcc_4_and_src_debc_mhl_dst_debc
+198   0000              	EXTERN ____sdcc_4_and_src_debc_hlix_dst_debc
+199   0000              	EXTERN ____sdcc_4_or_src_debc_hlix_dst_debc
+200   0000              	EXTERN ____sdcc_4_xor_src_debc_hlix_dst_debc
+201   0000              
+202   0000              ;--------------------------------------------------------
+203   0000              ; Public variables in this module
+204   0000              ;--------------------------------------------------------
+205   0000              	GLOBAL _main
+206   0000              	GLOBAL _thePlanet
+207   0000              	GLOBAL _theSun
+208   0000              	GLOBAL _mywindow
+209   0000              	GLOBAL _neptune
+210   0000              	GLOBAL _uranus
+211   0000              	GLOBAL _saturn
+212   0000              	GLOBAL _jupiter
+213   0000              	GLOBAL _mars
+214   0000              	GLOBAL _venus
+215   0000              	GLOBAL _mercury
+216   0000              	GLOBAL _moon
+217   0000              	GLOBAL _sun
+218   0000              ;--------------------------------------------------------
+219   0000              ; Externals used
+220   0000              ;--------------------------------------------------------
+221   0000              	GLOBAL _deg_3
+222   0000              	GLOBAL _deg_2
+223   0000              	GLOBAL _deg_1
+224   0000              	GLOBAL _deg_0
+225   0000              	GLOBAL _rad_3
+226   0000              	GLOBAL _rad_2
+227   0000              	GLOBAL _rad_1
+228   0000              	GLOBAL _rad_0
+229   0000              	GLOBAL _atan_3
+230   0000              	GLOBAL _atan_2
+231   0000              	GLOBAL _atan_1
+232   0000              	GLOBAL _atan_0
+233   0000              	GLOBAL _acos_3
+234   0000              	GLOBAL _acos_2
+235   0000              	GLOBAL _acos_1
+236   0000              	GLOBAL _acos_0
+237   0000              	GLOBAL _asin_3
+238   0000              	GLOBAL _asin_2
+239   0000              	GLOBAL _asin_1
+240   0000              	GLOBAL _asin_0
+241   0000              	GLOBAL _tan_3
+242   0000              	GLOBAL _tan_2
+243   0000              	GLOBAL _tan_1
+244   0000              	GLOBAL _tan_0
+245   0000              	GLOBAL _cos_3
+246   0000              	GLOBAL _cos_2
+247   0000              	GLOBAL _cos_1
+248   0000              	GLOBAL _cos_0
+249   0000              	GLOBAL _sin_3
+250   0000              	GLOBAL _sin_2
+251   0000              	GLOBAL _sin_1
+252   0000              	GLOBAL _sin_0
+253   0000              	GLOBAL _div_3
+254   0000              	GLOBAL _div_2
+255   0000              	GLOBAL _div_1
+256   0000              	GLOBAL _div_0
+257   0000              	GLOBAL _mul_3
+258   0000              	GLOBAL _mul_2
+259   0000              	GLOBAL _mul_1
+260   0000              	GLOBAL _mul_0
+261   0000              	GLOBAL _add_3
+262   0000              	GLOBAL _add_2
+263   0000              	GLOBAL _add_1
+264   0000              	GLOBAL _add_0
+265   0000              	GLOBAL _push_3
+266   0000              	GLOBAL _push_2
+267   0000              	GLOBAL _push_1
+268   0000              	GLOBAL _push_0
+269   0000              	GLOBAL _pop_3
+270   0000              	GLOBAL _pop_2
+271   0000              	GLOBAL _pop_1
+272   0000              	GLOBAL _pop_0
+273   0000              	GLOBAL _rev
+274   0000              	GLOBAL _addCartesianCoordinates
+275   0000              	GLOBAL _eccentricAnomaly
+276   0000              	GLOBAL _planetEclipticCartesianCoordinates
+277   0000              	GLOBAL _sunEclipticCartesianCoordinates
+278   0000              	GLOBAL _draw_free
+279   0000              	GLOBAL _draw_text
+280   0000              	GLOBAL _draw_unarc
+281   0000              	GLOBAL _draw_arc
+282   0000              	GLOBAL _draw_uncircle_fill
+283   0000              	GLOBAL _draw_circle_fill
+284   0000              	GLOBAL _draw_uncircle
+285   0000              	GLOBAL _draw_circle
+286   0000              	GLOBAL _draw_unbox_fill
+287   0000              	GLOBAL _draw_box_fill
+288   0000              	GLOBAL _draw_unbox
+289   0000              	GLOBAL _draw_box
+290   0000              	GLOBAL _draw_unline_abs
+291   0000              	GLOBAL _draw_line_abs
+292   0000              	GLOBAL _draw_unline_rel
+293   0000              	GLOBAL _draw_line_rel
+294   0000              	GLOBAL _draw_unpixel_abs
+295   0000              	GLOBAL _draw_pixel_abs
+296   0000              	GLOBAL _draw_unpixel_rel
+297   0000              	GLOBAL _draw_pixel_rel
+298   0000              	GLOBAL _draw_abs
+299   0000              	GLOBAL _draw_ofs
+300   0000              	GLOBAL _draw_rel
+301   0000              	GLOBAL _draw_intensity
+302   0000              	GLOBAL _draw_pattern
+303   0000              	GLOBAL _draw_mode
+304   0000              	GLOBAL _window_close
+305   0000              	GLOBAL _window_clear
+306   0000              	GLOBAL _window_write
+307   0000              	GLOBAL _window_reset
+308   0000              	GLOBAL _window_new
+309   0000              	GLOBAL _z80_otdr_callee
+310   0000              	GLOBAL _z80_otdr
+311   0000              	GLOBAL _z80_otir_callee
+312   0000              	GLOBAL _z80_otir
+313   0000              	GLOBAL _z80_outp_callee
+314   0000              	GLOBAL _z80_outp
+315   0000              	GLOBAL _z80_indr_callee
+316   0000              	GLOBAL _z80_indr
+317   0000              	GLOBAL _z80_inir_callee
+318   0000              	GLOBAL _z80_inir
+319   0000              	GLOBAL _z80_inp_fastcall
+320   0000              	GLOBAL _z80_inp
+321   0000              	GLOBAL _z80_set_int_state_fastcall
+322   0000              	GLOBAL _z80_set_int_state
+323   0000              	GLOBAL _z80_get_int_state
+324   0000              	GLOBAL _z80_delay_tstate_fastcall
+325   0000              	GLOBAL _z80_delay_tstate
+326   0000              	GLOBAL _z80_delay_ms_fastcall
+327   0000              	GLOBAL _z80_delay_ms
+328   0000              	GLOBAL _im2_remove_generic_callback_callee
+329   0000              	GLOBAL _im2_remove_generic_callback
+330   0000              	GLOBAL _im2_prepend_generic_callback_callee
+331   0000              	GLOBAL _im2_prepend_generic_callback
+332   0000              	GLOBAL _im2_append_generic_callback_callee
+333   0000              	GLOBAL _im2_append_generic_callback
+334   0000              	GLOBAL _im2_create_generic_isr_8080_callee
+335   0000              	GLOBAL _im2_create_generic_isr_8080
+336   0000              	GLOBAL _im2_create_generic_isr_callee
+337   0000              	GLOBAL _im2_create_generic_isr
+338   0000              	GLOBAL _im2_install_isr_callee
+339   0000              	GLOBAL _im2_install_isr
+340   0000              	GLOBAL _im2_init_fastcall
+341   0000              	GLOBAL _im2_init
+342   0000              	GLOBAL _poly_callee
+343   0000              	GLOBAL _poly
+344   0000              	GLOBAL _exp10_fastcall
+345   0000              	GLOBAL _exp10
+346   0000              	GLOBAL _mul10u_fastcall
+347   0000              	GLOBAL _mul10u
+348   0000              	GLOBAL _mul2_fastcall
+349   0000              	GLOBAL _mul2
+350   0000              	GLOBAL _div2_fastcall
+351   0000              	GLOBAL _div2
+352   0000              	GLOBAL _invsqrt_fastcall
+353   0000              	GLOBAL _invsqrt
+354   0000              	GLOBAL _inv_fastcall
+355   0000              	GLOBAL _inv
+356   0000              	GLOBAL _sqr_fastcall
+357   0000              	GLOBAL _sqr
+358   0000              	GLOBAL _neg_fastcall
+359   0000              	GLOBAL _neg
+360   0000              	GLOBAL _isunordered_callee
+361   0000              	GLOBAL _isunordered
+362   0000              	GLOBAL _islessgreater_callee
+363   0000              	GLOBAL _islessgreater
+364   0000              	GLOBAL _islessequal_callee
+365   0000              	GLOBAL _islessequal
+366   0000              	GLOBAL _isless_callee
+367   0000              	GLOBAL _isless
+368   0000              	GLOBAL _isgreaterequal_callee
+369   0000              	GLOBAL _isgreaterequal
+370   0000              	GLOBAL _isgreater_callee
+371   0000              	GLOBAL _isgreater
+372   0000              	GLOBAL _fma_callee
+373   0000              	GLOBAL _fma
+374   0000              	GLOBAL _fmin_callee
+375   0000              	GLOBAL _fmin
+376   0000              	GLOBAL _fmax_callee
+377   0000              	GLOBAL _fmax
+378   0000              	GLOBAL _fdim_callee
+379   0000              	GLOBAL _fdim
+380   0000              	GLOBAL _nexttoward_callee
+381   0000              	GLOBAL _nexttoward
+382   0000              	GLOBAL _nextafter_callee
+383   0000              	GLOBAL _nextafter
+384   0000              	GLOBAL _nan_fastcall
+385   0000              	GLOBAL _nan
+386   0000              	GLOBAL _copysign_callee
+387   0000              	GLOBAL _copysign
+388   0000              	GLOBAL _remquo_callee
+389   0000              	GLOBAL _remquo
+390   0000              	GLOBAL _remainder_callee
+391   0000              	GLOBAL _remainder
+392   0000              	GLOBAL _fmod_callee
+393   0000              	GLOBAL _fmod
+394   0000              	GLOBAL _modf_callee
+395   0000              	GLOBAL _modf
+396   0000              	GLOBAL _trunc_fastcall
+397   0000              	GLOBAL _trunc
+398   0000              	GLOBAL _lround_fastcall
+399   0000              	GLOBAL _lround
+400   0000              	GLOBAL _round_fastcall
+401   0000              	GLOBAL _round
+402   0000              	GLOBAL _lrint_fastcall
+403   0000              	GLOBAL _lrint
+404   0000              	GLOBAL _rint_fastcall
+405   0000              	GLOBAL _rint
+406   0000              	GLOBAL _nearbyint_fastcall
+407   0000              	GLOBAL _nearbyint
+408   0000              	GLOBAL _floor_fastcall
+409   0000              	GLOBAL _floor
+410   0000              	GLOBAL _ceil_fastcall
+411   0000              	GLOBAL _ceil
+412   0000              	GLOBAL _tgamma_fastcall
+413   0000              	GLOBAL _tgamma
+414   0000              	GLOBAL _lgamma_fastcall
+415   0000              	GLOBAL _lgamma
+416   0000              	GLOBAL _erfc_fastcall
+417   0000              	GLOBAL _erfc
+418   0000              	GLOBAL _erf_fastcall
+419   0000              	GLOBAL _erf
+420   0000              	GLOBAL _cbrt_fastcall
+421   0000              	GLOBAL _cbrt
+422   0000              	GLOBAL _sqrt_fastcall
+423   0000              	GLOBAL _sqrt
+424   0000              	GLOBAL _pow_callee
+425   0000              	GLOBAL _pow
+426   0000              	GLOBAL _hypot_callee
+427   0000              	GLOBAL _hypot
+428   0000              	GLOBAL _fabs_fastcall
+429   0000              	GLOBAL _fabs
+430   0000              	GLOBAL _logb_fastcall
+431   0000              	GLOBAL _logb
+432   0000              	GLOBAL _log2_fastcall
+433   0000              	GLOBAL _log2
+434   0000              	GLOBAL _log1p_fastcall
+435   0000              	GLOBAL _log1p
+436   0000              	GLOBAL _log10_fastcall
+437   0000              	GLOBAL _log10
+438   0000              	GLOBAL _log_fastcall
+439   0000              	GLOBAL _log
+440   0000              	GLOBAL _scalbln_callee
+441   0000              	GLOBAL _scalbln
+442   0000              	GLOBAL _scalbn_callee
+443   0000              	GLOBAL _scalbn
+444   0000              	GLOBAL _ldexp_callee
+445   0000              	GLOBAL _ldexp
+446   0000              	GLOBAL _ilogb_fastcall
+447   0000              	GLOBAL _ilogb
+448   0000              	GLOBAL _frexp_callee
+449   0000              	GLOBAL _frexp
+450   0000              	GLOBAL _expm1_fastcall
+451   0000              	GLOBAL _expm1
+452   0000              	GLOBAL _exp2_fastcall
+453   0000              	GLOBAL _exp2
+454   0000              	GLOBAL _exp_fastcall
+455   0000              	GLOBAL _exp
+456   0000              	GLOBAL _tanh_fastcall
+457   0000              	GLOBAL _tanh
+458   0000              	GLOBAL _sinh_fastcall
+459   0000              	GLOBAL _sinh
+460   0000              	GLOBAL _cosh_fastcall
+461   0000              	GLOBAL _cosh
+462   0000              	GLOBAL _atanh_fastcall
+463   0000              	GLOBAL _atanh
+464   0000              	GLOBAL _asinh_fastcall
+465   0000              	GLOBAL _asinh
+466   0000              	GLOBAL _acosh_fastcall
+467   0000              	GLOBAL _acosh
+468   0000              	GLOBAL _tan_fastcall
+469   0000              	GLOBAL _tan
+470   0000              	GLOBAL _sin_fastcall
+471   0000              	GLOBAL _sin
+472   0000              	GLOBAL _cos_fastcall
+473   0000              	GLOBAL _cos
+474   0000              	GLOBAL _atan2_callee
+475   0000              	GLOBAL _atan2
+476   0000              	GLOBAL _atan_fastcall
+477   0000              	GLOBAL _atan
+478   0000              	GLOBAL _asin_fastcall
+479   0000              	GLOBAL _asin
+480   0000              	GLOBAL _acos_fastcall
+481   0000              	GLOBAL _acos
+482   0000              	GLOBAL _vscanf_unlocked_callee
+483   0000              	GLOBAL _vscanf_unlocked
+484   0000              	GLOBAL _vprintf_unlocked_callee
+485   0000              	GLOBAL _vprintf_unlocked
+486   0000              	GLOBAL _vfscanf_unlocked_callee
+487   0000              	GLOBAL _vfscanf_unlocked
+488   0000              	GLOBAL _vfprintf_unlocked_callee
+489   0000              	GLOBAL _vfprintf_unlocked
+490   0000              	GLOBAL _ungetc_unlocked_callee
+491   0000              	GLOBAL _ungetc_unlocked
+492   0000              	GLOBAL _scanf_unlocked
+493   0000              	GLOBAL _rewind_unlocked_fastcall
+494   0000              	GLOBAL _rewind_unlocked
+495   0000              	GLOBAL _puts_unlocked_fastcall
+496   0000              	GLOBAL _puts_unlocked
+497   0000              	GLOBAL _putchar_unlocked_fastcall
+498   0000              	GLOBAL _putchar_unlocked
+499   0000              	GLOBAL _putc_unlocked_callee
+500   0000              	GLOBAL _putc_unlocked
+501   0000              	GLOBAL _printf_unlocked
+502   0000              	GLOBAL _gets_unlocked_fastcall
+503   0000              	GLOBAL _gets_unlocked
+504   0000              	GLOBAL _getline_unlocked_callee
+505   0000              	GLOBAL _getline_unlocked
+506   0000              	GLOBAL _getdelim_unlocked_callee
+507   0000              	GLOBAL _getdelim_unlocked
+508   0000              	GLOBAL _getchar_unlocked
+509   0000              	GLOBAL _getc_unlocked_fastcall
+510   0000              	GLOBAL _getc_unlocked
+511   0000              	GLOBAL _fwrite_unlocked_callee
+512   0000              	GLOBAL _fwrite_unlocked
+513   0000              	GLOBAL _ftell_unlocked_fastcall
+514   0000              	GLOBAL _ftell_unlocked
+515   0000              	GLOBAL _fsetpos_unlocked_callee
+516   0000              	GLOBAL _fsetpos_unlocked
+517   0000              	GLOBAL _fseek_unlocked_callee
+518   0000              	GLOBAL _fseek_unlocked
+519   0000              	GLOBAL _fscanf_unlocked
+520   0000              	GLOBAL _freopen_unlocked_callee
+521   0000              	GLOBAL _freopen_unlocked
+522   0000              	GLOBAL _fread_unlocked_callee
+523   0000              	GLOBAL _fread_unlocked
+524   0000              	GLOBAL _fputs_unlocked_callee
+525   0000              	GLOBAL _fputs_unlocked
+526   0000              	GLOBAL _fputc_unlocked_callee
+527   0000              	GLOBAL _fputc_unlocked
+528   0000              	GLOBAL _fprintf_unlocked
+529   0000              	GLOBAL _fileno_unlocked_fastcall
+530   0000              	GLOBAL _fileno_unlocked
+531   0000              	GLOBAL _fgets_unlocked_callee
+532   0000              	GLOBAL _fgets_unlocked
+533   0000              	GLOBAL _fgetpos_unlocked_callee
+534   0000              	GLOBAL _fgetpos_unlocked
+535   0000              	GLOBAL _fgetc_unlocked_fastcall
+536   0000              	GLOBAL _fgetc_unlocked
+537   0000              	GLOBAL _fflush_unlocked_fastcall
+538   0000              	GLOBAL _fflush_unlocked
+539   0000              	GLOBAL _ferror_unlocked_fastcall
+540   0000              	GLOBAL _ferror_unlocked
+541   0000              	GLOBAL _feof_unlocked_fastcall
+542   0000              	GLOBAL _feof_unlocked
+543   0000              	GLOBAL _fclose_unlocked_fastcall
+544   0000              	GLOBAL _fclose_unlocked
+545   0000              	GLOBAL _clearerr_unlocked_fastcall
+546   0000              	GLOBAL _clearerr_unlocked
+547   0000              	GLOBAL _vsscanf_callee
+548   0000              	GLOBAL _vsscanf
+549   0000              	GLOBAL _vsprintf_callee
+550   0000              	GLOBAL _vsprintf
+551   0000              	GLOBAL _vsnprintf_callee
+552   0000              	GLOBAL _vsnprintf
+553   0000              	GLOBAL _vscanf_callee
+554   0000              	GLOBAL _vscanf
+555   0000              	GLOBAL _vprintf_callee
+556   0000              	GLOBAL _vprintf
+557   0000              	GLOBAL _vfscanf_callee
+558   0000              	GLOBAL _vfscanf
+559   0000              	GLOBAL _vfprintf_callee
+560   0000              	GLOBAL _vfprintf
+561   0000              	GLOBAL _vasprintf_callee
+562   0000              	GLOBAL _vasprintf
+563   0000              	GLOBAL _ungetc_callee
+564   0000              	GLOBAL _ungetc
+565   0000              	GLOBAL _sscanf
+566   0000              	GLOBAL _sprintf
+567   0000              	GLOBAL _snprintf
+568   0000              	GLOBAL _scanf
+569   0000              	GLOBAL _rewind_fastcall
+570   0000              	GLOBAL _rewind
+571   0000              	GLOBAL _puts_fastcall
+572   0000              	GLOBAL _puts
+573   0000              	GLOBAL _putchar_fastcall
+574   0000              	GLOBAL _putchar
+575   0000              	GLOBAL _putc_callee
+576   0000              	GLOBAL _putc
+577   0000              	GLOBAL _printf
+578   0000              	GLOBAL _perror_fastcall
+579   0000              	GLOBAL _perror
+580   0000              	GLOBAL _open_memstream_callee
+581   0000              	GLOBAL _open_memstream
+582   0000              	GLOBAL _obstack_vprintf_callee
+583   0000              	GLOBAL _obstack_vprintf
+584   0000              	GLOBAL _obstack_printf
+585   0000              	GLOBAL _gets_fastcall
+586   0000              	GLOBAL _gets
+587   0000              	GLOBAL _getline_callee
+588   0000              	GLOBAL _getline
+589   0000              	GLOBAL _getdelim_callee
+590   0000              	GLOBAL _getdelim
+591   0000              	GLOBAL _getchar
+592   0000              	GLOBAL _getc_fastcall
+593   0000              	GLOBAL _getc
+594   0000              	GLOBAL _fwrite_callee
+595   0000              	GLOBAL _fwrite
+596   0000              	GLOBAL _funlockfile_fastcall
+597   0000              	GLOBAL _funlockfile
+598   0000              	GLOBAL _ftrylockfile_fastcall
+599   0000              	GLOBAL _ftrylockfile
+600   0000              	GLOBAL _ftell_fastcall
+601   0000              	GLOBAL _ftell
+602   0000              	GLOBAL _fsetpos_callee
+603   0000              	GLOBAL _fsetpos
+604   0000              	GLOBAL _fseek_callee
+605   0000              	GLOBAL _fseek
+606   0000              	GLOBAL _fscanf
+607   0000              	GLOBAL _freopen_callee
+608   0000              	GLOBAL _freopen
+609   0000              	GLOBAL _fread_callee
+610   0000              	GLOBAL _fread
+611   0000              	GLOBAL _fputs_callee
+612   0000              	GLOBAL _fputs
+613   0000              	GLOBAL _fputc_callee
+614   0000              	GLOBAL _fputc
+615   0000              	GLOBAL _fprintf
+616   0000              	GLOBAL _fopen_callee
+617   0000              	GLOBAL _fopen
+618   0000              	GLOBAL _fmemopen_callee
+619   0000              	GLOBAL _fmemopen
+620   0000              	GLOBAL _flockfile_fastcall
+621   0000              	GLOBAL _flockfile
+622   0000              	GLOBAL _fileno_fastcall
+623   0000              	GLOBAL _fileno
+624   0000              	GLOBAL _fgets_callee
+625   0000              	GLOBAL _fgets
+626   0000              	GLOBAL _fgetpos_callee
+627   0000              	GLOBAL _fgetpos
+628   0000              	GLOBAL _fgetc_fastcall
+629   0000              	GLOBAL _fgetc
+630   0000              	GLOBAL _fflush_fastcall
+631   0000              	GLOBAL _fflush
+632   0000              	GLOBAL _ferror_fastcall
+633   0000              	GLOBAL _ferror
+634   0000              	GLOBAL _feof_fastcall
+635   0000              	GLOBAL _feof
+636   0000              	GLOBAL _fdopen_callee
+637   0000              	GLOBAL _fdopen
+638   0000              	GLOBAL _fclose_fastcall
+639   0000              	GLOBAL _fclose
+640   0000              	GLOBAL _clearerr_fastcall
+641   0000              	GLOBAL _clearerr
+642   0000              	GLOBAL _asprintf
+643   0000              	GLOBAL __fmemopen__callee
+644   0000              	GLOBAL __fmemopen_
+645   0000              	GLOBAL _ttyerr
+646   0000              	GLOBAL _ttyout
+647   0000              	GLOBAL _ttyin
+648   0000              	GLOBAL _stdlst
+649   0000              	GLOBAL _stdpun
+650   0000              	GLOBAL _stdrdr
+651   0000              	GLOBAL _stderr
+652   0000              	GLOBAL _stdout
+653   0000              	GLOBAL _stdin
+654   0000              	GLOBAL __MAX_FOPEN
+655   0000              ;--------------------------------------------------------
+656   0000              ; special function registers
+657   0000              ;--------------------------------------------------------
+658   0000              ;--------------------------------------------------------
+659   0000              ; ram data
+660   0000              ;--------------------------------------------------------
+661   0000              	SECTION bss_compiler
+662   0000              _mywindow:
+663   0000  00 00 00 00 00 00 00 00 00 00 00 00 
+                        	DEFS 12
+664   000C              _theSun:
+665   000C  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+                        	DEFS 20
+666   0020              _thePlanet:
+667   0020  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+                        	DEFS 20
+668   0034              ;--------------------------------------------------------
+669   0034              ; ram data
+670   0034              ;--------------------------------------------------------
+671   0034              
+672   0034              IF 0
+673   0034              
+674   0034              ; .area _INITIALIZED removed by z88dk
+675   0034              
+676   0034              
+677   0034              ENDIF
+678   0034              
+679   0034              ;--------------------------------------------------------
+680   0034              ; absolute external ram data
+681   0034              ;--------------------------------------------------------
+682   0034              	SECTION IGNORE
+683   0000              ;--------------------------------------------------------
+684   0000              ; global & static initialisations
+685   0000              ;--------------------------------------------------------
+686   0000              	SECTION code_crt_init
+687   0000              ;--------------------------------------------------------
+688   0000              ; Home
+689   0000              ;--------------------------------------------------------
+690   0000              	SECTION IGNORE
+691   0000              ;--------------------------------------------------------
+692   0000              ; code
+693   0000              ;--------------------------------------------------------
+694   0000              	SECTION code_compiler
+695   0000              ;	---------------------------------
+696   0000              ; Function main
+697   0000              ; ---------------------------------
+698   0000              _main:
+699   0000  DD E5       	push	ix
+700   0002  DD 21 00 00 	ld	ix,0
+701   0006  DD 39       	add	ix,sp
+702   0008  21 E4 FF    	ld	hl, -28
+703   000B  39          	add	hl, sp
+704   000C  F9          	ld	sp, hl
+705   000D  21 04 00    	ld	hl,4
+706   0010  39          	add	hl, sp
+707   0011  DD 75 F2    	ld	(ix-14),l
+708   0014  DD 74 F3    	ld	(ix-13),h
+709   0017  DD 7E F2    	ld	a,(ix-14)
+710   001A  DD 77 F4    	ld	(ix-12),a
+711   001D  DD 7E F3    	ld	a,(ix-13)
+712   0020  DD 77 F5    	ld	(ix-11),a
+713   0023  DD 36 FE F7 	ld	(ix-2),0xf7
+714   0027  DD 36 FF 1D 	ld	(ix-1),0x1d
+715   002B              l_main_00102:
+716   002B  21 E0 01    	ld	hl,0x01e0
+717   002E  E5          	push	hl
+718   002F  21 00 03    	ld	hl,0x0300
+719   0032  E5          	push	hl
+720   0033  21 00 00    	ld	hl,_mywindow
+721   0036  E5          	push	hl
+722   0037  CD 00 00    	call	_window_new
+723   003A  F1          	pop	af
+724   003B  F1          	pop	af
+725   003C  F1          	pop	af
+726   003D  DD 6E FE    	ld	l,(ix-2)
+727   0040  DD 66 FF    	ld	h,(ix-1)
+728   0043  E5          	push	hl
+729   0044  CD 00 00    	call	___uint2fs_callee
+730   0047  DD 75 F6    	ld	(ix-10),l
+731   004A  DD 74 F7    	ld	(ix-9),h
+732   004D  DD 73 F8    	ld	(ix-8),e
+733   0050  DD 72 F9    	ld	(ix-7),d
+734   0053  11 1C 00    	ld	de, +(_theSun + 16)
+735   0056  21 12 00    	ld	hl,18
+736   0059  39          	add	hl, sp
+737   005A  01 04 00    	ld	bc,0x0004
+738   005D  ED B0       	ldir
+739   005F  21 0C 00    	ld	hl,_theSun
+740   0062  CD 00 00    	call	_sunEclipticCartesianCoordinates
+741   0065  ED 4B 0C 00 	ld	bc, (_theSun + 0)
+742   0069  2A 0E 00    	ld	hl, (_theSun + 2)
+743   006C  E5          	push	hl
+744   006D  C5          	push	bc
+745   006E  21 40 42    	ld	hl,0x4240
+746   0071  E5          	push	hl
+747   0072  21 00 00    	ld	hl,0x0000
+748   0075  E5          	push	hl
+749   0076  CD 00 00    	call	___fsmul_callee
+750   0079  D5          	push	de
+751   007A  E5          	push	hl
+752   007B  CD 00 00    	call	___fs2sint_callee
+753   007E  01 80 01    	ld	bc,0x0180
+754   0081  09          	add	hl, bc
+755   0082  E5          	push	hl
+756   0083  CD 00 00    	call	___sint2fs_callee
+757   0086  E3          	ex	(sp), hl
+758   0087  DD 73 E6    	ld	(ix-26),e
+759   008A  DD 72 E7    	ld	(ix-25),d
+760   008D  ED 4B 10 00 	ld	bc, (_theSun + 4)
+761   0091  2A 12 00    	ld	hl, (_theSun + 6)
+762   0094  E5          	push	hl
+763   0095  C5          	push	bc
+764   0096  21 40 42    	ld	hl,0x4240
+765   0099  E5          	push	hl
+766   009A  21 00 00    	ld	hl,0x0000
+767   009D  E5          	push	hl
+768   009E  CD 00 00    	call	___fsmul_callee
+769   00A1  D5          	push	de
+770   00A2  E5          	push	hl
+771   00A3  CD 00 00    	call	___fs2sint_callee
+772   00A6  3E F0       	ld	a,0xf0
+773   00A8  95          	sub	a, l
+774   00A9  4F          	ld	c, a
+775   00AA  9F          	sbc	a, a
+776   00AB  94          	sub	a, h
+777   00AC  47          	ld	b, a
+778   00AD  C5          	push	bc
+779   00AE  CD 00 00    	call	___sint2fs_callee
+780   00B1  DD 75 FA    	ld	(ix-6),l
+781   00B4  DD 74 FB    	ld	(ix-5),h
+782   00B7  DD 73 FC    	ld	(ix-4),e
+783   00BA  DD 72 FD    	ld	(ix-3),d
+784   00BD  21 F0 00    	ld	hl,0x00f0
+785   00C0  E5          	push	hl
+786   00C1  21 80 01    	ld	hl,0x0180
+787   00C4  E5          	push	hl
+788   00C5  21 00 00    	ld	hl,_mywindow
+789   00C8  E5          	push	hl
+790   00C9  CD 00 00    	call	_draw_abs
+791   00CC  F1          	pop	af
+792   00CD  F1          	pop	af
+793   00CE  26 01       	ld	h,0x01
+794   00D0  E3          	ex	(sp),hl
+795   00D1  33          	inc	sp
+796   00D2  21 00 00    	ld	hl,_mywindow
+797   00D5  E5          	push	hl
+798   00D6  CD 00 00    	call	_draw_intensity
+799   00D9  33          	inc	sp
+800   00DA  21 08 00    	ld	hl,0x0008
+801   00DD  E3          	ex	(sp),hl
+802   00DE  21 00 00    	ld	hl,_mywindow
+803   00E1  E5          	push	hl
+804   00E2  CD 00 00    	call	_draw_circle_fill
+805   00E5  F1          	pop	af
+806   00E6  26 06       	ld	h,0x06
+807   00E8  E3          	ex	(sp),hl
+808   00E9  33          	inc	sp
+809   00EA  21 00 00    	ld	hl,_mywindow
+810   00ED  E5          	push	hl
+811   00EE  CD 00 00    	call	_draw_intensity
+812   00F1  F1          	pop	af
+813   00F2  33          	inc	sp
+814   00F3  ED 4B 18 00 	ld	bc, (_theSun + 12)
+815   00F7  2A 1A 00    	ld	hl, (_theSun + 14)
+816   00FA  E5          	push	hl
+817   00FB  C5          	push	bc
+818   00FC  21 40 42    	ld	hl,0x4240
+819   00FF  E5          	push	hl
+820   0100  21 00 00    	ld	hl,0x0000
+821   0103  E5          	push	hl
+822   0104  CD 00 00    	call	___fsmul_callee
+823   0107  D5          	push	de
+824   0108  E5          	push	hl
+825   0109  CD 00 00    	call	___fs2uint_callee
+826   010C  E5          	push	hl
+827   010D  21 00 00    	ld	hl,_mywindow
+828   0110  E5          	push	hl
+829   0111  CD 00 00    	call	_draw_circle
+830   0114  F1          	pop	af
+831   0115  F1          	pop	af
+832   0116  DD 6E FC    	ld	l,(ix-4)
+833   0119  DD 66 FD    	ld	h,(ix-3)
+834   011C  E5          	push	hl
+835   011D  DD 6E FA    	ld	l,(ix-6)
+836   0120  DD 66 FB    	ld	h,(ix-5)
+837   0123  E5          	push	hl
+838   0124  CD 00 00    	call	___fs2uint_callee
+839   0127  DD 75 FA    	ld	(ix-6),l
+840   012A  DD 74 FB    	ld	(ix-5),h
+841   012D  D1          	pop	de
+842   012E  E1          	pop	hl
+843   012F  E5          	push	hl
+844   0130  D5          	push	de
+845   0131  EB          	ex	de,hl
+846   0132  E1          	pop	hl
+847   0133  E5          	push	hl
+848   0134  D5          	push	de
+849   0135  E5          	push	hl
+850   0136  CD 00 00    	call	___fs2uint_callee
+851   0139  DD 75 FC    	ld	(ix-4),l
+852   013C  DD 74 FD    	ld	(ix-3),h
+853   013F  DD 6E FA    	ld	l,(ix-6)
+854   0142  DD 66 FB    	ld	h,(ix-5)
+855   0145  E5          	push	hl
+856   0146  DD 6E FC    	ld	l,(ix-4)
+857   0149  DD 66 FD    	ld	h,(ix-3)
+858   014C  E5          	push	hl
+859   014D  21 00 00    	ld	hl,_mywindow
+860   0150  E5          	push	hl
+861   0151  CD 00 00    	call	_draw_abs
+862   0154  F1          	pop	af
+863   0155  F1          	pop	af
+864   0156  21 12 00    	ld	hl,0x0012
+865   0159  E3          	ex	(sp),hl
+866   015A  21 00 00    	ld	hl,_mywindow
+867   015D  E5          	push	hl
+868   015E  CD 00 00    	call	_draw_circle_fill
+869   0161  F1          	pop	af
+870   0162  F1          	pop	af
+871   0163  11 30 00    	ld	de, +(_thePlanet + 16)
+872   0166  21 12 00    	ld	hl,18
+873   0169  39          	add	hl, sp
+874   016A  01 04 00    	ld	bc,0x0004
+875   016D  ED B0       	ldir
+876   016F  21 36 00    	ld	hl,_moon
+877   0172  E5          	push	hl
+878   0173  21 20 00    	ld	hl,_thePlanet
+879   0176  E5          	push	hl
+880   0177  CD 00 00    	call	_planetEclipticCartesianCoordinates
+881   017A  21 F0 00    	ld	hl,0x00f0
+882   017D  E5          	push	hl
+883   017E  21 80 01    	ld	hl,0x0180
+884   0181  E5          	push	hl
+885   0182  21 00 00    	ld	hl,_mywindow
+886   0185  E5          	push	hl
+887   0186  CD 00 00    	call	_draw_abs
+888   0189  F1          	pop	af
+889   018A  F1          	pop	af
+890   018B  26 07       	ld	h,0x07
+891   018D  E3          	ex	(sp),hl
+892   018E  33          	inc	sp
+893   018F  21 00 00    	ld	hl,_mywindow
+894   0192  E5          	push	hl
+895   0193  CD 00 00    	call	_draw_intensity
+896   0196  F1          	pop	af
+897   0197  33          	inc	sp
+898   0198  ED 4B 2C 00 	ld	bc, ((_thePlanet + 12) + 0)
+899   019C  2A 2E 00    	ld	hl, ((_thePlanet + 12) + 2)
+900   019F  E5          	push	hl
+901   01A0  C5          	push	bc
+902   01A1  21 96 45    	ld	hl,0x4596
+903   01A4  E5          	push	hl
+904   01A5  21 00 00    	ld	hl,0x0000
+905   01A8  E5          	push	hl
+906   01A9  CD 00 00    	call	___fsmul_callee
+907   01AC  D5          	push	de
+908   01AD  E5          	push	hl
+909   01AE  CD 00 00    	call	___fs2uint_callee
+910   01B1  E5          	push	hl
+911   01B2  21 00 00    	ld	hl,_mywindow
+912   01B5  E5          	push	hl
+913   01B6  CD 00 00    	call	_draw_circle
+914   01B9  F1          	pop	af
+915   01BA  F1          	pop	af
+916   01BB  ED 4B 24 00 	ld	bc, ((_thePlanet + 4) + 0)
+917   01BF  2A 26 00    	ld	hl, ((_thePlanet + 4) + 2)
+918   01C2  E5          	push	hl
+919   01C3  C5          	push	bc
+920   01C4  21 96 45    	ld	hl,0x4596
+921   01C7  E5          	push	hl
+922   01C8  21 00 00    	ld	hl,0x0000
+923   01CB  E5          	push	hl
+924   01CC  CD 00 00    	call	___fsmul_callee
+925   01CF  D5          	push	de
+926   01D0  E5          	push	hl
+927   01D1  CD 00 00    	call	___fs2sint_callee
+928   01D4  3E F0       	ld	a,0xf0
+929   01D6  95          	sub	a, l
+930   01D7  4F          	ld	c, a
+931   01D8  9F          	sbc	a, a
+932   01D9  94          	sub	a, h
+933   01DA  47          	ld	b, a
+934   01DB  ED 5B 20 00 	ld	de, (_thePlanet + 0)
+935   01DF  2A 22 00    	ld	hl, (_thePlanet + 2)
+936   01E2  C5          	push	bc
+937   01E3  E5          	push	hl
+938   01E4  D5          	push	de
+939   01E5  21 96 45    	ld	hl,0x4596
+940   01E8  E5          	push	hl
+941   01E9  21 00 00    	ld	hl,0x0000
+942   01EC  E5          	push	hl
+943   01ED  CD 00 00    	call	___fsmul_callee
+944   01F0  D5          	push	de
+945   01F1  E5          	push	hl
+946   01F2  CD 00 00    	call	___fs2sint_callee
+947   01F5  C1          	pop	bc
+948   01F6  11 80 01    	ld	de,0x0180
+949   01F9  19          	add	hl, de
+950   01FA  C5          	push	bc
+951   01FB  E5          	push	hl
+952   01FC  21 00 00    	ld	hl,_mywindow
+953   01FF  E5          	push	hl
+954   0200  CD 00 00    	call	_draw_abs
+955   0203  F1          	pop	af
+956   0204  F1          	pop	af
+957   0205  21 03 00    	ld	hl,0x0003
+958   0208  E3          	ex	(sp),hl
+959   0209  21 00 00    	ld	hl,_mywindow
+960   020C  E5          	push	hl
+961   020D  CD 00 00    	call	_draw_circle_fill
+962   0210  F1          	pop	af
+963   0211  21 6C 00    	ld	hl,_mercury
+964   0214  E3          	ex	(sp),hl
+965   0215  21 20 00    	ld	hl,_thePlanet
+966   0218  E5          	push	hl
+967   0219  CD 00 00    	call	_planetEclipticCartesianCoordinates
+968   021C  21 0C 00    	ld	hl,_theSun
+969   021F  E5          	push	hl
+970   0220  21 20 00    	ld	hl,_thePlanet
+971   0223  E5          	push	hl
+972   0224  CD 00 00    	call	_addCartesianCoordinates
+973   0227  DD 6E FA    	ld	l,(ix-6)
+974   022A  DD 66 FB    	ld	h,(ix-5)
+975   022D  E5          	push	hl
+976   022E  DD 6E FC    	ld	l,(ix-4)
+977   0231  DD 66 FD    	ld	h,(ix-3)
+978   0234  E5          	push	hl
+979   0235  21 00 00    	ld	hl,_mywindow
+980   0238  E5          	push	hl
+981   0239  CD 00 00    	call	_draw_abs
+982   023C  F1          	pop	af
+983   023D  F1          	pop	af
+984   023E  26 02       	ld	h,0x02
+985   0240  E3          	ex	(sp),hl
+986   0241  33          	inc	sp
+987   0242  21 00 00    	ld	hl,_mywindow
+988   0245  E5          	push	hl
+989   0246  CD 00 00    	call	_draw_intensity
+990   0249  F1          	pop	af
+991   024A  33          	inc	sp
+992   024B  ED 4B 2C 00 	ld	bc, ((_thePlanet + 12) + 0)
+993   024F  2A 2E 00    	ld	hl, ((_thePlanet + 12) + 2)
+994   0252  E5          	push	hl
+995   0253  C5          	push	bc
+996   0254  21 40 42    	ld	hl,0x4240
+997   0257  E5          	push	hl
+998   0258  21 00 00    	ld	hl,0x0000
+999   025B  E5          	push	hl
+1000  025C  CD 00 00    	call	___fsmul_callee
+1001  025F  D5          	push	de
+1002  0260  E5          	push	hl
+1003  0261  CD 00 00    	call	___fs2uint_callee
+1004  0264  E5          	push	hl
+1005  0265  21 00 00    	ld	hl,_mywindow
+1006  0268  E5          	push	hl
+1007  0269  CD 00 00    	call	_draw_circle
+1008  026C  F1          	pop	af
+1009  026D  F1          	pop	af
+1010  026E  ED 4B 24 00 	ld	bc, ((_thePlanet + 4) + 0)
+1011  0272  2A 26 00    	ld	hl, ((_thePlanet + 4) + 2)
+1012  0275  E5          	push	hl
+1013  0276  C5          	push	bc
+1014  0277  21 40 42    	ld	hl,0x4240
+1015  027A  E5          	push	hl
+1016  027B  21 00 00    	ld	hl,0x0000
+1017  027E  E5          	push	hl
+1018  027F  CD 00 00    	call	___fsmul_callee
+1019  0282  D5          	push	de
+1020  0283  E5          	push	hl
+1021  0284  CD 00 00    	call	___fs2sint_callee
+1022  0287  3E F0       	ld	a,0xf0
+1023  0289  95          	sub	a, l
+1024  028A  4F          	ld	c, a
+1025  028B  9F          	sbc	a, a
+1026  028C  94          	sub	a, h
+1027  028D  47          	ld	b, a
+1028  028E  ED 5B 20 00 	ld	de, (_thePlanet + 0)
+1029  0292  2A 22 00    	ld	hl, (_thePlanet + 2)
+1030  0295  C5          	push	bc
+1031  0296  E5          	push	hl
+1032  0297  D5          	push	de
+1033  0298  21 40 42    	ld	hl,0x4240
+1034  029B  E5          	push	hl
+1035  029C  21 00 00    	ld	hl,0x0000
+1036  029F  E5          	push	hl
+1037  02A0  CD 00 00    	call	___fsmul_callee
+1038  02A3  D5          	push	de
+1039  02A4  E5          	push	hl
+1040  02A5  CD 00 00    	call	___fs2sint_callee
+1041  02A8  C1          	pop	bc
+1042  02A9  11 80 01    	ld	de,0x0180
+1043  02AC  19          	add	hl, de
+1044  02AD  C5          	push	bc
+1045  02AE  E5          	push	hl
+1046  02AF  21 00 00    	ld	hl,_mywindow
+1047  02B2  E5          	push	hl
+1048  02B3  CD 00 00    	call	_draw_abs
+1049  02B6  F1          	pop	af
+1050  02B7  F1          	pop	af
+1051  02B8  21 04 00    	ld	hl,0x0004
+1052  02BB  E3          	ex	(sp),hl
+1053  02BC  21 00 00    	ld	hl,_mywindow
+1054  02BF  E5          	push	hl
+1055  02C0  CD 00 00    	call	_draw_circle_fill
+1056  02C3  F1          	pop	af
+1057  02C4  21 A2 00    	ld	hl,_venus
+1058  02C7  E3          	ex	(sp),hl
+1059  02C8  21 20 00    	ld	hl,_thePlanet
+1060  02CB  E5          	push	hl
+1061  02CC  CD 00 00    	call	_planetEclipticCartesianCoordinates
+1062  02CF  21 0C 00    	ld	hl,_theSun
+1063  02D2  E5          	push	hl
+1064  02D3  21 20 00    	ld	hl,_thePlanet
+1065  02D6  E5          	push	hl
+1066  02D7  CD 00 00    	call	_addCartesianCoordinates
+1067  02DA  DD 6E FA    	ld	l,(ix-6)
+1068  02DD  DD 66 FB    	ld	h,(ix-5)
+1069  02E0  E5          	push	hl
+1070  02E1  DD 6E FC    	ld	l,(ix-4)
+1071  02E4  DD 66 FD    	ld	h,(ix-3)
+1072  02E7  E5          	push	hl
+1073  02E8  21 00 00    	ld	hl,_mywindow
+1074  02EB  E5          	push	hl
+1075  02EC  CD 00 00    	call	_draw_abs
+1076  02EF  F1          	pop	af
+1077  02F0  F1          	pop	af
+1078  02F1  26 05       	ld	h,0x05
+1079  02F3  E3          	ex	(sp),hl
+1080  02F4  33          	inc	sp
+1081  02F5  21 00 00    	ld	hl,_mywindow
+1082  02F8  E5          	push	hl
+1083  02F9  CD 00 00    	call	_draw_intensity
+1084  02FC  F1          	pop	af
+1085  02FD  33          	inc	sp
+1086  02FE  ED 4B 2C 00 	ld	bc, ((_thePlanet + 12) + 0)
+1087  0302  2A 2E 00    	ld	hl, ((_thePlanet + 12) + 2)
+1088  0305  E5          	push	hl
+1089  0306  C5          	push	bc
+1090  0307  21 40 42    	ld	hl,0x4240
+1091  030A  E5          	push	hl
+1092  030B  21 00 00    	ld	hl,0x0000
+1093  030E  E5          	push	hl
+1094  030F  CD 00 00    	call	___fsmul_callee
+1095  0312  D5          	push	de
+1096  0313  E5          	push	hl
+1097  0314  CD 00 00    	call	___fs2uint_callee
+1098  0317  E5          	push	hl
+1099  0318  21 00 00    	ld	hl,_mywindow
+1100  031B  E5          	push	hl
+1101  031C  CD 00 00    	call	_draw_circle
+1102  031F  F1          	pop	af
+1103  0320  F1          	pop	af
+1104  0321  ED 4B 24 00 	ld	bc, ((_thePlanet + 4) + 0)
+1105  0325  2A 26 00    	ld	hl, ((_thePlanet + 4) + 2)
+1106  0328  E5          	push	hl
+1107  0329  C5          	push	bc
+1108  032A  21 40 42    	ld	hl,0x4240
+1109  032D  E5          	push	hl
+1110  032E  21 00 00    	ld	hl,0x0000
+1111  0331  E5          	push	hl
+1112  0332  CD 00 00    	call	___fsmul_callee
+1113  0335  D5          	push	de
+1114  0336  E5          	push	hl
+1115  0337  CD 00 00    	call	___fs2sint_callee
+1116  033A  3E F0       	ld	a,0xf0
+1117  033C  95          	sub	a, l
+1118  033D  4F          	ld	c, a
+1119  033E  9F          	sbc	a, a
+1120  033F  94          	sub	a, h
+1121  0340  47          	ld	b, a
+1122  0341  ED 5B 20 00 	ld	de, (_thePlanet + 0)
+1123  0345  2A 22 00    	ld	hl, (_thePlanet + 2)
+1124  0348  C5          	push	bc
+1125  0349  E5          	push	hl
+1126  034A  D5          	push	de
+1127  034B  21 40 42    	ld	hl,0x4240
+1128  034E  E5          	push	hl
+1129  034F  21 00 00    	ld	hl,0x0000
+1130  0352  E5          	push	hl
+1131  0353  CD 00 00    	call	___fsmul_callee
+1132  0356  D5          	push	de
+1133  0357  E5          	push	hl
+1134  0358  CD 00 00    	call	___fs2sint_callee
+1135  035B  C1          	pop	bc
+1136  035C  11 80 01    	ld	de,0x0180
+1137  035F  19          	add	hl, de
+1138  0360  C5          	push	bc
+1139  0361  E5          	push	hl
+1140  0362  21 00 00    	ld	hl,_mywindow
+1141  0365  E5          	push	hl
+1142  0366  CD 00 00    	call	_draw_abs
+1143  0369  F1          	pop	af
+1144  036A  F1          	pop	af
+1145  036B  21 08 00    	ld	hl,0x0008
+1146  036E  E3          	ex	(sp),hl
+1147  036F  21 00 00    	ld	hl,_mywindow
+1148  0372  E5          	push	hl
+1149  0373  CD 00 00    	call	_draw_circle_fill
+1150  0376  F1          	pop	af
+1151  0377  21 D8 00    	ld	hl,_mars
+1152  037A  E3          	ex	(sp),hl
+1153  037B  21 20 00    	ld	hl,_thePlanet
+1154  037E  E5          	push	hl
+1155  037F  CD 00 00    	call	_planetEclipticCartesianCoordinates
+1156  0382  21 0C 00    	ld	hl,_theSun
+1157  0385  E5          	push	hl
+1158  0386  21 20 00    	ld	hl,_thePlanet
+1159  0389  E5          	push	hl
+1160  038A  CD 00 00    	call	_addCartesianCoordinates
+1161  038D  DD 6E FA    	ld	l,(ix-6)
+1162  0390  DD 66 FB    	ld	h,(ix-5)
+1163  0393  E5          	push	hl
+1164  0394  DD 6E FC    	ld	l,(ix-4)
+1165  0397  DD 66 FD    	ld	h,(ix-3)
+1166  039A  E5          	push	hl
+1167  039B  21 00 00    	ld	hl,_mywindow
+1168  039E  E5          	push	hl
+1169  039F  CD 00 00    	call	_draw_abs
+1170  03A2  F1          	pop	af
+1171  03A3  F1          	pop	af
+1172  03A4  26 02       	ld	h,0x02
+1173  03A6  E3          	ex	(sp),hl
+1174  03A7  33          	inc	sp
+1175  03A8  21 00 00    	ld	hl,_mywindow
+1176  03AB  E5          	push	hl
+1177  03AC  CD 00 00    	call	_draw_intensity
+1178  03AF  F1          	pop	af
+1179  03B0  33          	inc	sp
+1180  03B1  ED 4B 2C 00 	ld	bc, ((_thePlanet + 12) + 0)
+1181  03B5  2A 2E 00    	ld	hl, ((_thePlanet + 12) + 2)
+1182  03B8  E5          	push	hl
+1183  03B9  C5          	push	bc
+1184  03BA  21 40 42    	ld	hl,0x4240
+1185  03BD  E5          	push	hl
+1186  03BE  21 00 00    	ld	hl,0x0000
+1187  03C1  E5          	push	hl
+1188  03C2  CD 00 00    	call	___fsmul_callee
+1189  03C5  D5          	push	de
+1190  03C6  E5          	push	hl
+1191  03C7  CD 00 00    	call	___fs2uint_callee
+1192  03CA  E5          	push	hl
+1193  03CB  21 00 00    	ld	hl,_mywindow
+1194  03CE  E5          	push	hl
+1195  03CF  CD 00 00    	call	_draw_circle
+1196  03D2  F1          	pop	af
+1197  03D3  F1          	pop	af
+1198  03D4  ED 4B 24 00 	ld	bc, ((_thePlanet + 4) + 0)
+1199  03D8  2A 26 00    	ld	hl, ((_thePlanet + 4) + 2)
+1200  03DB  E5          	push	hl
+1201  03DC  C5          	push	bc
+1202  03DD  21 40 42    	ld	hl,0x4240
+1203  03E0  E5          	push	hl
+1204  03E1  21 00 00    	ld	hl,0x0000
+1205  03E4  E5          	push	hl
+1206  03E5  CD 00 00    	call	___fsmul_callee
+1207  03E8  D5          	push	de
+1208  03E9  E5          	push	hl
+1209  03EA  CD 00 00    	call	___fs2sint_callee
+1210  03ED  3E F0       	ld	a,0xf0
+1211  03EF  95          	sub	a, l
+1212  03F0  4F          	ld	c, a
+1213  03F1  9F          	sbc	a, a
+1214  03F2  94          	sub	a, h
+1215  03F3  47          	ld	b, a
+1216  03F4  ED 5B 20 00 	ld	de, (_thePlanet + 0)
+1217  03F8  2A 22 00    	ld	hl, (_thePlanet + 2)
+1218  03FB  C5          	push	bc
+1219  03FC  E5          	push	hl
+1220  03FD  D5          	push	de
+1221  03FE  21 40 42    	ld	hl,0x4240
+1222  0401  E5          	push	hl
+1223  0402  21 00 00    	ld	hl,0x0000
+1224  0405  E5          	push	hl
+1225  0406  CD 00 00    	call	___fsmul_callee
+1226  0409  D5          	push	de
+1227  040A  E5          	push	hl
+1228  040B  CD 00 00    	call	___fs2sint_callee
+1229  040E  C1          	pop	bc
+1230  040F  11 80 01    	ld	de,0x0180
+1231  0412  19          	add	hl, de
+1232  0413  C5          	push	bc
+1233  0414  E5          	push	hl
+1234  0415  21 00 00    	ld	hl,_mywindow
+1235  0418  E5          	push	hl
+1236  0419  CD 00 00    	call	_draw_abs
+1237  041C  F1          	pop	af
+1238  041D  F1          	pop	af
+1239  041E  21 06 00    	ld	hl,0x0006
+1240  0421  E3          	ex	(sp),hl
+1241  0422  21 00 00    	ld	hl,_mywindow
+1242  0425  E5          	push	hl
+1243  0426  CD 00 00    	call	_draw_circle_fill
+1244  0429  F1          	pop	af
+1245  042A  21 0E 01    	ld	hl,_jupiter
+1246  042D  E3          	ex	(sp),hl
+1247  042E  21 20 00    	ld	hl,_thePlanet
+1248  0431  E5          	push	hl
+1249  0432  CD 00 00    	call	_planetEclipticCartesianCoordinates
+1250  0435  21 0C 00    	ld	hl,_theSun
+1251  0438  E5          	push	hl
+1252  0439  21 20 00    	ld	hl,_thePlanet
+1253  043C  E5          	push	hl
+1254  043D  CD 00 00    	call	_addCartesianCoordinates
+1255  0440  DD 6E FA    	ld	l,(ix-6)
+1256  0443  DD 66 FB    	ld	h,(ix-5)
+1257  0446  E5          	push	hl
+1258  0447  DD 6E FC    	ld	l,(ix-4)
+1259  044A  DD 66 FD    	ld	h,(ix-3)
+1260  044D  E5          	push	hl
+1261  044E  21 00 00    	ld	hl,_mywindow
+1262  0451  E5          	push	hl
+1263  0452  CD 00 00    	call	_draw_abs
+1264  0455  F1          	pop	af
+1265  0456  F1          	pop	af
+1266  0457  26 05       	ld	h,0x05
+1267  0459  E3          	ex	(sp),hl
+1268  045A  33          	inc	sp
+1269  045B  21 00 00    	ld	hl,_mywindow
+1270  045E  E5          	push	hl
+1271  045F  CD 00 00    	call	_draw_intensity
+1272  0462  F1          	pop	af
+1273  0463  33          	inc	sp
+1274  0464  ED 4B 2C 00 	ld	bc, ((_thePlanet + 12) + 0)
+1275  0468  2A 2E 00    	ld	hl, ((_thePlanet + 12) + 2)
+1276  046B  E5          	push	hl
+1277  046C  C5          	push	bc
+1278  046D  21 40 42    	ld	hl,0x4240
+1279  0470  E5          	push	hl
+1280  0471  21 00 00    	ld	hl,0x0000
+1281  0474  E5          	push	hl
+1282  0475  CD 00 00    	call	___fsmul_callee
+1283  0478  D5          	push	de
+1284  0479  E5          	push	hl
+1285  047A  CD 00 00    	call	___fs2uint_callee
+1286  047D  E5          	push	hl
+1287  047E  21 00 00    	ld	hl,_mywindow
+1288  0481  E5          	push	hl
+1289  0482  CD 00 00    	call	_draw_circle
+1290  0485  F1          	pop	af
+1291  0486  F1          	pop	af
+1292  0487  ED 4B 24 00 	ld	bc, ((_thePlanet + 4) + 0)
+1293  048B  2A 26 00    	ld	hl, ((_thePlanet + 4) + 2)
+1294  048E  E5          	push	hl
+1295  048F  C5          	push	bc
+1296  0490  21 40 42    	ld	hl,0x4240
+1297  0493  E5          	push	hl
+1298  0494  21 00 00    	ld	hl,0x0000
+1299  0497  E5          	push	hl
+1300  0498  CD 00 00    	call	___fsmul_callee
+1301  049B  D5          	push	de
+1302  049C  E5          	push	hl
+1303  049D  CD 00 00    	call	___fs2sint_callee
+1304  04A0  3E F0       	ld	a,0xf0
+1305  04A2  95          	sub	a, l
+1306  04A3  4F          	ld	c, a
+1307  04A4  9F          	sbc	a, a
+1308  04A5  94          	sub	a, h
+1309  04A6  47          	ld	b, a
+1310  04A7  ED 5B 20 00 	ld	de, (_thePlanet + 0)
+1311  04AB  2A 22 00    	ld	hl, (_thePlanet + 2)
+1312  04AE  C5          	push	bc
+1313  04AF  E5          	push	hl
+1314  04B0  D5          	push	de
+1315  04B1  21 40 42    	ld	hl,0x4240
+1316  04B4  E5          	push	hl
+1317  04B5  21 00 00    	ld	hl,0x0000
+1318  04B8  E5          	push	hl
+1319  04B9  CD 00 00    	call	___fsmul_callee
+1320  04BC  D5          	push	de
+1321  04BD  E5          	push	hl
+1322  04BE  CD 00 00    	call	___fs2sint_callee
+1323  04C1  C1          	pop	bc
+1324  04C2  11 80 01    	ld	de,0x0180
+1325  04C5  19          	add	hl, de
+1326  04C6  C5          	push	bc
+1327  04C7  E5          	push	hl
+1328  04C8  21 00 00    	ld	hl,_mywindow
+1329  04CB  E5          	push	hl
+1330  04CC  CD 00 00    	call	_draw_abs
+1331  04CF  F1          	pop	af
+1332  04D0  F1          	pop	af
+1333  04D1  21 10 00    	ld	hl,0x0010
+1334  04D4  E3          	ex	(sp),hl
+1335  04D5  21 00 00    	ld	hl,_mywindow
+1336  04D8  E5          	push	hl
+1337  04D9  CD 00 00    	call	_draw_circle_fill
+1338  04DC  F1          	pop	af
+1339  04DD  21 44 01    	ld	hl,_saturn
+1340  04E0  E3          	ex	(sp),hl
+1341  04E1  21 20 00    	ld	hl,_thePlanet
+1342  04E4  E5          	push	hl
+1343  04E5  CD 00 00    	call	_planetEclipticCartesianCoordinates
+1344  04E8  21 0C 00    	ld	hl,_theSun
+1345  04EB  E5          	push	hl
+1346  04EC  21 20 00    	ld	hl,_thePlanet
+1347  04EF  E5          	push	hl
+1348  04F0  CD 00 00    	call	_addCartesianCoordinates
+1349  04F3  DD 6E FA    	ld	l,(ix-6)
+1350  04F6  DD 66 FB    	ld	h,(ix-5)
+1351  04F9  E5          	push	hl
+1352  04FA  DD 6E FC    	ld	l,(ix-4)
+1353  04FD  DD 66 FD    	ld	h,(ix-3)
+1354  0500  E5          	push	hl
+1355  0501  21 00 00    	ld	hl,_mywindow
+1356  0504  E5          	push	hl
+1357  0505  CD 00 00    	call	_draw_abs
+1358  0508  F1          	pop	af
+1359  0509  F1          	pop	af
+1360  050A  26 07       	ld	h,0x07
+1361  050C  E3          	ex	(sp),hl
+1362  050D  33          	inc	sp
+1363  050E  21 00 00    	ld	hl,_mywindow
+1364  0511  E5          	push	hl
+1365  0512  CD 00 00    	call	_draw_intensity
+1366  0515  F1          	pop	af
+1367  0516  33          	inc	sp
+1368  0517  ED 4B 2C 00 	ld	bc, ((_thePlanet + 12) + 0)
+1369  051B  2A 2E 00    	ld	hl, ((_thePlanet + 12) + 2)
+1370  051E  E5          	push	hl
+1371  051F  C5          	push	bc
+1372  0520  21 40 42    	ld	hl,0x4240
+1373  0523  E5          	push	hl
+1374  0524  21 00 00    	ld	hl,0x0000
+1375  0527  E5          	push	hl
+1376  0528  CD 00 00    	call	___fsmul_callee
+1377  052B  D5          	push	de
+1378  052C  E5          	push	hl
+1379  052D  CD 00 00    	call	___fs2uint_callee
+1380  0530  E5          	push	hl
+1381  0531  21 00 00    	ld	hl,_mywindow
+1382  0534  E5          	push	hl
+1383  0535  CD 00 00    	call	_draw_circle
+1384  0538  F1          	pop	af
+1385  0539  F1          	pop	af
+1386  053A  ED 4B 24 00 	ld	bc, ((_thePlanet + 4) + 0)
+1387  053E  2A 26 00    	ld	hl, ((_thePlanet + 4) + 2)
+1388  0541  E5          	push	hl
+1389  0542  C5          	push	bc
+1390  0543  21 40 42    	ld	hl,0x4240
+1391  0546  E5          	push	hl
+1392  0547  21 00 00    	ld	hl,0x0000
+1393  054A  E5          	push	hl
+1394  054B  CD 00 00    	call	___fsmul_callee
+1395  054E  D5          	push	de
+1396  054F  E5          	push	hl
+1397  0550  CD 00 00    	call	___fs2sint_callee
+1398  0553  3E F0       	ld	a,0xf0
+1399  0555  95          	sub	a, l
+1400  0556  4F          	ld	c, a
+1401  0557  9F          	sbc	a, a
+1402  0558  94          	sub	a, h
+1403  0559  47          	ld	b, a
+1404  055A  ED 5B 20 00 	ld	de, (_thePlanet + 0)
+1405  055E  2A 22 00    	ld	hl, (_thePlanet + 2)
+1406  0561  C5          	push	bc
+1407  0562  E5          	push	hl
+1408  0563  D5          	push	de
+1409  0564  21 40 42    	ld	hl,0x4240
+1410  0567  E5          	push	hl
+1411  0568  21 00 00    	ld	hl,0x0000
+1412  056B  E5          	push	hl
+1413  056C  CD 00 00    	call	___fsmul_callee
+1414  056F  D5          	push	de
+1415  0570  E5          	push	hl
+1416  0571  CD 00 00    	call	___fs2sint_callee
+1417  0574  C1          	pop	bc
+1418  0575  11 80 01    	ld	de,0x0180
+1419  0578  19          	add	hl, de
+1420  0579  C5          	push	bc
+1421  057A  E5          	push	hl
+1422  057B  21 00 00    	ld	hl,_mywindow
+1423  057E  E5          	push	hl
+1424  057F  CD 00 00    	call	_draw_abs
+1425  0582  F1          	pop	af
+1426  0583  F1          	pop	af
+1427  0584  21 0C 00    	ld	hl,0x000c
+1428  0587  E3          	ex	(sp),hl
+1429  0588  21 00 00    	ld	hl,_mywindow
+1430  058B  E5          	push	hl
+1431  058C  CD 00 00    	call	_draw_circle_fill
+1432  058F  F1          	pop	af
+1433  0590  21 0E 00    	ld	hl,0x000e
+1434  0593  E3          	ex	(sp),hl
+1435  0594  21 00 00    	ld	hl,_mywindow
+1436  0597  E5          	push	hl
+1437  0598  CD 00 00    	call	_draw_circle
+1438  059B  F1          	pop	af
+1439  059C  21 10 00    	ld	hl,0x0010
+1440  059F  E3          	ex	(sp),hl
+1441  05A0  21 00 00    	ld	hl,_mywindow
+1442  05A3  E5          	push	hl
+1443  05A4  CD 00 00    	call	_draw_circle
+1444  05A7  F1          	pop	af
+1445  05A8  21 12 00    	ld	hl,0x0012
+1446  05AB  E3          	ex	(sp),hl
+1447  05AC  21 00 00    	ld	hl,_mywindow
+1448  05AF  E5          	push	hl
+1449  05B0  CD 00 00    	call	_draw_circle
+1450  05B3  F1          	pop	af
+1451  05B4  F1          	pop	af
+1452  05B5  11 E6 01    	ld	de,___str_0
+1453  05B8  DD 4E F2    	ld	c,(ix-14)
+1454  05BB  DD 46 F3    	ld	b,(ix-13)
+1455  05BE  DD 6E FE    	ld	l,(ix-2)
+1456  05C1  DD 66 FF    	ld	h,(ix-1)
+1457  05C4  E5          	push	hl
+1458  05C5  D5          	push	de
+1459  05C6  C5          	push	bc
+1460  05C7  CD 00 00    	call	_sprintf
+1461  05CA  F1          	pop	af
+1462  05CB  F1          	pop	af
+1463  05CC  21 C2 01    	ld	hl,0x01c2
+1464  05CF  E3          	ex	(sp),hl
+1465  05D0  21 0A 00    	ld	hl,0x000a
+1466  05D3  E5          	push	hl
+1467  05D4  21 00 00    	ld	hl,_mywindow
+1468  05D7  E5          	push	hl
+1469  05D8  CD 00 00    	call	_draw_abs
+1470  05DB  F1          	pop	af
+1471  05DC  F1          	pop	af
+1472  05DD  F1          	pop	af
+1473  05DE  DD 4E F4    	ld	c,(ix-12)
+1474  05E1  DD 46 F5    	ld	b,(ix-11)
+1475  05E4  3E 02       	ld	a,0x02
+1476  05E6  F5          	push	af
+1477  05E7  33          	inc	sp
+1478  05E8  C5          	push	bc
+1479  05E9  21 00 00    	ld	hl,_mywindow
+1480  05EC  E5          	push	hl
+1481  05ED  CD 00 00    	call	_draw_text
+1482  05F0  F1          	pop	af
+1483  05F1  33          	inc	sp
+1484  05F2  21 00 00    	ld	hl,_mywindow
+1485  05F5  E3          	ex	(sp),hl
+1486  05F6  CD 00 00    	call	_window_write
+1487  05F9  21 00 00    	ld	hl,_mywindow
+1488  05FC  E3          	ex	(sp),hl
+1489  05FD  CD 00 00    	call	_window_close
+1490  0600  F1          	pop	af
+1491  0601  DD 34 FE    	inc	(ix-2)
+1492  0604  20 03       	jr	NZ,l_main_00117
+1493  0606  DD 34 FF    	inc	(ix-1)
+1494  0609              l_main_00117:
+1495  0609  DD 7E FE    	ld	a,(ix-2)
+1496  060C  D6 71       	sub	a,0x71
+1497  060E  DD 7E FF    	ld	a,(ix-1)
+1498  0611  DE 24       	sbc	a,0x24
+1499  0613  DA 2B 00    	jp	C, l_main_00102
+1500  0616  21 00 00    	ld	hl,0x0000
+1501  0619  DD F9       	ld	sp, ix
+1502  061B  DD E1       	pop	ix
+1503  061D  C9          	ret
+1504  061E              	SECTION rodata_compiler
+1505  0000              _sun:
+1506  0000  F0 01       	DEFW __str_1
+1507  0002  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1508  0006  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1509  000A  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1510  000E  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1511  0012  5F 78 8D 43 	DEFB +0x5f,0x78, +0x8d, +0x43
+1512  0016  43 86 45 38 	DEFB +0x43,0x86, +0x45, +0x38
+1513  001A  00 00 80 3F 	DEFB +0x00,0x00, +0x80, +0x3f
+1514  001E  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1515  0022  50 E1 88 3C 	DEFB +0x50,0xe1, +0x88, +0x3c
+1516  0026  36 31 9E B0 	DEFB +0x36,0x31, +0x9e, +0xb0
+1517  002A  04 06 B2 43 	DEFB +0x04,0x06, +0xb2, +0x43
+1518  002E  4C 50 7C 3F 	DEFB +0x4c,0x50, +0x7c, +0x3f
+1519  0032  00 00 DA 42 	DEFB +0x00,0x00, +0xda, +0x42
+1520  0036              _moon:
+1521  0036  F4 01       	DEFW __str_2
+1522  0038  E0 3E FA 42 	DEFB +0xe0,0x3e, +0xfa, +0x42
+1523  003C  18 E6 58 BD 	DEFB +0x18,0xe6, +0x58, +0xbd
+1524  0040  1E A7 A4 40 	DEFB +0x1e,0xa7, +0xa4, +0x40
+1525  0044  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1526  0048  1D 08 9F 43 	DEFB +0x1d,0x08, +0x9f, +0x43
+1527  004C  49 4D 28 3E 	DEFB +0x49,0x4d, +0x28, +0x3e
+1528  0050  DD 64 28 3B 	DEFB +0xdd,0x64, +0x28, +0x3b
+1529  0054  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1530  0058  D3 DE 60 3D 	DEFB +0xd3,0xde, +0x60, +0x3d
+1531  005C  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1532  0060  16 BB E6 42 	DEFB +0x16,0xbb, +0xe6, +0x42
+1533  0064  36 0A 51 41 	DEFB +0x36,0x0a, +0x51, +0x41
+1534  0068  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1535  006C              _mercury:
+1536  006C  F9 01       	DEFW __str_3
+1537  006E  40 53 41 42 	DEFB +0x40,0x53, +0x41, +0x42
+1538  0072  44 24 08 38 	DEFB +0x44,0x24, +0x08, +0x38
+1539  0076  81 26 E0 40 	DEFB +0x81,0x26, +0xe0, +0x40
+1540  007A  95 BF 56 33 	DEFB +0x95,0xbf, +0x56, +0x33
+1541  007E  28 FE E8 41 	DEFB +0x28,0xfe, +0xe8, +0x41
+1542  0082  DE 31 2A 37 	DEFB +0xde,0x31, +0x2a, +0x37
+1543  0086  B6 31 C6 3E 	DEFB +0xb6,0x31, +0xc6, +0x3e
+1544  008A  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1545  008E  FB 91 52 3E 	DEFB +0xfb,0x91, +0x52, +0x3e
+1546  0092  21 A8 19 30 	DEFB +0x21,0xa8, +0x19, +0x30
+1547  0096  FD A7 28 43 	DEFB +0xfd,0xa7, +0x28, +0x43
+1548  009A  67 F4 82 40 	DEFB +0x67,0xf4, +0x82, +0x40
+1549  009E  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1550  00A2              _venus:
+1551  00A2  01 02       	DEFW __str_4
+1552  00A4  1C 5C 99 42 	DEFB +0x1c,0x5c, +0x99, +0x42
+1553  00A8  CD DA CE 37 	DEFB +0xcd,0xda, +0xce, +0x37
+1554  00AC  20 41 59 40 	DEFB +0x20,0x41, +0x59, +0x40
+1555  00B0  24 39 EC 32 	DEFB +0x24,0x39, +0xec, +0x32
+1556  00B4  62 90 5B 42 	DEFB +0x62,0x90, +0x5b, +0x42
+1557  00B8  2E 27 68 37 	DEFB +0x2e,0x27, +0x68, +0x37
+1558  00BC  28 2C 39 3F 	DEFB +0x28,0x2c, +0x39, +0x3f
+1559  00C0  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1560  00C4  0B F0 DD 3B 	DEFB +0x0b,0xf0, +0xdd, +0x3b
+1561  00C8  0D F2 B2 B0 	DEFB +0x0d,0xf2, +0xb2, +0xb0
+1562  00CC  53 05 40 42 	DEFB +0x53,0x05, +0x40, +0x42
+1563  00D0  9A 12 CD 3F 	DEFB +0x9a,0x12, +0xcd, +0x3f
+1564  00D4  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1565  00D8              _mars:
+1566  00D8  07 02       	DEFW __str_5
+1567  00DA  C7 3A 46 42 	DEFB +0xc7,0x3a, +0x46, +0x42
+1568  00DE  4D 11 B1 37 	DEFB +0x4d,0x11, +0xb1, +0x37
+1569  00E2  F8 C2 EC 3F 	DEFB +0xf8,0xc2, +0xec, +0x3f
+1570  00E6  9D E6 98 B2 	DEFB +0x9d,0xe6, +0x98, +0xb2
+1571  00EA  34 40 8F 43 	DEFB +0x34,0x40, +0x8f, +0x43
+1572  00EE  E5 C0 F5 37 	DEFB +0xe5,0xc0, +0xf5, +0x37
+1573  00F2  35 08 C3 3F 	DEFB +0x35,0x08, +0xc3, +0x3f
+1574  00F6  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1575  00FA  1F 4B BF 3D 	DEFB +0x1f,0x4b, +0xbf, +0x3d
+1576  00FE  F1 E5 2C 31 	DEFB +0xf1,0xe5, +0x2c, +0x31
+1577  0102  1A D1 94 41 	DEFB +0x1a,0xd1, +0x94, +0x41
+1578  0106  3A 26 06 3F 	DEFB +0x3a,0x26, +0x06, +0x3f
+1579  010A  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1580  010E              _jupiter:
+1581  010E  0C 02       	DEFW __str_6
+1582  0110  8D E8 C8 42 	DEFB +0x8d,0xe8, +0xc8, +0x42
+1583  0114  F2 3D E8 37 	DEFB +0xf2,0x3d, +0xe8, +0x37
+1584  0118  B4 C8 A6 3F 	DEFB +0xb4,0xc8, +0xa6, +0x3f
+1585  011C  7D 2E 27 B4 	DEFB +0x7d,0x2e, +0x27, +0xb4
+1586  0120  58 F0 88 43 	DEFB +0x58,0xf0, +0x88, +0x43
+1587  0124  2E FF 89 37 	DEFB +0x2e,0xff, +0x89, +0x37
+1588  0128  5F 7B A6 40 	DEFB +0x5f,0x7b, +0xa6, +0x40
+1589  012C  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1590  0130  D7 A5 46 3D 	DEFB +0xd7,0xa5, +0x46, +0x3d
+1591  0134  BD 8D 99 31 	DEFB +0xbd,0x8d, +0x99, +0x31
+1592  0138  F6 28 9F 41 	DEFB +0xf6,0x28, +0x9f, +0x41
+1593  013C  A0 28 AA 3D 	DEFB +0xa0,0x28, +0xaa, +0x3d
+1594  0140  00 00 20 41 	DEFB +0x00,0x00, +0x20, +0x41
+1595  0144              _saturn:
+1596  0144  14 02       	DEFW __str_7
+1597  0146  A9 53 E3 42 	DEFB +0xa9,0x53, +0xe3, +0x42
+1598  014A  90 78 C8 37 	DEFB +0x90,0x78, +0xc8, +0x37
+1599  014E  39 45 1F 40 	DEFB +0x39,0x45, +0x1f, +0x40
+1600  0152  9A 24 E8 B3 	DEFB +0x9a,0x24, +0xe8, +0xb3
+1601  0156  6B B2 A9 43 	DEFB +0x6b,0xb2, +0xa9, +0x43
+1602  015A  37 B2 F9 37 	DEFB +0x37,0xb2, +0xf9, +0x37
+1603  015E  42 E0 18 41 	DEFB +0x42,0xe0, +0x18, +0x41
+1604  0162  00 00 00 00 	DEFB +0x00,0x00, +0x00, +0x00
+1605  0166  34 84 63 3D 	DEFB +0x34,0x84, +0x63, +0x3d
+1606  016A  0B 31 23 B2 	DEFB +0x0b,0x31, +0x23, +0xb2
+1607  016E  C7 7B 9E 43 	DEFB +0xc7,0x7b, +0x9e, +0x43
+1608  0172  D1 FC 08 3D 	DEFB +0xd1,0xfc, +0x08, +0x3d
+1609  0176  00 00 10 41 	DEFB +0x00,0x00, +0x10, +0x41
+1610  017A              _uranus:
+1611  017A  1B 02       	DEFW __str_8
+1612  017C  42 00 94 42 	DEFB +0x42,0x00, +0x94, +0x42
+1613  0180  0E 83 6A 37 	DEFB +0x0e,0x83, +0x6a, +0x37
+1614  0184  FD F6 45 3F 	DEFB +0xfd,0xf6, +0x45, +0x3f
+1615  0188  71 35 A3 32 	DEFB +0x71,0x35, +0xa3, +0x32
+1616  018C  89 52 C1 42 	DEFB +0x89,0x52, +0xc1, +0x42
+1617  0190  EB 32 00 38 	DEFB +0xeb,0x32, +0x00, +0x38
+1618  0194  24 74 99 41 	DEFB +0x24,0x74, +0x99, +0x41
+1619  0198  DC 24 85 B2 	DEFB +0xdc,0x24, +0x85, +0xb2
+1620  019C  85 D0 41 3D 	DEFB +0x85,0xd0, +0x41, +0x3d
+1621  01A0  E5 FA FF 31 	DEFB +0xe5,0xfa, +0xff, +0x31
+1622  01A4  2B 97 0E 43 	DEFB +0x2b,0x97, +0x0e, +0x43
+1623  01A8  98 1D 40 3C 	DEFB +0x98,0x1d, +0x40, +0x3c
+1624  01AC  00 00 40 40 	DEFB +0x00,0x00, +0x40, +0x40
+1625  01B0              _neptune:
+1626  01B0  22 02       	DEFW __str_9
+1627  01B2  D5 C7 03 43 	DEFB +0xd5,0xc7, +0x03, +0x43
+1628  01B6  06 1C FD 37 	DEFB +0x06,0x1c, +0xfd, +0x37
+1629  01BA  5C 8F E2 3F 	DEFB +0x5c,0x8f, +0xe2, +0x3f
+1630  01BE  EF E6 88 B4 	DEFB +0xef,0xe6, +0x88, +0xb4
+1631  01C2  4D 6C 88 43 	DEFB +0x4d,0x6c, +0x88, +0x43
+1632  01C6  89 3B CA B6 	DEFB +0x89,0x3b, +0xca, +0xb6
+1633  01CA  51 77 F0 41 	DEFB +0x51,0x77, +0xf0, +0x41
+1634  01CE  D2 4A 0E 33 	DEFB +0xd2,0x4a, +0x0e, +0x33
+1635  01D2  2E 00 0D 3C 	DEFB +0x2e,0x00, +0x0d, +0x3c
+1636  01D6  33 BF 13 31 	DEFB +0x33,0xbf, +0x13, +0x31
+1637  01DA  A1 1F 82 43 	DEFB +0xa1,0x1f, +0x82, +0x43
+1638  01DE  F0 72 C4 3B 	DEFB +0xf0,0x72, +0xc4, +0x3b
+1639  01E2  00 00 40 40 	DEFB +0x00,0x00, +0x40, +0x40
+1640  01E6              	SECTION rodata_compiler
+1641  01E6              ___str_0:
+1642  01E6  44 61 79 3A 20 25 2E 34 64 
+                        	DEFM "Day: %.4d"
+1643  01EF  00          	DEFB 0x00
+1644  01F0              	SECTION rodata_compiler
+1645  01F0              __str_1:
+1646  01F0  53 75 6E    	DEFM "Sun"
+1647  01F3  00          	DEFB 0x00
+1648  01F4              	SECTION rodata_compiler
+1649  01F4              __str_2:
+1650  01F4  4D 6F 6F 6E 	DEFM "Moon"
+1651  01F8  00          	DEFB 0x00
+1652  01F9              	SECTION rodata_compiler
+1653  01F9              __str_3:
+1654  01F9  4D 65 72 63 75 72 79 
+                        	DEFM "Mercury"
+1655  0200  00          	DEFB 0x00
+1656  0201              	SECTION rodata_compiler
+1657  0201              __str_4:
+1658  0201  56 65 6E 75 73 
+                        	DEFM "Venus"
+1659  0206  00          	DEFB 0x00
+1660  0207              	SECTION rodata_compiler
+1661  0207              __str_5:
+1662  0207  4D 61 72 73 	DEFM "Mars"
+1663  020B  00          	DEFB 0x00
+1664  020C              	SECTION rodata_compiler
+1665  020C              __str_6:
+1666  020C  4A 75 70 69 74 65 72 
+                        	DEFM "Jupiter"
+1667  0213  00          	DEFB 0x00
+1668  0214              	SECTION rodata_compiler
+1669  0214              __str_7:
+1670  0214  53 61 74 75 72 6E 
+                        	DEFM "Saturn"
+1671  021A  00          	DEFB 0x00
+1672  021B              	SECTION rodata_compiler
+1673  021B              __str_8:
+1674  021B  55 72 61 6E 75 73 
+                        	DEFM "Uranus"
+1675  0221  00          	DEFB 0x00
+1676  0222              	SECTION rodata_compiler
+1677  0222              __str_9:
+1678  0222  4E 65 70 74 75 6E 65 
+                        	DEFM "Neptune"
+1679  0229  00          	DEFB 0x00
+1680  022A              	SECTION IGNORE
+1681  0000              

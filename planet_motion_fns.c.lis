@@ -1,0 +1,2093 @@
+1     0000              MODULE planet_motion_fns_c
+2     0000              LINE 0, "planet_motion_fns.c"
+0     0000              
+1     0000              ;--------------------------------------------------------
+2     0000              ; File Created by SDCC : free open source ANSI-C Compiler
+3     0000              ; Version 4.1.6 #12419 (Linux)
+4     0000              ;--------------------------------------------------------
+5     0000              ; Processed by Z88DK
+6     0000              ;--------------------------------------------------------
+7     0000              
+8     0000              	EXTERN __divschar
+9     0000              	EXTERN __divschar_callee
+10    0000              	EXTERN __divsint
+11    0000              	EXTERN __divsint_callee
+12    0000              	EXTERN __divslong
+13    0000              	EXTERN __divslong_callee
+14    0000              	EXTERN __divslonglong
+15    0000              	EXTERN __divslonglong_callee
+16    0000              	EXTERN __divsuchar
+17    0000              	EXTERN __divsuchar_callee
+18    0000              	EXTERN __divuchar
+19    0000              	EXTERN __divuchar_callee
+20    0000              	EXTERN __divuint
+21    0000              	EXTERN __divuint_callee
+22    0000              	EXTERN __divulong
+23    0000              	EXTERN __divulong_callee
+24    0000              	EXTERN __divulonglong
+25    0000              	EXTERN __divulonglong_callee
+26    0000              	EXTERN __divuschar
+27    0000              	EXTERN __divuschar_callee
+28    0000              	EXTERN __modschar
+29    0000              	EXTERN __modschar_callee
+30    0000              	EXTERN __modsint
+31    0000              	EXTERN __modsint_callee
+32    0000              	EXTERN __modslong
+33    0000              	EXTERN __modslong_callee
+34    0000              	EXTERN __modslonglong
+35    0000              	EXTERN __modslonglong_callee
+36    0000              	EXTERN __modsuchar
+37    0000              	EXTERN __modsuchar_callee
+38    0000              	EXTERN __moduchar
+39    0000              	EXTERN __moduchar_callee
+40    0000              	EXTERN __moduint
+41    0000              	EXTERN __moduint_callee
+42    0000              	EXTERN __modulong
+43    0000              	EXTERN __modulong_callee
+44    0000              	EXTERN __modulonglong
+45    0000              	EXTERN __modulonglong_callee
+46    0000              	EXTERN __moduschar
+47    0000              	EXTERN __moduschar_callee
+48    0000              	EXTERN __mulint
+49    0000              	EXTERN __mulint_callee
+50    0000              	EXTERN __mullong
+51    0000              	EXTERN __mullong_callee
+52    0000              	EXTERN __mullonglong
+53    0000              	EXTERN __mullonglong_callee
+54    0000              	EXTERN __mulschar
+55    0000              	EXTERN __mulschar_callee
+56    0000              	EXTERN __mulsuchar
+57    0000              	EXTERN __mulsuchar_callee
+58    0000              	EXTERN __muluchar
+59    0000              	EXTERN __muluchar_callee
+60    0000              	EXTERN __muluschar
+61    0000              	EXTERN __muluschar_callee
+62    0000              	EXTERN __rlslonglong
+63    0000              	EXTERN __rlslonglong_callee
+64    0000              	EXTERN __rlulonglong
+65    0000              	EXTERN __rlulonglong_callee
+66    0000              	EXTERN __rrslonglong
+67    0000              	EXTERN __rrslonglong_callee
+68    0000              	EXTERN __rrulonglong
+69    0000              	EXTERN __rrulonglong_callee
+70    0000              	EXTERN ___sdcc_call_hl
+71    0000              	EXTERN ___sdcc_call_iy
+72    0000              	EXTERN ___sdcc_enter_ix
+73    0000              	EXTERN banked_call
+74    0000              	EXTERN _banked_ret
+75    0000              	EXTERN ___fs2schar
+76    0000              	EXTERN ___fs2schar_callee
+77    0000              	EXTERN ___fs2sint
+78    0000              	EXTERN ___fs2sint_callee
+79    0000              	EXTERN ___fs2slong
+80    0000              	EXTERN ___fs2slong_callee
+81    0000              	EXTERN ___fs2slonglong
+82    0000              	EXTERN ___fs2slonglong_callee
+83    0000              	EXTERN ___fs2uchar
+84    0000              	EXTERN ___fs2uchar_callee
+85    0000              	EXTERN ___fs2uint
+86    0000              	EXTERN ___fs2uint_callee
+87    0000              	EXTERN ___fs2ulong
+88    0000              	EXTERN ___fs2ulong_callee
+89    0000              	EXTERN ___fs2ulonglong
+90    0000              	EXTERN ___fs2ulonglong_callee
+91    0000              	EXTERN ___fsadd
+92    0000              	EXTERN ___fsadd_callee
+93    0000              	EXTERN ___fsdiv
+94    0000              	EXTERN ___fsdiv_callee
+95    0000              	EXTERN ___fseq
+96    0000              	EXTERN ___fseq_callee
+97    0000              	EXTERN ___fsgt
+98    0000              	EXTERN ___fsgt_callee
+99    0000              	EXTERN ___fslt
+100   0000              	EXTERN ___fslt_callee
+101   0000              	EXTERN ___fsmul
+102   0000              	EXTERN ___fsmul_callee
+103   0000              	EXTERN ___fsneq
+104   0000              	EXTERN ___fsneq_callee
+105   0000              	EXTERN ___fssub
+106   0000              	EXTERN ___fssub_callee
+107   0000              	EXTERN ___schar2fs
+108   0000              	EXTERN ___schar2fs_callee
+109   0000              	EXTERN ___sint2fs
+110   0000              	EXTERN ___sint2fs_callee
+111   0000              	EXTERN ___slong2fs
+112   0000              	EXTERN ___slong2fs_callee
+113   0000              	EXTERN ___slonglong2fs
+114   0000              	EXTERN ___slonglong2fs_callee
+115   0000              	EXTERN ___uchar2fs
+116   0000              	EXTERN ___uchar2fs_callee
+117   0000              	EXTERN ___uint2fs
+118   0000              	EXTERN ___uint2fs_callee
+119   0000              	EXTERN ___ulong2fs
+120   0000              	EXTERN ___ulong2fs_callee
+121   0000              	EXTERN ___ulonglong2fs
+122   0000              	EXTERN ___ulonglong2fs_callee
+123   0000              	EXTERN ____sdcc_2_copy_src_mhl_dst_deix
+124   0000              	EXTERN ____sdcc_2_copy_src_mhl_dst_bcix
+125   0000              	EXTERN ____sdcc_4_copy_src_mhl_dst_deix
+126   0000              	EXTERN ____sdcc_4_copy_src_mhl_dst_bcix
+127   0000              	EXTERN ____sdcc_4_copy_src_mhl_dst_mbc
+128   0000              	EXTERN ____sdcc_4_ldi_nosave_bc
+129   0000              	EXTERN ____sdcc_4_ldi_save_bc
+130   0000              	EXTERN ____sdcc_4_push_hlix
+131   0000              	EXTERN ____sdcc_4_push_mhl
+132   0000              	EXTERN ____sdcc_lib_setmem_hl
+133   0000              	EXTERN ____sdcc_ll_add_de_bc_hl
+134   0000              	EXTERN ____sdcc_ll_add_de_bc_hlix
+135   0000              	EXTERN ____sdcc_ll_add_de_hlix_bc
+136   0000              	EXTERN ____sdcc_ll_add_de_hlix_bcix
+137   0000              	EXTERN ____sdcc_ll_add_deix_bc_hl
+138   0000              	EXTERN ____sdcc_ll_add_deix_hlix
+139   0000              	EXTERN ____sdcc_ll_add_hlix_bc_deix
+140   0000              	EXTERN ____sdcc_ll_add_hlix_deix_bc
+141   0000              	EXTERN ____sdcc_ll_add_hlix_deix_bcix
+142   0000              	EXTERN ____sdcc_ll_asr_hlix_a
+143   0000              	EXTERN ____sdcc_ll_asr_mbc_a
+144   0000              	EXTERN ____sdcc_ll_copy_src_de_dst_hlix
+145   0000              	EXTERN ____sdcc_ll_copy_src_de_dst_hlsp
+146   0000              	EXTERN ____sdcc_ll_copy_src_deix_dst_hl
+147   0000              	EXTERN ____sdcc_ll_copy_src_deix_dst_hlix
+148   0000              	EXTERN ____sdcc_ll_copy_src_deixm_dst_hlsp
+149   0000              	EXTERN ____sdcc_ll_copy_src_desp_dst_hlsp
+150   0000              	EXTERN ____sdcc_ll_copy_src_hl_dst_de
+151   0000              	EXTERN ____sdcc_ll_copy_src_hlsp_dst_de
+152   0000              	EXTERN ____sdcc_ll_copy_src_hlsp_dst_deixm
+153   0000              	EXTERN ____sdcc_ll_lsl_hlix_a
+154   0000              	EXTERN ____sdcc_ll_lsl_mbc_a
+155   0000              	EXTERN ____sdcc_ll_lsr_hlix_a
+156   0000              	EXTERN ____sdcc_ll_lsr_mbc_a
+157   0000              	EXTERN ____sdcc_ll_push_hlix
+158   0000              	EXTERN ____sdcc_ll_push_mhl
+159   0000              	EXTERN ____sdcc_ll_sub_de_bc_hl
+160   0000              	EXTERN ____sdcc_ll_sub_de_bc_hlix
+161   0000              	EXTERN ____sdcc_ll_sub_de_hlix_bc
+162   0000              	EXTERN ____sdcc_ll_sub_de_hlix_bcix
+163   0000              	EXTERN ____sdcc_ll_sub_deix_bc_hl
+164   0000              	EXTERN ____sdcc_ll_sub_deix_hlix
+165   0000              	EXTERN ____sdcc_ll_sub_hlix_bc_deix
+166   0000              	EXTERN ____sdcc_ll_sub_hlix_deix_bc
+167   0000              	EXTERN ____sdcc_ll_sub_hlix_deix_bcix
+168   0000              	EXTERN ____sdcc_load_debc_deix
+169   0000              	EXTERN ____sdcc_load_dehl_deix
+170   0000              	EXTERN ____sdcc_load_debc_mhl
+171   0000              	EXTERN ____sdcc_load_hlde_mhl
+172   0000              	EXTERN ____sdcc_store_dehl_bcix
+173   0000              	EXTERN ____sdcc_store_debc_hlix
+174   0000              	EXTERN ____sdcc_store_debc_mhl
+175   0000              	EXTERN ____sdcc_cpu_pop_ei
+176   0000              	EXTERN ____sdcc_cpu_pop_ei_jp
+177   0000              	EXTERN ____sdcc_cpu_push_di
+178   0000              	EXTERN ____sdcc_outi
+179   0000              	EXTERN ____sdcc_outi_128
+180   0000              	EXTERN ____sdcc_outi_256
+181   0000              	EXTERN ____sdcc_ldi
+182   0000              	EXTERN ____sdcc_ldi_128
+183   0000              	EXTERN ____sdcc_ldi_256
+184   0000              	EXTERN ____sdcc_4_copy_srcd_hlix_dst_deix
+185   0000              	EXTERN ____sdcc_4_and_src_mbc_mhl_dst_deix
+186   0000              	EXTERN ____sdcc_4_or_src_mbc_mhl_dst_deix
+187   0000              	EXTERN ____sdcc_4_xor_src_mbc_mhl_dst_deix
+188   0000              	EXTERN ____sdcc_4_or_src_dehl_dst_bcix
+189   0000              	EXTERN ____sdcc_4_xor_src_dehl_dst_bcix
+190   0000              	EXTERN ____sdcc_4_and_src_dehl_dst_bcix
+191   0000              	EXTERN ____sdcc_4_xor_src_mbc_mhl_dst_debc
+192   0000              	EXTERN ____sdcc_4_or_src_mbc_mhl_dst_debc
+193   0000              	EXTERN ____sdcc_4_and_src_mbc_mhl_dst_debc
+194   0000              	EXTERN ____sdcc_4_cpl_src_mhl_dst_debc
+195   0000              	EXTERN ____sdcc_4_xor_src_debc_mhl_dst_debc
+196   0000              	EXTERN ____sdcc_4_or_src_debc_mhl_dst_debc
+197   0000              	EXTERN ____sdcc_4_and_src_debc_mhl_dst_debc
+198   0000              	EXTERN ____sdcc_4_and_src_debc_hlix_dst_debc
+199   0000              	EXTERN ____sdcc_4_or_src_debc_hlix_dst_debc
+200   0000              	EXTERN ____sdcc_4_xor_src_debc_hlix_dst_debc
+201   0000              
+202   0000              ;--------------------------------------------------------
+203   0000              ; Public variables in this module
+204   0000              ;--------------------------------------------------------
+205   0000              	GLOBAL _sunEclipticCartesianCoordinates
+206   0000              	GLOBAL _planetEclipticCartesianCoordinates
+207   0000              	GLOBAL _eccentricAnomaly
+208   0000              	GLOBAL _addCartesianCoordinates
+209   0000              ;--------------------------------------------------------
+210   0000              ; Externals used
+211   0000              ;--------------------------------------------------------
+212   0000              	GLOBAL _rev
+213   0000              	GLOBAL _poly_callee
+214   0000              	GLOBAL _poly
+215   0000              	GLOBAL _exp10_fastcall
+216   0000              	GLOBAL _exp10
+217   0000              	GLOBAL _mul10u_fastcall
+218   0000              	GLOBAL _mul10u
+219   0000              	GLOBAL _mul2_fastcall
+220   0000              	GLOBAL _mul2
+221   0000              	GLOBAL _div2_fastcall
+222   0000              	GLOBAL _div2
+223   0000              	GLOBAL _invsqrt_fastcall
+224   0000              	GLOBAL _invsqrt
+225   0000              	GLOBAL _inv_fastcall
+226   0000              	GLOBAL _inv
+227   0000              	GLOBAL _sqr_fastcall
+228   0000              	GLOBAL _sqr
+229   0000              	GLOBAL _neg_fastcall
+230   0000              	GLOBAL _neg
+231   0000              	GLOBAL _isunordered_callee
+232   0000              	GLOBAL _isunordered
+233   0000              	GLOBAL _islessgreater_callee
+234   0000              	GLOBAL _islessgreater
+235   0000              	GLOBAL _islessequal_callee
+236   0000              	GLOBAL _islessequal
+237   0000              	GLOBAL _isless_callee
+238   0000              	GLOBAL _isless
+239   0000              	GLOBAL _isgreaterequal_callee
+240   0000              	GLOBAL _isgreaterequal
+241   0000              	GLOBAL _isgreater_callee
+242   0000              	GLOBAL _isgreater
+243   0000              	GLOBAL _fma_callee
+244   0000              	GLOBAL _fma
+245   0000              	GLOBAL _fmin_callee
+246   0000              	GLOBAL _fmin
+247   0000              	GLOBAL _fmax_callee
+248   0000              	GLOBAL _fmax
+249   0000              	GLOBAL _fdim_callee
+250   0000              	GLOBAL _fdim
+251   0000              	GLOBAL _nexttoward_callee
+252   0000              	GLOBAL _nexttoward
+253   0000              	GLOBAL _nextafter_callee
+254   0000              	GLOBAL _nextafter
+255   0000              	GLOBAL _nan_fastcall
+256   0000              	GLOBAL _nan
+257   0000              	GLOBAL _copysign_callee
+258   0000              	GLOBAL _copysign
+259   0000              	GLOBAL _remquo_callee
+260   0000              	GLOBAL _remquo
+261   0000              	GLOBAL _remainder_callee
+262   0000              	GLOBAL _remainder
+263   0000              	GLOBAL _fmod_callee
+264   0000              	GLOBAL _fmod
+265   0000              	GLOBAL _modf_callee
+266   0000              	GLOBAL _modf
+267   0000              	GLOBAL _trunc_fastcall
+268   0000              	GLOBAL _trunc
+269   0000              	GLOBAL _lround_fastcall
+270   0000              	GLOBAL _lround
+271   0000              	GLOBAL _round_fastcall
+272   0000              	GLOBAL _round
+273   0000              	GLOBAL _lrint_fastcall
+274   0000              	GLOBAL _lrint
+275   0000              	GLOBAL _rint_fastcall
+276   0000              	GLOBAL _rint
+277   0000              	GLOBAL _nearbyint_fastcall
+278   0000              	GLOBAL _nearbyint
+279   0000              	GLOBAL _floor_fastcall
+280   0000              	GLOBAL _floor
+281   0000              	GLOBAL _ceil_fastcall
+282   0000              	GLOBAL _ceil
+283   0000              	GLOBAL _tgamma_fastcall
+284   0000              	GLOBAL _tgamma
+285   0000              	GLOBAL _lgamma_fastcall
+286   0000              	GLOBAL _lgamma
+287   0000              	GLOBAL _erfc_fastcall
+288   0000              	GLOBAL _erfc
+289   0000              	GLOBAL _erf_fastcall
+290   0000              	GLOBAL _erf
+291   0000              	GLOBAL _cbrt_fastcall
+292   0000              	GLOBAL _cbrt
+293   0000              	GLOBAL _sqrt_fastcall
+294   0000              	GLOBAL _sqrt
+295   0000              	GLOBAL _pow_callee
+296   0000              	GLOBAL _pow
+297   0000              	GLOBAL _hypot_callee
+298   0000              	GLOBAL _hypot
+299   0000              	GLOBAL _fabs_fastcall
+300   0000              	GLOBAL _fabs
+301   0000              	GLOBAL _logb_fastcall
+302   0000              	GLOBAL _logb
+303   0000              	GLOBAL _log2_fastcall
+304   0000              	GLOBAL _log2
+305   0000              	GLOBAL _log1p_fastcall
+306   0000              	GLOBAL _log1p
+307   0000              	GLOBAL _log10_fastcall
+308   0000              	GLOBAL _log10
+309   0000              	GLOBAL _log_fastcall
+310   0000              	GLOBAL _log
+311   0000              	GLOBAL _scalbln_callee
+312   0000              	GLOBAL _scalbln
+313   0000              	GLOBAL _scalbn_callee
+314   0000              	GLOBAL _scalbn
+315   0000              	GLOBAL _ldexp_callee
+316   0000              	GLOBAL _ldexp
+317   0000              	GLOBAL _ilogb_fastcall
+318   0000              	GLOBAL _ilogb
+319   0000              	GLOBAL _frexp_callee
+320   0000              	GLOBAL _frexp
+321   0000              	GLOBAL _expm1_fastcall
+322   0000              	GLOBAL _expm1
+323   0000              	GLOBAL _exp2_fastcall
+324   0000              	GLOBAL _exp2
+325   0000              	GLOBAL _exp_fastcall
+326   0000              	GLOBAL _exp
+327   0000              	GLOBAL _tanh_fastcall
+328   0000              	GLOBAL _tanh
+329   0000              	GLOBAL _sinh_fastcall
+330   0000              	GLOBAL _sinh
+331   0000              	GLOBAL _cosh_fastcall
+332   0000              	GLOBAL _cosh
+333   0000              	GLOBAL _atanh_fastcall
+334   0000              	GLOBAL _atanh
+335   0000              	GLOBAL _asinh_fastcall
+336   0000              	GLOBAL _asinh
+337   0000              	GLOBAL _acosh_fastcall
+338   0000              	GLOBAL _acosh
+339   0000              	GLOBAL _tan_fastcall
+340   0000              	GLOBAL _tan
+341   0000              	GLOBAL _sin_fastcall
+342   0000              	GLOBAL _sin
+343   0000              	GLOBAL _cos_fastcall
+344   0000              	GLOBAL _cos
+345   0000              	GLOBAL _atan2_callee
+346   0000              	GLOBAL _atan2
+347   0000              	GLOBAL _atan_fastcall
+348   0000              	GLOBAL _atan
+349   0000              	GLOBAL _asin_fastcall
+350   0000              	GLOBAL _asin
+351   0000              	GLOBAL _acos_fastcall
+352   0000              	GLOBAL _acos
+353   0000              ;--------------------------------------------------------
+354   0000              ; special function registers
+355   0000              ;--------------------------------------------------------
+356   0000              ;--------------------------------------------------------
+357   0000              ; ram data
+358   0000              ;--------------------------------------------------------
+359   0000              	SECTION bss_compiler
+360   0000              ;--------------------------------------------------------
+361   0000              ; ram data
+362   0000              ;--------------------------------------------------------
+363   0000              
+364   0000              IF 0
+365   0000              
+366   0000              ; .area _INITIALIZED removed by z88dk
+367   0000              
+368   0000              
+369   0000              ENDIF
+370   0000              
+371   0000              ;--------------------------------------------------------
+372   0000              ; absolute external ram data
+373   0000              ;--------------------------------------------------------
+374   0000              	SECTION IGNORE
+375   0000              ;--------------------------------------------------------
+376   0000              ; global & static initialisations
+377   0000              ;--------------------------------------------------------
+378   0000              	SECTION code_crt_init
+379   0000              ;--------------------------------------------------------
+380   0000              ; Home
+381   0000              ;--------------------------------------------------------
+382   0000              	SECTION IGNORE
+383   0000              ;--------------------------------------------------------
+384   0000              ; code
+385   0000              ;--------------------------------------------------------
+386   0000              	SECTION code_compiler
+387   0000              ;	---------------------------------
+388   0000              ; Function sunEclipticCartesianCoordinates
+389   0000              ; ---------------------------------
+390   0000              _sunEclipticCartesianCoordinates:
+391   0000  DD E5       	push	ix
+392   0002  DD 21 00 00 	ld	ix,0
+393   0006  DD 39       	add	ix,sp
+394   0008  4D          	ld	c, l
+395   0009  44          	ld	b, h
+396   000A  21 EA FF    	ld	hl, -22
+397   000D  39          	add	hl, sp
+398   000E  F9          	ld	sp, hl
+399   000F  DD 71 FE    	ld	(ix-2),c
+400   0012  DD 70 FF    	ld	(ix-1),b
+401   0015  DD 4E FE    	ld	c,(ix-2)
+402   0018  DD 46 FF    	ld	b,(ix-1)
+403   001B  21 10 00    	ld	hl,16
+404   001E  09          	add	hl, bc
+405   001F  4E          	ld	c, (hl)
+406   0020  23          	inc	hl
+407   0021  46          	ld	b, (hl)
+408   0022  23          	inc	hl
+409   0023  5E          	ld	e, (hl)
+410   0024  23          	inc	hl
+411   0025  56          	ld	d, (hl)
+412   0026  21 C0 3F    	ld	hl,0x3fc0
+413   0029  E5          	push	hl
+414   002A  21 00 00    	ld	hl,0x0000
+415   002D  E5          	push	hl
+416   002E  D5          	push	de
+417   002F  C5          	push	bc
+418   0030  CD 00 00    	call	___fssub_callee
+419   0033  D5          	push	de
+420   0034  E5          	push	hl
+421   0035  21 E5 37    	ld	hl,0x37e5
+422   0038  E5          	push	hl
+423   0039  21 E2 AA    	ld	hl,0xaae2
+424   003C  E5          	push	hl
+425   003D  CD 00 00    	call	___fsmul_callee
+426   0040  DD 75 FA    	ld	(ix-6),l
+427   0043  DD 74 FB    	ld	(ix-5),h
+428   0046  DD 73 FC    	ld	(ix-4),e
+429   0049  DD 72 FD    	ld	(ix-3),d
+430   004C  DD 6E FA    	ld	l,(ix-6)
+431   004F  DD 66 FB    	ld	h,(ix-5)
+432   0052  DD 5E FC    	ld	e,(ix-4)
+433   0055  DD 56 FD    	ld	d,(ix-3)
+434   0058  CD 00 00    	call	_sqr_fastcall
+435   005B  DD 75 EE    	ld	(ix-18),l
+436   005E  DD 74 EF    	ld	(ix-17),h
+437   0061  DD 73 F0    	ld	(ix-16),e
+438   0064  DD 72 F1    	ld	(ix-15),d
+439   0067  DD 6E FC    	ld	l,(ix-4)
+440   006A  DD 66 FD    	ld	h,(ix-3)
+441   006D  E5          	push	hl
+442   006E  DD 6E FA    	ld	l,(ix-6)
+443   0071  DD 66 FB    	ld	h,(ix-5)
+444   0074  E5          	push	hl
+445   0075  21 0C 47    	ld	hl,0x470c
+446   0078  E5          	push	hl
+447   0079  21 C5 A0    	ld	hl,0xa0c5
+448   007C  E5          	push	hl
+449   007D  CD 00 00    	call	___fsmul_callee
+450   0080  01 8C 43    	ld	bc,0x438c
+451   0083  C5          	push	bc
+452   0084  01 B5 3B    	ld	bc,0x3bb5
+453   0087  C5          	push	bc
+454   0088  D5          	push	de
+455   0089  E5          	push	hl
+456   008A  CD 00 00    	call	___fsadd_callee
+457   008D  DD 75 F6    	ld	(ix-10),l
+458   0090  DD 74 F7    	ld	(ix-9),h
+459   0093  DD 73 F8    	ld	(ix-8),e
+460   0096  DD 72 F9    	ld	(ix-7),d
+461   0099  DD 6E F0    	ld	l,(ix-16)
+462   009C  DD 66 F1    	ld	h,(ix-15)
+463   009F  E5          	push	hl
+464   00A0  DD 6E EE    	ld	l,(ix-18)
+465   00A3  DD 66 EF    	ld	h,(ix-17)
+466   00A6  E5          	push	hl
+467   00A7  21 9E 39    	ld	hl,0x399e
+468   00AA  E5          	push	hl
+469   00AB  21 D1 F6    	ld	hl,0xf6d1
+470   00AE  E5          	push	hl
+471   00AF  CD 00 00    	call	___fsmul_callee
+472   00B2  D5          	push	de
+473   00B3  E5          	push	hl
+474   00B4  DD 6E F8    	ld	l,(ix-8)
+475   00B7  DD 66 F9    	ld	h,(ix-7)
+476   00BA  E5          	push	hl
+477   00BB  DD 6E F6    	ld	l,(ix-10)
+478   00BE  DD 66 F7    	ld	h,(ix-9)
+479   00C1  E5          	push	hl
+480   00C2  CD 00 00    	call	___fsadd_callee
+481   00C5  CD 00 00    	call	_rev
+482   00C8  DD 75 F6    	ld	(ix-10),l
+483   00CB  DD 74 F7    	ld	(ix-9),h
+484   00CE  DD 73 F8    	ld	(ix-8),e
+485   00D1  DD 72 F9    	ld	(ix-7),d
+486   00D4  DD 6E FC    	ld	l,(ix-4)
+487   00D7  DD 66 FD    	ld	h,(ix-3)
+488   00DA  E5          	push	hl
+489   00DB  DD 6E FA    	ld	l,(ix-6)
+490   00DE  DD 66 FB    	ld	h,(ix-5)
+491   00E1  E5          	push	hl
+492   00E2  21 0C 47    	ld	hl,0x470c
+493   00E5  E5          	push	hl
+494   00E6  21 0D 9F    	ld	hl,0x9f0d
+495   00E9  E5          	push	hl
+496   00EA  CD 00 00    	call	___fsmul_callee
+497   00ED  01 B2 43    	ld	bc,0x43b2
+498   00F0  C5          	push	bc
+499   00F1  01 BA C3    	ld	bc,0xc3ba
+500   00F4  C5          	push	bc
+501   00F5  D5          	push	de
+502   00F6  E5          	push	hl
+503   00F7  CD 00 00    	call	___fsadd_callee
+504   00FA  DD 75 F2    	ld	(ix-14),l
+505   00FD  DD 74 F3    	ld	(ix-13),h
+506   0100  DD 73 F4    	ld	(ix-12),e
+507   0103  DD 72 F5    	ld	(ix-11),d
+508   0106  DD 6E F0    	ld	l,(ix-16)
+509   0109  DD 66 F1    	ld	h,(ix-15)
+510   010C  E5          	push	hl
+511   010D  DD 6E EE    	ld	l,(ix-18)
+512   0110  DD 66 EF    	ld	h,(ix-17)
+513   0113  E5          	push	hl
+514   0114  21 23 39    	ld	hl,0x3923
+515   0117  E5          	push	hl
+516   0118  21 16 79    	ld	hl,0x7916
+517   011B  E5          	push	hl
+518   011C  CD 00 00    	call	___fsmul_callee
+519   011F  D5          	push	de
+520   0120  E5          	push	hl
+521   0121  DD 6E F4    	ld	l,(ix-12)
+522   0124  DD 66 F5    	ld	h,(ix-11)
+523   0127  E5          	push	hl
+524   0128  DD 6E F2    	ld	l,(ix-14)
+525   012B  DD 66 F3    	ld	h,(ix-13)
+526   012E  E5          	push	hl
+527   012F  CD 00 00    	call	___fssub_callee
+528   0132  DD 75 F2    	ld	(ix-14),l
+529   0135  DD 74 F3    	ld	(ix-13),h
+530   0138  DD 73 F4    	ld	(ix-12),e
+531   013B  DD 72 F5    	ld	(ix-11),d
+532   013E  DD 6E FC    	ld	l,(ix-4)
+533   0141  DD 66 FD    	ld	h,(ix-3)
+534   0144  E5          	push	hl
+535   0145  DD 6E FA    	ld	l,(ix-6)
+536   0148  DD 66 FB    	ld	h,(ix-5)
+537   014B  E5          	push	hl
+538   014C  21 00 35    	ld	hl,0x3500
+539   014F  E5          	push	hl
+540   0150  21 59 D9    	ld	hl,0xd959
+541   0153  E5          	push	hl
+542   0154  CD 00 00    	call	___fsmul_callee
+543   0157  DD 4E F0    	ld	c,(ix-16)
+544   015A  DD 46 F1    	ld	b,(ix-15)
+545   015D  C5          	push	bc
+546   015E  DD 4E EE    	ld	c,(ix-18)
+547   0161  DD 46 EF    	ld	b,(ix-17)
+548   0164  C5          	push	bc
+549   0165  D5          	push	de
+550   0166  E5          	push	hl
+551   0167  CD 00 00    	call	___fsmul_callee
+552   016A  D5          	push	de
+553   016B  E5          	push	hl
+554   016C  DD 6E F4    	ld	l,(ix-12)
+555   016F  DD 66 F5    	ld	h,(ix-11)
+556   0172  E5          	push	hl
+557   0173  DD 6E F2    	ld	l,(ix-14)
+558   0176  DD 66 F3    	ld	h,(ix-13)
+559   0179  E5          	push	hl
+560   017A  CD 00 00    	call	___fssub_callee
+561   017D  CD 00 00    	call	_rev
+562   0180  E3          	ex	(sp), hl
+563   0181  DD 73 EC    	ld	(ix-20),e
+564   0184  DD 72 ED    	ld	(ix-19),d
+565   0187  DD 6E FC    	ld	l,(ix-4)
+566   018A  DD 66 FD    	ld	h,(ix-3)
+567   018D  E5          	push	hl
+568   018E  DD 6E FA    	ld	l,(ix-6)
+569   0191  DD 66 FB    	ld	h,(ix-5)
+570   0194  E5          	push	hl
+571   0195  21 9D 3B    	ld	hl,0x3b9d
+572   0198  E5          	push	hl
+573   0199  21 ED D7    	ld	hl,0xd7ed
+574   019C  E5          	push	hl
+575   019D  CD 00 00    	call	___fsmul_callee
+576   01A0  D5          	push	de
+577   01A1  E5          	push	hl
+578   01A2  21 F5 3F    	ld	hl,0x3ff5
+579   01A5  E5          	push	hl
+580   01A6  21 9D 11    	ld	hl,0x119d
+581   01A9  E5          	push	hl
+582   01AA  CD 00 00    	call	___fssub_callee
+583   01AD  DD 75 F2    	ld	(ix-14),l
+584   01B0  DD 74 F3    	ld	(ix-13),h
+585   01B3  DD 73 F4    	ld	(ix-12),e
+586   01B6  DD 72 F5    	ld	(ix-11),d
+587   01B9  DD 6E F0    	ld	l,(ix-16)
+588   01BC  DD 66 F1    	ld	h,(ix-15)
+589   01BF  E5          	push	hl
+590   01C0  DD 6E EE    	ld	l,(ix-18)
+591   01C3  DD 66 EF    	ld	h,(ix-17)
+592   01C6  E5          	push	hl
+593   01C7  21 6A 37    	ld	hl,0x376a
+594   01CA  E5          	push	hl
+595   01CB  21 8B E1    	ld	hl,0xe18b
+596   01CE  E5          	push	hl
+597   01CF  CD 00 00    	call	___fsmul_callee
+598   01D2  D5          	push	de
+599   01D3  E5          	push	hl
+600   01D4  DD 6E F4    	ld	l,(ix-12)
+601   01D7  DD 66 F5    	ld	h,(ix-11)
+602   01DA  E5          	push	hl
+603   01DB  DD 6E F2    	ld	l,(ix-14)
+604   01DE  DD 66 F3    	ld	h,(ix-13)
+605   01E1  E5          	push	hl
+606   01E2  CD 00 00    	call	___fssub_callee
+607   01E5  DD 75 F2    	ld	(ix-14),l
+608   01E8  DD 74 F3    	ld	(ix-13),h
+609   01EB  DD 73 F4    	ld	(ix-12),e
+610   01EE  DD 72 F5    	ld	(ix-11),d
+611   01F1  D1          	pop	de
+612   01F2  E1          	pop	hl
+613   01F3  E5          	push	hl
+614   01F4  D5          	push	de
+615   01F5  EB          	ex	de,hl
+616   01F6  E1          	pop	hl
+617   01F7  E5          	push	hl
+618   01F8  D5          	push	de
+619   01F9  E5          	push	hl
+620   01FA  21 8E 3C    	ld	hl,0x3c8e
+621   01FD  E5          	push	hl
+622   01FE  21 35 FA    	ld	hl,0xfa35
+623   0201  E5          	push	hl
+624   0202  CD 00 00    	call	___fsmul_callee
+625   0205  CD 00 00    	call	_sin_fastcall
+626   0208  D5          	push	de
+627   0209  E5          	push	hl
+628   020A  DD 6E F4    	ld	l,(ix-12)
+629   020D  DD 66 F5    	ld	h,(ix-11)
+630   0210  E5          	push	hl
+631   0211  DD 6E F2    	ld	l,(ix-14)
+632   0214  DD 66 F3    	ld	h,(ix-13)
+633   0217  E5          	push	hl
+634   0218  CD 00 00    	call	___fsmul_callee
+635   021B  DD 75 EE    	ld	(ix-18),l
+636   021E  DD 74 EF    	ld	(ix-17),h
+637   0221  DD 73 F0    	ld	(ix-16),e
+638   0224  DD 72 F1    	ld	(ix-15),d
+639   0227  DD 6E FC    	ld	l,(ix-4)
+640   022A  DD 66 FD    	ld	h,(ix-3)
+641   022D  E5          	push	hl
+642   022E  DD 6E FA    	ld	l,(ix-6)
+643   0231  DD 66 FB    	ld	h,(ix-5)
+644   0234  E5          	push	hl
+645   0235  21 D3 38    	ld	hl,0x38d3
+646   0238  E5          	push	hl
+647   0239  21 F6 CF    	ld	hl,0xcff6
+648   023C  E5          	push	hl
+649   023D  CD 00 00    	call	___fsmul_callee
+650   0240  D5          	push	de
+651   0241  E5          	push	hl
+652   0242  21 A3 3C    	ld	hl,0x3ca3
+653   0245  E5          	push	hl
+654   0246  21 3D 44    	ld	hl,0x443d
+655   0249  E5          	push	hl
+656   024A  CD 00 00    	call	___fssub_callee
+657   024D  DD 75 F2    	ld	(ix-14),l
+658   0250  DD 74 F3    	ld	(ix-13),h
+659   0253  DD 73 F4    	ld	(ix-12),e
+660   0256  DD 72 F5    	ld	(ix-11),d
+661   0259  D1          	pop	de
+662   025A  E1          	pop	hl
+663   025B  E5          	push	hl
+664   025C  D5          	push	de
+665   025D  EB          	ex	de,hl
+666   025E  E1          	pop	hl
+667   025F  E5          	push	hl
+668   0260  D5          	push	de
+669   0261  E5          	push	hl
+670   0262  21 0E 3D    	ld	hl,0x3d0e
+671   0265  E5          	push	hl
+672   0266  21 35 FA    	ld	hl,0xfa35
+673   0269  E5          	push	hl
+674   026A  CD 00 00    	call	___fsmul_callee
+675   026D  CD 00 00    	call	_sin_fastcall
+676   0270  D5          	push	de
+677   0271  E5          	push	hl
+678   0272  DD 6E F4    	ld	l,(ix-12)
+679   0275  DD 66 F5    	ld	h,(ix-11)
+680   0278  E5          	push	hl
+681   0279  DD 6E F2    	ld	l,(ix-14)
+682   027C  DD 66 F3    	ld	h,(ix-13)
+683   027F  E5          	push	hl
+684   0280  CD 00 00    	call	___fsmul_callee
+685   0283  D5          	push	de
+686   0284  E5          	push	hl
+687   0285  DD 6E F0    	ld	l,(ix-16)
+688   0288  DD 66 F1    	ld	h,(ix-15)
+689   028B  E5          	push	hl
+690   028C  DD 6E EE    	ld	l,(ix-18)
+691   028F  DD 66 EF    	ld	h,(ix-17)
+692   0292  E5          	push	hl
+693   0293  CD 00 00    	call	___fsadd_callee
+694   0296  DD 75 F2    	ld	(ix-14),l
+695   0299  DD 74 F3    	ld	(ix-13),h
+696   029C  DD 73 F4    	ld	(ix-12),e
+697   029F  DD 72 F5    	ld	(ix-11),d
+698   02A2  D1          	pop	de
+699   02A3  E1          	pop	hl
+700   02A4  E5          	push	hl
+701   02A5  D5          	push	de
+702   02A6  EB          	ex	de,hl
+703   02A7  E1          	pop	hl
+704   02A8  E5          	push	hl
+705   02A9  D5          	push	de
+706   02AA  E5          	push	hl
+707   02AB  21 56 3D    	ld	hl,0x3d56
+708   02AE  E5          	push	hl
+709   02AF  21 50 77    	ld	hl,0x7750
+710   02B2  E5          	push	hl
+711   02B3  CD 00 00    	call	___fsmul_callee
+712   02B6  CD 00 00    	call	_sin_fastcall
+713   02B9  D5          	push	de
+714   02BA  E5          	push	hl
+715   02BB  21 98 39    	ld	hl,0x3998
+716   02BE  E5          	push	hl
+717   02BF  21 24 0B    	ld	hl,0x0b24
+718   02C2  E5          	push	hl
+719   02C3  CD 00 00    	call	___fsmul_callee
+720   02C6  D5          	push	de
+721   02C7  E5          	push	hl
+722   02C8  DD 6E F4    	ld	l,(ix-12)
+723   02CB  DD 66 F5    	ld	h,(ix-11)
+724   02CE  E5          	push	hl
+725   02CF  DD 6E F2    	ld	l,(ix-14)
+726   02D2  DD 66 F3    	ld	h,(ix-13)
+727   02D5  E5          	push	hl
+728   02D6  CD 00 00    	call	___fsadd_callee
+729   02D9  CD 00 00    	call	_rev
+730   02DC  DD 75 EE    	ld	(ix-18),l
+731   02DF  DD 74 EF    	ld	(ix-17),h
+732   02E2  DD 73 F0    	ld	(ix-16),e
+733   02E5  DD 72 F1    	ld	(ix-15),d
+734   02E8  DD 6E F0    	ld	l,(ix-16)
+735   02EB  DD 66 F1    	ld	h,(ix-15)
+736   02EE  E5          	push	hl
+737   02EF  DD 6E EE    	ld	l,(ix-18)
+738   02F2  DD 66 EF    	ld	h,(ix-17)
+739   02F5  E5          	push	hl
+740   02F6  DD 6E F8    	ld	l,(ix-8)
+741   02F9  DD 66 F9    	ld	h,(ix-7)
+742   02FC  E5          	push	hl
+743   02FD  DD 6E F6    	ld	l,(ix-10)
+744   0300  DD 66 F7    	ld	h,(ix-9)
+745   0303  E5          	push	hl
+746   0304  CD 00 00    	call	___fsadd_callee
+747   0307  CD 00 00    	call	_rev
+748   030A  DD 75 F2    	ld	(ix-14),l
+749   030D  DD 74 F3    	ld	(ix-13),h
+750   0310  DD 73 F4    	ld	(ix-12),e
+751   0313  DD 72 F5    	ld	(ix-11),d
+752   0316  DD 6E FC    	ld	l,(ix-4)
+753   0319  DD 66 FD    	ld	h,(ix-3)
+754   031C  E5          	push	hl
+755   031D  DD 6E FA    	ld	l,(ix-6)
+756   0320  DD 66 FB    	ld	h,(ix-5)
+757   0323  E5          	push	hl
+758   0324  21 04 34    	ld	hl,0x3404
+759   0327  E5          	push	hl
+760   0328  21 E9 B6    	ld	hl,0xb6e9
+761   032B  E5          	push	hl
+762   032C  CD 00 00    	call	___fsmul_callee
+763   032F  01 30 38    	ld	bc,0x3830
+764   0332  C5          	push	bc
+765   0333  01 E3 50    	ld	bc,0x50e3
+766   0336  C5          	push	bc
+767   0337  D5          	push	de
+768   0338  E5          	push	hl
+769   0339  CD 00 00    	call	___fsadd_callee
+770   033C  D5          	push	de
+771   033D  E5          	push	hl
+772   033E  DD 6E FC    	ld	l,(ix-4)
+773   0341  DD 66 FD    	ld	h,(ix-3)
+774   0344  E5          	push	hl
+775   0345  DD 6E FA    	ld	l,(ix-6)
+776   0348  DD 66 FB    	ld	h,(ix-5)
+777   034B  E5          	push	hl
+778   034C  CD 00 00    	call	___fsmul_callee
+779   034F  D5          	push	de
+780   0350  E5          	push	hl
+781   0351  21 88 3C    	ld	hl,0x3c88
+782   0354  E5          	push	hl
+783   0355  21 82 E0    	ld	hl,0xe082
+784   0358  E5          	push	hl
+785   0359  CD 00 00    	call	___fssub_callee
+786   035C  DD 75 F6    	ld	(ix-10),l
+787   035F  DD 74 F7    	ld	(ix-9),h
+788   0362  DD 73 F8    	ld	(ix-8),e
+789   0365  DD 72 F9    	ld	(ix-7),d
+790   0368  DD 6E F6    	ld	l,(ix-10)
+791   036B  DD 66 F7    	ld	h,(ix-9)
+792   036E  DD 5E F8    	ld	e,(ix-8)
+793   0371  DD 56 F9    	ld	d,(ix-7)
+794   0374  CD 00 00    	call	_sqr_fastcall
+795   0377  D5          	push	de
+796   0378  E5          	push	hl
+797   0379  21 80 3F    	ld	hl,0x3f80
+798   037C  E5          	push	hl
+799   037D  21 00 00    	ld	hl,0x0000
+800   0380  E5          	push	hl
+801   0381  CD 00 00    	call	___fssub_callee
+802   0384  D5          	push	de
+803   0385  E5          	push	hl
+804   0386  21 80 3F    	ld	hl,0x3f80
+805   0389  E5          	push	hl
+806   038A  21 09 00    	ld	hl,0x0009
+807   038D  E5          	push	hl
+808   038E  CD 00 00    	call	___fsmul_callee
+809   0391  DD 75 FA    	ld	(ix-6),l
+810   0394  DD 74 FB    	ld	(ix-5),h
+811   0397  DD 73 FC    	ld	(ix-4),e
+812   039A  DD 72 FD    	ld	(ix-3),d
+813   039D  DD 6E F0    	ld	l,(ix-16)
+814   03A0  DD 66 F1    	ld	h,(ix-15)
+815   03A3  E5          	push	hl
+816   03A4  DD 6E EE    	ld	l,(ix-18)
+817   03A7  DD 66 EF    	ld	h,(ix-17)
+818   03AA  E5          	push	hl
+819   03AB  DD 6E EC    	ld	l,(ix-20)
+820   03AE  DD 66 ED    	ld	h,(ix-19)
+821   03B1  E5          	push	hl
+822   03B2  DD 6E EA    	ld	l,(ix-22)
+823   03B5  DD 66 EB    	ld	h,(ix-21)
+824   03B8  E5          	push	hl
+825   03B9  CD 00 00    	call	___fsadd_callee
+826   03BC  D5          	push	de
+827   03BD  E5          	push	hl
+828   03BE  21 8E 3C    	ld	hl,0x3c8e
+829   03C1  E5          	push	hl
+830   03C2  21 35 FA    	ld	hl,0xfa35
+831   03C5  E5          	push	hl
+832   03C6  CD 00 00    	call	___fsmul_callee
+833   03C9  CD 00 00    	call	_cos_fastcall
+834   03CC  D5          	push	de
+835   03CD  E5          	push	hl
+836   03CE  DD 6E F8    	ld	l,(ix-8)
+837   03D1  DD 66 F9    	ld	h,(ix-7)
+838   03D4  E5          	push	hl
+839   03D5  DD 6E F6    	ld	l,(ix-10)
+840   03D8  DD 66 F7    	ld	h,(ix-9)
+841   03DB  E5          	push	hl
+842   03DC  CD 00 00    	call	___fsmul_callee
+843   03DF  01 80 3F    	ld	bc,0x3f80
+844   03E2  C5          	push	bc
+845   03E3  01 00 00    	ld	bc,0x0000
+846   03E6  C5          	push	bc
+847   03E7  D5          	push	de
+848   03E8  E5          	push	hl
+849   03E9  CD 00 00    	call	___fsadd_callee
+850   03EC  D5          	push	de
+851   03ED  E5          	push	hl
+852   03EE  DD 6E FC    	ld	l,(ix-4)
+853   03F1  DD 66 FD    	ld	h,(ix-3)
+854   03F4  E5          	push	hl
+855   03F5  DD 6E FA    	ld	l,(ix-6)
+856   03F8  DD 66 FB    	ld	h,(ix-5)
+857   03FB  E5          	push	hl
+858   03FC  CD 00 00    	call	___fsdiv_callee
+859   03FF  DD 75 FA    	ld	(ix-6),l
+860   0402  DD 74 FB    	ld	(ix-5),h
+861   0405  DD 73 FC    	ld	(ix-4),e
+862   0408  DD 72 FD    	ld	(ix-3),d
+863   040B  DD 6E F4    	ld	l,(ix-12)
+864   040E  DD 66 F5    	ld	h,(ix-11)
+865   0411  E5          	push	hl
+866   0412  DD 6E F2    	ld	l,(ix-14)
+867   0415  DD 66 F3    	ld	h,(ix-13)
+868   0418  E5          	push	hl
+869   0419  21 8E 3C    	ld	hl,0x3c8e
+870   041C  E5          	push	hl
+871   041D  21 35 FA    	ld	hl,0xfa35
+872   0420  E5          	push	hl
+873   0421  CD 00 00    	call	___fsmul_callee
+874   0424  DD 75 F6    	ld	(ix-10),l
+875   0427  DD 74 F7    	ld	(ix-9),h
+876   042A  DD 73 F8    	ld	(ix-8),e
+877   042D  DD 72 F9    	ld	(ix-7),d
+878   0430  DD 6E F6    	ld	l,(ix-10)
+879   0433  DD 66 F7    	ld	h,(ix-9)
+880   0436  DD 5E F8    	ld	e,(ix-8)
+881   0439  DD 56 F9    	ld	d,(ix-7)
+882   043C  CD 00 00    	call	_cos_fastcall
+883   043F  D5          	push	de
+884   0440  E5          	push	hl
+885   0441  DD 6E FC    	ld	l,(ix-4)
+886   0444  DD 66 FD    	ld	h,(ix-3)
+887   0447  E5          	push	hl
+888   0448  DD 6E FA    	ld	l,(ix-6)
+889   044B  DD 66 FB    	ld	h,(ix-5)
+890   044E  E5          	push	hl
+891   044F  CD 00 00    	call	___fsmul_callee
+892   0452  4D          	ld	c, l
+893   0453  44          	ld	b, h
+894   0454  DD 6E FE    	ld	l,(ix-2)
+895   0457  DD 66 FF    	ld	h,(ix-1)
+896   045A  71          	ld	(hl), c
+897   045B  23          	inc	hl
+898   045C  70          	ld	(hl), b
+899   045D  23          	inc	hl
+900   045E  73          	ld	(hl), e
+901   045F  23          	inc	hl
+902   0460  72          	ld	(hl), d
+903   0461  DD 6E FE    	ld	l,(ix-2)
+904   0464  DD 66 FF    	ld	h,(ix-1)
+905   0467  11 04 00    	ld	de,0x0004
+906   046A  19          	add	hl, de
+907   046B  E5          	push	hl
+908   046C  DD 6E F6    	ld	l,(ix-10)
+909   046F  DD 66 F7    	ld	h,(ix-9)
+910   0472  DD 5E F8    	ld	e,(ix-8)
+911   0475  DD 56 F9    	ld	d,(ix-7)
+912   0478  CD 00 00    	call	_sin_fastcall
+913   047B  D5          	push	de
+914   047C  E5          	push	hl
+915   047D  DD 5E FC    	ld	e,(ix-4)
+916   0480  DD 56 FD    	ld	d,(ix-3)
+917   0483  D5          	push	de
+918   0484  DD 5E FA    	ld	e,(ix-6)
+919   0487  DD 56 FB    	ld	d,(ix-5)
+920   048A  D5          	push	de
+921   048B  CD 00 00    	call	___fsmul_callee
+922   048E  4D          	ld	c, l
+923   048F  44          	ld	b, h
+924   0490  E1          	pop	hl
+925   0491  71          	ld	(hl), c
+926   0492  23          	inc	hl
+927   0493  70          	ld	(hl), b
+928   0494  23          	inc	hl
+929   0495  73          	ld	(hl), e
+930   0496  23          	inc	hl
+931   0497  72          	ld	(hl), d
+932   0498  DD 6E FE    	ld	l,(ix-2)
+933   049B  DD 66 FF    	ld	h,(ix-1)
+934   049E  11 08 00    	ld	de,0x0008
+935   04A1  19          	add	hl, de
+936   04A2  AF          	xor	a, a
+937   04A3  77          	ld	(hl), a
+938   04A4  23          	inc	hl
+939   04A5  77          	ld	(hl), a
+940   04A6  23          	inc	hl
+941   04A7  77          	ld	(hl), a
+942   04A8  23          	inc	hl
+943   04A9  77          	ld	(hl), a
+944   04AA  DD 7E FE    	ld	a,(ix-2)
+945   04AD  C6 0C       	add	a,0x0c
+946   04AF  5F          	ld	e, a
+947   04B0  DD 7E FF    	ld	a,(ix-1)
+948   04B3  CE 00       	adc	a,0x00
+949   04B5  57          	ld	d, a
+950   04B6  21 10 00    	ld	hl,16
+951   04B9  39          	add	hl, sp
+952   04BA  01 04 00    	ld	bc,0x0004
+953   04BD  ED B0       	ldir
+954   04BF  DD F9       	ld	sp, ix
+955   04C1  DD E1       	pop	ix
+956   04C3  C9          	ret
+957   04C4              	SECTION code_compiler
+958   04C4              ;	---------------------------------
+959   04C4              ; Function planetEclipticCartesianCoordinates
+960   04C4              ; ---------------------------------
+961   04C4              _planetEclipticCartesianCoordinates:
+962   04C4  DD E5       	push	ix
+963   04C6  DD 21 00 00 	ld	ix,0
+964   04CA  DD 39       	add	ix,sp
+965   04CC  21 DC FF    	ld	hl, -36
+966   04CF  39          	add	hl, sp
+967   04D0  F9          	ld	sp, hl
+968   04D1  DD 7E 04    	ld	a,(ix+4)
+969   04D4  DD 77 E0    	ld	(ix-32),a
+970   04D7  DD 7E 05    	ld	a,(ix+5)
+971   04DA  DD 77 E1    	ld	(ix-31),a
+972   04DD  DD 5E E0    	ld	e,(ix-32)
+973   04E0  DD 56 E1    	ld	d,(ix-31)
+974   04E3  21 10 00    	ld	hl,16
+975   04E6  39          	add	hl, sp
+976   04E7  EB          	ex	de, hl
+977   04E8  01 10 00    	ld	bc,0x0010
+978   04EB  09          	add	hl, bc
+979   04EC  01 04 00    	ld	bc,0x0004
+980   04EF  ED B0       	ldir
+981   04F1  DD 4E 06    	ld	c,(ix+6)
+982   04F4  DD 46 07    	ld	b,(ix+7)
+983   04F7  59          	ld	e, c
+984   04F8  50          	ld	d, b
+985   04F9  C5          	push	bc
+986   04FA  21 22 00    	ld	hl,34
+987   04FD  39          	add	hl, sp
+988   04FE  EB          	ex	de, hl
+989   04FF  23          	inc	hl
+990   0500  23          	inc	hl
+991   0501  01 04 00    	ld	bc,0x0004
+992   0504  ED B0       	ldir
+993   0506  C1          	pop	bc
+994   0507  59          	ld	e, c
+995   0508  50          	ld	d, b
+996   0509  21 06 00    	ld	hl,6
+997   050C  19          	add	hl, de
+998   050D  5E          	ld	e, (hl)
+999   050E  23          	inc	hl
+1000  050F  56          	ld	d, (hl)
+1001  0510  23          	inc	hl
+1002  0511  23          	inc	hl
+1003  0512  7E          	ld	a, (hl)
+1004  0513  2B          	dec	hl
+1005  0514  6E          	ld	l, (hl)
+1006  0515  67          	ld	h, a
+1007  0516  C5          	push	bc
+1008  0517  E5          	push	hl
+1009  0518  D5          	push	de
+1010  0519  DD 6E EE    	ld	l,(ix-18)
+1011  051C  DD 66 EF    	ld	h,(ix-17)
+1012  051F  E5          	push	hl
+1013  0520  DD 6E EC    	ld	l,(ix-20)
+1014  0523  DD 66 ED    	ld	h,(ix-19)
+1015  0526  E5          	push	hl
+1016  0527  CD 00 00    	call	___fsmul_callee
+1017  052A  D5          	push	de
+1018  052B  E5          	push	hl
+1019  052C  DD 6E FE    	ld	l,(ix-2)
+1020  052F  DD 66 FF    	ld	h,(ix-1)
+1021  0532  E5          	push	hl
+1022  0533  DD 6E FC    	ld	l,(ix-4)
+1023  0536  DD 66 FD    	ld	h,(ix-3)
+1024  0539  E5          	push	hl
+1025  053A  CD 00 00    	call	___fsadd_callee
+1026  053D  CD 00 00    	call	_rev
+1027  0540  C1          	pop	bc
+1028  0541  DD 75 F0    	ld	(ix-16),l
+1029  0544  DD 74 F1    	ld	(ix-15),h
+1030  0547  DD 73 F2    	ld	(ix-14),e
+1031  054A  DD 72 F3    	ld	(ix-13),d
+1032  054D  59          	ld	e, c
+1033  054E  50          	ld	d, b
+1034  054F  C5          	push	bc
+1035  0550  21 22 00    	ld	hl,34
+1036  0553  39          	add	hl, sp
+1037  0554  EB          	ex	de, hl
+1038  0555  01 0A 00    	ld	bc,0x000a
+1039  0558  09          	add	hl, bc
+1040  0559  01 04 00    	ld	bc,0x0004
+1041  055C  ED B0       	ldir
+1042  055E  C1          	pop	bc
+1043  055F  59          	ld	e, c
+1044  0560  50          	ld	d, b
+1045  0561  21 0E 00    	ld	hl,14
+1046  0564  19          	add	hl, de
+1047  0565  5E          	ld	e, (hl)
+1048  0566  23          	inc	hl
+1049  0567  56          	ld	d, (hl)
+1050  0568  23          	inc	hl
+1051  0569  23          	inc	hl
+1052  056A  7E          	ld	a, (hl)
+1053  056B  2B          	dec	hl
+1054  056C  6E          	ld	l, (hl)
+1055  056D  67          	ld	h, a
+1056  056E  C5          	push	bc
+1057  056F  E5          	push	hl
+1058  0570  D5          	push	de
+1059  0571  DD 6E EE    	ld	l,(ix-18)
+1060  0574  DD 66 EF    	ld	h,(ix-17)
+1061  0577  E5          	push	hl
+1062  0578  DD 6E EC    	ld	l,(ix-20)
+1063  057B  DD 66 ED    	ld	h,(ix-19)
+1064  057E  E5          	push	hl
+1065  057F  CD 00 00    	call	___fsmul_callee
+1066  0582  D5          	push	de
+1067  0583  E5          	push	hl
+1068  0584  DD 6E FE    	ld	l,(ix-2)
+1069  0587  DD 66 FF    	ld	h,(ix-1)
+1070  058A  E5          	push	hl
+1071  058B  DD 6E FC    	ld	l,(ix-4)
+1072  058E  DD 66 FD    	ld	h,(ix-3)
+1073  0591  E5          	push	hl
+1074  0592  CD 00 00    	call	___fsadd_callee
+1075  0595  CD 00 00    	call	_rev
+1076  0598  C1          	pop	bc
+1077  0599  DD 75 F4    	ld	(ix-12),l
+1078  059C  DD 74 F5    	ld	(ix-11),h
+1079  059F  DD 73 F6    	ld	(ix-10),e
+1080  05A2  DD 72 F7    	ld	(ix-9),d
+1081  05A5  59          	ld	e, c
+1082  05A6  50          	ld	d, b
+1083  05A7  C5          	push	bc
+1084  05A8  21 22 00    	ld	hl,34
+1085  05AB  39          	add	hl, sp
+1086  05AC  EB          	ex	de, hl
+1087  05AD  01 12 00    	ld	bc,0x0012
+1088  05B0  09          	add	hl, bc
+1089  05B1  01 04 00    	ld	bc,0x0004
+1090  05B4  ED B0       	ldir
+1091  05B6  C1          	pop	bc
+1092  05B7  59          	ld	e, c
+1093  05B8  50          	ld	d, b
+1094  05B9  21 16 00    	ld	hl,22
+1095  05BC  19          	add	hl, de
+1096  05BD  5E          	ld	e, (hl)
+1097  05BE  23          	inc	hl
+1098  05BF  56          	ld	d, (hl)
+1099  05C0  23          	inc	hl
+1100  05C1  23          	inc	hl
+1101  05C2  7E          	ld	a, (hl)
+1102  05C3  2B          	dec	hl
+1103  05C4  6E          	ld	l, (hl)
+1104  05C5  67          	ld	h, a
+1105  05C6  C5          	push	bc
+1106  05C7  E5          	push	hl
+1107  05C8  D5          	push	de
+1108  05C9  DD 6E EE    	ld	l,(ix-18)
+1109  05CC  DD 66 EF    	ld	h,(ix-17)
+1110  05CF  E5          	push	hl
+1111  05D0  DD 6E EC    	ld	l,(ix-20)
+1112  05D3  DD 66 ED    	ld	h,(ix-19)
+1113  05D6  E5          	push	hl
+1114  05D7  CD 00 00    	call	___fsmul_callee
+1115  05DA  D5          	push	de
+1116  05DB  E5          	push	hl
+1117  05DC  DD 6E FE    	ld	l,(ix-2)
+1118  05DF  DD 66 FF    	ld	h,(ix-1)
+1119  05E2  E5          	push	hl
+1120  05E3  DD 6E FC    	ld	l,(ix-4)
+1121  05E6  DD 66 FD    	ld	h,(ix-3)
+1122  05E9  E5          	push	hl
+1123  05EA  CD 00 00    	call	___fsadd_callee
+1124  05ED  CD 00 00    	call	_rev
+1125  05F0  C1          	pop	bc
+1126  05F1  DD 75 F8    	ld	(ix-8),l
+1127  05F4  DD 74 F9    	ld	(ix-7),h
+1128  05F7  DD 73 FA    	ld	(ix-6),e
+1129  05FA  DD 72 FB    	ld	(ix-5),d
+1130  05FD  59          	ld	e, c
+1131  05FE  50          	ld	d, b
+1132  05FF  C5          	push	bc
+1133  0600  21 22 00    	ld	hl,34
+1134  0603  39          	add	hl, sp
+1135  0604  EB          	ex	de, hl
+1136  0605  01 1A 00    	ld	bc,0x001a
+1137  0608  09          	add	hl, bc
+1138  0609  01 04 00    	ld	bc,0x0004
+1139  060C  ED B0       	ldir
+1140  060E  C1          	pop	bc
+1141  060F  59          	ld	e, c
+1142  0610  50          	ld	d, b
+1143  0611  21 1E 00    	ld	hl,30
+1144  0614  19          	add	hl, de
+1145  0615  5E          	ld	e, (hl)
+1146  0616  23          	inc	hl
+1147  0617  56          	ld	d, (hl)
+1148  0618  23          	inc	hl
+1149  0619  23          	inc	hl
+1150  061A  7E          	ld	a, (hl)
+1151  061B  2B          	dec	hl
+1152  061C  6E          	ld	l, (hl)
+1153  061D  67          	ld	h, a
+1154  061E  C5          	push	bc
+1155  061F  E5          	push	hl
+1156  0620  D5          	push	de
+1157  0621  DD 6E EE    	ld	l,(ix-18)
+1158  0624  DD 66 EF    	ld	h,(ix-17)
+1159  0627  E5          	push	hl
+1160  0628  DD 6E EC    	ld	l,(ix-20)
+1161  062B  DD 66 ED    	ld	h,(ix-19)
+1162  062E  E5          	push	hl
+1163  062F  CD 00 00    	call	___fsmul_callee
+1164  0632  D5          	push	de
+1165  0633  E5          	push	hl
+1166  0634  DD 6E FE    	ld	l,(ix-2)
+1167  0637  DD 66 FF    	ld	h,(ix-1)
+1168  063A  E5          	push	hl
+1169  063B  DD 6E FC    	ld	l,(ix-4)
+1170  063E  DD 66 FD    	ld	h,(ix-3)
+1171  0641  E5          	push	hl
+1172  0642  CD 00 00    	call	___fsadd_callee
+1173  0645  CD 00 00    	call	_rev
+1174  0648  C1          	pop	bc
+1175  0649  DD 75 E4    	ld	(ix-28),l
+1176  064C  DD 74 E5    	ld	(ix-27),h
+1177  064F  DD 73 E6    	ld	(ix-26),e
+1178  0652  DD 72 E7    	ld	(ix-25),d
+1179  0655  59          	ld	e, c
+1180  0656  50          	ld	d, b
+1181  0657  C5          	push	bc
+1182  0658  21 22 00    	ld	hl,34
+1183  065B  39          	add	hl, sp
+1184  065C  EB          	ex	de, hl
+1185  065D  01 22 00    	ld	bc,0x0022
+1186  0660  09          	add	hl, bc
+1187  0661  01 04 00    	ld	bc,0x0004
+1188  0664  ED B0       	ldir
+1189  0666  C1          	pop	bc
+1190  0667  59          	ld	e, c
+1191  0668  50          	ld	d, b
+1192  0669  21 26 00    	ld	hl,38
+1193  066C  19          	add	hl, de
+1194  066D  5E          	ld	e, (hl)
+1195  066E  23          	inc	hl
+1196  066F  56          	ld	d, (hl)
+1197  0670  23          	inc	hl
+1198  0671  23          	inc	hl
+1199  0672  7E          	ld	a, (hl)
+1200  0673  2B          	dec	hl
+1201  0674  6E          	ld	l, (hl)
+1202  0675  67          	ld	h, a
+1203  0676  C5          	push	bc
+1204  0677  E5          	push	hl
+1205  0678  D5          	push	de
+1206  0679  DD 6E EE    	ld	l,(ix-18)
+1207  067C  DD 66 EF    	ld	h,(ix-17)
+1208  067F  E5          	push	hl
+1209  0680  DD 6E EC    	ld	l,(ix-20)
+1210  0683  DD 66 ED    	ld	h,(ix-19)
+1211  0686  E5          	push	hl
+1212  0687  CD 00 00    	call	___fsmul_callee
+1213  068A  D5          	push	de
+1214  068B  E5          	push	hl
+1215  068C  DD 6E FE    	ld	l,(ix-2)
+1216  068F  DD 66 FF    	ld	h,(ix-1)
+1217  0692  E5          	push	hl
+1218  0693  DD 6E FC    	ld	l,(ix-4)
+1219  0696  DD 66 FD    	ld	h,(ix-3)
+1220  0699  E5          	push	hl
+1221  069A  CD 00 00    	call	___fsadd_callee
+1222  069D  CD 00 00    	call	_rev
+1223  06A0  C1          	pop	bc
+1224  06A1  DD 75 E8    	ld	(ix-24),l
+1225  06A4  DD 74 E9    	ld	(ix-23),h
+1226  06A7  DD 73 EA    	ld	(ix-22),e
+1227  06AA  DD 72 EB    	ld	(ix-21),d
+1228  06AD  59          	ld	e, c
+1229  06AE  50          	ld	d, b
+1230  06AF  C5          	push	bc
+1231  06B0  21 22 00    	ld	hl,34
+1232  06B3  39          	add	hl, sp
+1233  06B4  EB          	ex	de, hl
+1234  06B5  01 2A 00    	ld	bc,0x002a
+1235  06B8  09          	add	hl, bc
+1236  06B9  01 04 00    	ld	bc,0x0004
+1237  06BC  ED B0       	ldir
+1238  06BE  C1          	pop	bc
+1239  06BF  21 2E 00    	ld	hl,46
+1240  06C2  09          	add	hl, bc
+1241  06C3  4E          	ld	c, (hl)
+1242  06C4  23          	inc	hl
+1243  06C5  46          	ld	b, (hl)
+1244  06C6  23          	inc	hl
+1245  06C7  5E          	ld	e, (hl)
+1246  06C8  23          	inc	hl
+1247  06C9  56          	ld	d, (hl)
+1248  06CA  D5          	push	de
+1249  06CB  C5          	push	bc
+1250  06CC  DD 6E EE    	ld	l,(ix-18)
+1251  06CF  DD 66 EF    	ld	h,(ix-17)
+1252  06D2  E5          	push	hl
+1253  06D3  DD 6E EC    	ld	l,(ix-20)
+1254  06D6  DD 66 ED    	ld	h,(ix-19)
+1255  06D9  E5          	push	hl
+1256  06DA  CD 00 00    	call	___fsmul_callee
+1257  06DD  D5          	push	de
+1258  06DE  E5          	push	hl
+1259  06DF  DD 6E FE    	ld	l,(ix-2)
+1260  06E2  DD 66 FF    	ld	h,(ix-1)
+1261  06E5  E5          	push	hl
+1262  06E6  DD 6E FC    	ld	l,(ix-4)
+1263  06E9  DD 66 FD    	ld	h,(ix-3)
+1264  06EC  E5          	push	hl
+1265  06ED  CD 00 00    	call	___fsadd_callee
+1266  06F0  CD 00 00    	call	_rev
+1267  06F3  D5          	push	de
+1268  06F4  E5          	push	hl
+1269  06F5  DD 6E EA    	ld	l,(ix-22)
+1270  06F8  DD 66 EB    	ld	h,(ix-21)
+1271  06FB  E5          	push	hl
+1272  06FC  DD 6E E8    	ld	l,(ix-24)
+1273  06FF  DD 66 E9    	ld	h,(ix-23)
+1274  0702  E5          	push	hl
+1275  0703  CD D7 0A    	call	_eccentricAnomaly
+1276  0706  CD 00 00    	call	_rev
+1277  0709  D5          	push	de
+1278  070A  E5          	push	hl
+1279  070B  21 8E 3C    	ld	hl,0x3c8e
+1280  070E  E5          	push	hl
+1281  070F  21 35 FA    	ld	hl,0xfa35
+1282  0712  E5          	push	hl
+1283  0713  CD 00 00    	call	___fsmul_callee
+1284  0716  DD 75 FC    	ld	(ix-4),l
+1285  0719  DD 74 FD    	ld	(ix-3),h
+1286  071C  DD 73 FE    	ld	(ix-2),e
+1287  071F  DD 72 FF    	ld	(ix-1),d
+1288  0722  DD 6E FC    	ld	l,(ix-4)
+1289  0725  DD 66 FD    	ld	h,(ix-3)
+1290  0728  DD 5E FE    	ld	e,(ix-2)
+1291  072B  DD 56 FF    	ld	d,(ix-1)
+1292  072E  CD 00 00    	call	_cos_fastcall
+1293  0731  DD 4E EA    	ld	c,(ix-22)
+1294  0734  DD 46 EB    	ld	b,(ix-21)
+1295  0737  C5          	push	bc
+1296  0738  DD 4E E8    	ld	c,(ix-24)
+1297  073B  DD 46 E9    	ld	b,(ix-23)
+1298  073E  C5          	push	bc
+1299  073F  D5          	push	de
+1300  0740  E5          	push	hl
+1301  0741  CD 00 00    	call	___fssub_callee
+1302  0744  D5          	push	de
+1303  0745  E5          	push	hl
+1304  0746  DD 6E E6    	ld	l,(ix-26)
+1305  0749  DD 66 E7    	ld	h,(ix-25)
+1306  074C  E5          	push	hl
+1307  074D  DD 6E E4    	ld	l,(ix-28)
+1308  0750  DD 66 E5    	ld	h,(ix-27)
+1309  0753  E5          	push	hl
+1310  0754  CD 00 00    	call	___fsmul_callee
+1311  0757  DD 75 EC    	ld	(ix-20),l
+1312  075A  DD 74 ED    	ld	(ix-19),h
+1313  075D  DD 73 EE    	ld	(ix-18),e
+1314  0760  DD 72 EF    	ld	(ix-17),d
+1315  0763  DD 6E E8    	ld	l,(ix-24)
+1316  0766  DD 66 E9    	ld	h,(ix-23)
+1317  0769  DD 5E EA    	ld	e,(ix-22)
+1318  076C  DD 56 EB    	ld	d,(ix-21)
+1319  076F  CD 00 00    	call	_sqr_fastcall
+1320  0772  D5          	push	de
+1321  0773  E5          	push	hl
+1322  0774  21 80 3F    	ld	hl,0x3f80
+1323  0777  E5          	push	hl
+1324  0778  21 00 00    	ld	hl,0x0000
+1325  077B  E5          	push	hl
+1326  077C  CD 00 00    	call	___fssub_callee
+1327  077F  CD 00 00    	call	_sqrt_fastcall
+1328  0782  D5          	push	de
+1329  0783  E5          	push	hl
+1330  0784  DD 6E E6    	ld	l,(ix-26)
+1331  0787  DD 66 E7    	ld	h,(ix-25)
+1332  078A  E5          	push	hl
+1333  078B  DD 6E E4    	ld	l,(ix-28)
+1334  078E  DD 66 E5    	ld	h,(ix-27)
+1335  0791  E5          	push	hl
+1336  0792  CD 00 00    	call	___fsmul_callee
+1337  0795  DD 75 E8    	ld	(ix-24),l
+1338  0798  DD 74 E9    	ld	(ix-23),h
+1339  079B  DD 73 EA    	ld	(ix-22),e
+1340  079E  DD 72 EB    	ld	(ix-21),d
+1341  07A1  DD 6E FC    	ld	l,(ix-4)
+1342  07A4  DD 66 FD    	ld	h,(ix-3)
+1343  07A7  DD 5E FE    	ld	e,(ix-2)
+1344  07AA  DD 56 FF    	ld	d,(ix-1)
+1345  07AD  CD 00 00    	call	_sin_fastcall
+1346  07B0  D5          	push	de
+1347  07B1  E5          	push	hl
+1348  07B2  DD 6E EA    	ld	l,(ix-22)
+1349  07B5  DD 66 EB    	ld	h,(ix-21)
+1350  07B8  E5          	push	hl
+1351  07B9  DD 6E E8    	ld	l,(ix-24)
+1352  07BC  DD 66 E9    	ld	h,(ix-23)
+1353  07BF  E5          	push	hl
+1354  07C0  CD 00 00    	call	___fsmul_callee
+1355  07C3  DD 75 E8    	ld	(ix-24),l
+1356  07C6  DD 74 E9    	ld	(ix-23),h
+1357  07C9  DD 73 EA    	ld	(ix-22),e
+1358  07CC  DD 72 EB    	ld	(ix-21),d
+1359  07CF  DD 6E EE    	ld	l,(ix-18)
+1360  07D2  DD 66 EF    	ld	h,(ix-17)
+1361  07D5  E5          	push	hl
+1362  07D6  DD 6E EC    	ld	l,(ix-20)
+1363  07D9  DD 66 ED    	ld	h,(ix-19)
+1364  07DC  E5          	push	hl
+1365  07DD  DD 6E EA    	ld	l,(ix-22)
+1366  07E0  DD 66 EB    	ld	h,(ix-21)
+1367  07E3  E5          	push	hl
+1368  07E4  DD 6E E8    	ld	l,(ix-24)
+1369  07E7  DD 66 E9    	ld	h,(ix-23)
+1370  07EA  E5          	push	hl
+1371  07EB  CD 00 00    	call	_atan2_callee
+1372  07EE  D5          	push	de
+1373  07EF  E5          	push	hl
+1374  07F0  21 65 42    	ld	hl,0x4265
+1375  07F3  E5          	push	hl
+1376  07F4  21 E1 2E    	ld	hl,0x2ee1
+1377  07F7  E5          	push	hl
+1378  07F8  CD 00 00    	call	___fsmul_callee
+1379  07FB  DD 75 FC    	ld	(ix-4),l
+1380  07FE  DD 74 FD    	ld	(ix-3),h
+1381  0801  DD 73 FE    	ld	(ix-2),e
+1382  0804  DD 72 FF    	ld	(ix-1),d
+1383  0807  DD 6E EA    	ld	l,(ix-22)
+1384  080A  DD 66 EB    	ld	h,(ix-21)
+1385  080D  E5          	push	hl
+1386  080E  DD 6E E8    	ld	l,(ix-24)
+1387  0811  DD 66 E9    	ld	h,(ix-23)
+1388  0814  E5          	push	hl
+1389  0815  DD 6E EE    	ld	l,(ix-18)
+1390  0818  DD 66 EF    	ld	h,(ix-17)
+1391  081B  E5          	push	hl
+1392  081C  DD 6E EC    	ld	l,(ix-20)
+1393  081F  DD 66 ED    	ld	h,(ix-19)
+1394  0822  E5          	push	hl
+1395  0823  CD 00 00    	call	_hypot_callee
+1396  0826  DD 75 E2    	ld	(ix-30),l
+1397  0829  DD 74 E3    	ld	(ix-29),h
+1398  082C  DD 73 E4    	ld	(ix-28),e
+1399  082F  DD 72 E5    	ld	(ix-27),d
+1400  0832  DD 6E F2    	ld	l,(ix-14)
+1401  0835  DD 66 F3    	ld	h,(ix-13)
+1402  0838  E5          	push	hl
+1403  0839  DD 6E F0    	ld	l,(ix-16)
+1404  083C  DD 66 F1    	ld	h,(ix-15)
+1405  083F  E5          	push	hl
+1406  0840  21 8E 3C    	ld	hl,0x3c8e
+1407  0843  E5          	push	hl
+1408  0844  21 35 FA    	ld	hl,0xfa35
+1409  0847  E5          	push	hl
+1410  0848  CD 00 00    	call	___fsmul_callee
+1411  084B  E5          	push	hl
+1412  084C  D5          	push	de
+1413  084D  CD 00 00    	call	_cos_fastcall
+1414  0850  DD 75 F0    	ld	(ix-16),l
+1415  0853  DD 74 F1    	ld	(ix-15),h
+1416  0856  DD 73 F2    	ld	(ix-14),e
+1417  0859  DD 72 F3    	ld	(ix-13),d
+1418  085C  D1          	pop	de
+1419  085D  E1          	pop	hl
+1420  085E  DD 7E F0    	ld	a,(ix-16)
+1421  0861  DD 77 E6    	ld	(ix-26),a
+1422  0864  DD 7E F1    	ld	a,(ix-15)
+1423  0867  DD 77 E7    	ld	(ix-25),a
+1424  086A  DD 7E F2    	ld	a,(ix-14)
+1425  086D  DD 77 E8    	ld	(ix-24),a
+1426  0870  DD 7E F3    	ld	a,(ix-13)
+1427  0873  DD 77 E9    	ld	(ix-23),a
+1428  0876  CD 00 00    	call	_sin_fastcall
+1429  0879  DD 75 EA    	ld	(ix-22),l
+1430  087C  DD 74 EB    	ld	(ix-21),h
+1431  087F  DD 73 EC    	ld	(ix-20),e
+1432  0882  DD 72 ED    	ld	(ix-19),d
+1433  0885  DD 6E F6    	ld	l,(ix-10)
+1434  0888  DD 66 F7    	ld	h,(ix-9)
+1435  088B  E5          	push	hl
+1436  088C  DD 6E F4    	ld	l,(ix-12)
+1437  088F  DD 66 F5    	ld	h,(ix-11)
+1438  0892  E5          	push	hl
+1439  0893  21 8E 3C    	ld	hl,0x3c8e
+1440  0896  E5          	push	hl
+1441  0897  21 35 FA    	ld	hl,0xfa35
+1442  089A  E5          	push	hl
+1443  089B  CD 00 00    	call	___fsmul_callee
+1444  089E  E5          	push	hl
+1445  089F  D5          	push	de
+1446  08A0  CD 00 00    	call	_cos_fastcall
+1447  08A3  DD 75 F4    	ld	(ix-12),l
+1448  08A6  DD 74 F5    	ld	(ix-11),h
+1449  08A9  DD 73 F6    	ld	(ix-10),e
+1450  08AC  DD 72 F7    	ld	(ix-9),d
+1451  08AF  D1          	pop	de
+1452  08B0  E1          	pop	hl
+1453  08B1  DD 7E F4    	ld	a,(ix-12)
+1454  08B4  DD 77 EE    	ld	(ix-18),a
+1455  08B7  DD 7E F5    	ld	a,(ix-11)
+1456  08BA  DD 77 EF    	ld	(ix-17),a
+1457  08BD  DD 7E F6    	ld	a,(ix-10)
+1458  08C0  DD 77 F0    	ld	(ix-16),a
+1459  08C3  DD 7E F7    	ld	a,(ix-9)
+1460  08C6  DD 77 F1    	ld	(ix-15),a
+1461  08C9  CD 00 00    	call	_sin_fastcall
+1462  08CC  DD 75 F2    	ld	(ix-14),l
+1463  08CF  DD 74 F3    	ld	(ix-13),h
+1464  08D2  DD 73 F4    	ld	(ix-12),e
+1465  08D5  DD 72 F5    	ld	(ix-11),d
+1466  08D8  DD 6E FA    	ld	l,(ix-6)
+1467  08DB  DD 66 FB    	ld	h,(ix-5)
+1468  08DE  E5          	push	hl
+1469  08DF  DD 6E F8    	ld	l,(ix-8)
+1470  08E2  DD 66 F9    	ld	h,(ix-7)
+1471  08E5  E5          	push	hl
+1472  08E6  DD 6E FE    	ld	l,(ix-2)
+1473  08E9  DD 66 FF    	ld	h,(ix-1)
+1474  08EC  E5          	push	hl
+1475  08ED  DD 6E FC    	ld	l,(ix-4)
+1476  08F0  DD 66 FD    	ld	h,(ix-3)
+1477  08F3  E5          	push	hl
+1478  08F4  CD 00 00    	call	___fsadd_callee
+1479  08F7  D5          	push	de
+1480  08F8  E5          	push	hl
+1481  08F9  21 8E 3C    	ld	hl,0x3c8e
+1482  08FC  E5          	push	hl
+1483  08FD  21 35 FA    	ld	hl,0xfa35
+1484  0900  E5          	push	hl
+1485  0901  CD 00 00    	call	___fsmul_callee
+1486  0904  E5          	push	hl
+1487  0905  D5          	push	de
+1488  0906  CD 00 00    	call	_cos_fastcall
+1489  0909  DD 75 FC    	ld	(ix-4),l
+1490  090C  DD 74 FD    	ld	(ix-3),h
+1491  090F  DD 73 FE    	ld	(ix-2),e
+1492  0912  DD 72 FF    	ld	(ix-1),d
+1493  0915  D1          	pop	de
+1494  0916  E1          	pop	hl
+1495  0917  DD 7E FC    	ld	a,(ix-4)
+1496  091A  DD 77 F6    	ld	(ix-10),a
+1497  091D  DD 7E FD    	ld	a,(ix-3)
+1498  0920  DD 77 F7    	ld	(ix-9),a
+1499  0923  DD 7E FE    	ld	a,(ix-2)
+1500  0926  DD 77 F8    	ld	(ix-8),a
+1501  0929  DD 7E FF    	ld	a,(ix-1)
+1502  092C  DD 77 F9    	ld	(ix-7),a
+1503  092F  CD 00 00    	call	_sin_fastcall
+1504  0932  DD 75 FA    	ld	(ix-6),l
+1505  0935  DD 74 FB    	ld	(ix-5),h
+1506  0938  DD 73 FC    	ld	(ix-4),e
+1507  093B  DD 72 FD    	ld	(ix-3),d
+1508  093E  DD 6E F8    	ld	l,(ix-8)
+1509  0941  DD 66 F9    	ld	h,(ix-7)
+1510  0944  E5          	push	hl
+1511  0945  DD 6E F6    	ld	l,(ix-10)
+1512  0948  DD 66 F7    	ld	h,(ix-9)
+1513  094B  E5          	push	hl
+1514  094C  DD 6E E8    	ld	l,(ix-24)
+1515  094F  DD 66 E9    	ld	h,(ix-23)
+1516  0952  E5          	push	hl
+1517  0953  DD 6E E6    	ld	l,(ix-26)
+1518  0956  DD 66 E7    	ld	h,(ix-25)
+1519  0959  E5          	push	hl
+1520  095A  CD 00 00    	call	___fsmul_callee
+1521  095D  E3          	ex	(sp), hl
+1522  095E  DD 73 DE    	ld	(ix-34),e
+1523  0961  DD 72 DF    	ld	(ix-33),d
+1524  0964  DD 6E FC    	ld	l,(ix-4)
+1525  0967  DD 66 FD    	ld	h,(ix-3)
+1526  096A  E5          	push	hl
+1527  096B  DD 6E FA    	ld	l,(ix-6)
+1528  096E  DD 66 FB    	ld	h,(ix-5)
+1529  0971  E5          	push	hl
+1530  0972  DD 6E EC    	ld	l,(ix-20)
+1531  0975  DD 66 ED    	ld	h,(ix-19)
+1532  0978  E5          	push	hl
+1533  0979  DD 6E EA    	ld	l,(ix-22)
+1534  097C  DD 66 EB    	ld	h,(ix-21)
+1535  097F  E5          	push	hl
+1536  0980  CD 00 00    	call	___fsmul_callee
+1537  0983  DD 4E F0    	ld	c,(ix-16)
+1538  0986  DD 46 F1    	ld	b,(ix-15)
+1539  0989  C5          	push	bc
+1540  098A  DD 4E EE    	ld	c,(ix-18)
+1541  098D  DD 46 EF    	ld	b,(ix-17)
+1542  0990  C5          	push	bc
+1543  0991  D5          	push	de
+1544  0992  E5          	push	hl
+1545  0993  CD 00 00    	call	___fsmul_callee
+1546  0996  D5          	push	de
+1547  0997  E5          	push	hl
+1548  0998  DD 6E DE    	ld	l,(ix-34)
+1549  099B  DD 66 DF    	ld	h,(ix-33)
+1550  099E  E5          	push	hl
+1551  099F  DD 6E DC    	ld	l,(ix-36)
+1552  09A2  DD 66 DD    	ld	h,(ix-35)
+1553  09A5  E5          	push	hl
+1554  09A6  CD 00 00    	call	___fssub_callee
+1555  09A9  D5          	push	de
+1556  09AA  E5          	push	hl
+1557  09AB  DD 6E E4    	ld	l,(ix-28)
+1558  09AE  DD 66 E5    	ld	h,(ix-27)
+1559  09B1  E5          	push	hl
+1560  09B2  DD 6E E2    	ld	l,(ix-30)
+1561  09B5  DD 66 E3    	ld	h,(ix-29)
+1562  09B8  E5          	push	hl
+1563  09B9  CD 00 00    	call	___fsmul_callee
+1564  09BC  4D          	ld	c, l
+1565  09BD  44          	ld	b, h
+1566  09BE  DD 6E E0    	ld	l,(ix-32)
+1567  09C1  DD 66 E1    	ld	h,(ix-31)
+1568  09C4  71          	ld	(hl), c
+1569  09C5  23          	inc	hl
+1570  09C6  70          	ld	(hl), b
+1571  09C7  23          	inc	hl
+1572  09C8  73          	ld	(hl), e
+1573  09C9  23          	inc	hl
+1574  09CA  72          	ld	(hl), d
+1575  09CB  DD 7E E0    	ld	a,(ix-32)
+1576  09CE  C6 04       	add	a,0x04
+1577  09D0  DD 77 FE    	ld	(ix-2),a
+1578  09D3  DD 7E E1    	ld	a,(ix-31)
+1579  09D6  CE 00       	adc	a,0x00
+1580  09D8  DD 77 FF    	ld	(ix-1),a
+1581  09DB  DD 6E F8    	ld	l,(ix-8)
+1582  09DE  DD 66 F9    	ld	h,(ix-7)
+1583  09E1  E5          	push	hl
+1584  09E2  DD 6E F6    	ld	l,(ix-10)
+1585  09E5  DD 66 F7    	ld	h,(ix-9)
+1586  09E8  E5          	push	hl
+1587  09E9  DD 6E EC    	ld	l,(ix-20)
+1588  09EC  DD 66 ED    	ld	h,(ix-19)
+1589  09EF  E5          	push	hl
+1590  09F0  DD 6E EA    	ld	l,(ix-22)
+1591  09F3  DD 66 EB    	ld	h,(ix-21)
+1592  09F6  E5          	push	hl
+1593  09F7  CD 00 00    	call	___fsmul_callee
+1594  09FA  DD 75 F6    	ld	(ix-10),l
+1595  09FD  DD 74 F7    	ld	(ix-9),h
+1596  0A00  DD 73 F8    	ld	(ix-8),e
+1597  0A03  DD 72 F9    	ld	(ix-7),d
+1598  0A06  DD 6E FC    	ld	l,(ix-4)
+1599  0A09  DD 66 FD    	ld	h,(ix-3)
+1600  0A0C  E5          	push	hl
+1601  0A0D  DD 6E FA    	ld	l,(ix-6)
+1602  0A10  DD 66 FB    	ld	h,(ix-5)
+1603  0A13  E5          	push	hl
+1604  0A14  DD 6E E8    	ld	l,(ix-24)
+1605  0A17  DD 66 E9    	ld	h,(ix-23)
+1606  0A1A  E5          	push	hl
+1607  0A1B  DD 6E E6    	ld	l,(ix-26)
+1608  0A1E  DD 66 E7    	ld	h,(ix-25)
+1609  0A21  E5          	push	hl
+1610  0A22  CD 00 00    	call	___fsmul_callee
+1611  0A25  DD 4E F0    	ld	c,(ix-16)
+1612  0A28  DD 46 F1    	ld	b,(ix-15)
+1613  0A2B  C5          	push	bc
+1614  0A2C  DD 4E EE    	ld	c,(ix-18)
+1615  0A2F  DD 46 EF    	ld	b,(ix-17)
+1616  0A32  C5          	push	bc
+1617  0A33  D5          	push	de
+1618  0A34  E5          	push	hl
+1619  0A35  CD 00 00    	call	___fsmul_callee
+1620  0A38  D5          	push	de
+1621  0A39  E5          	push	hl
+1622  0A3A  DD 6E F8    	ld	l,(ix-8)
+1623  0A3D  DD 66 F9    	ld	h,(ix-7)
+1624  0A40  E5          	push	hl
+1625  0A41  DD 6E F6    	ld	l,(ix-10)
+1626  0A44  DD 66 F7    	ld	h,(ix-9)
+1627  0A47  E5          	push	hl
+1628  0A48  CD 00 00    	call	___fsadd_callee
+1629  0A4B  D5          	push	de
+1630  0A4C  E5          	push	hl
+1631  0A4D  DD 6E E4    	ld	l,(ix-28)
+1632  0A50  DD 66 E5    	ld	h,(ix-27)
+1633  0A53  E5          	push	hl
+1634  0A54  DD 6E E2    	ld	l,(ix-30)
+1635  0A57  DD 66 E3    	ld	h,(ix-29)
+1636  0A5A  E5          	push	hl
+1637  0A5B  CD 00 00    	call	___fsmul_callee
+1638  0A5E  4D          	ld	c, l
+1639  0A5F  44          	ld	b, h
+1640  0A60  DD 6E FE    	ld	l,(ix-2)
+1641  0A63  DD 66 FF    	ld	h,(ix-1)
+1642  0A66  71          	ld	(hl), c
+1643  0A67  23          	inc	hl
+1644  0A68  70          	ld	(hl), b
+1645  0A69  23          	inc	hl
+1646  0A6A  73          	ld	(hl), e
+1647  0A6B  23          	inc	hl
+1648  0A6C  72          	ld	(hl), d
+1649  0A6D  DD 6E E0    	ld	l,(ix-32)
+1650  0A70  DD 66 E1    	ld	h,(ix-31)
+1651  0A73  11 08 00    	ld	de,0x0008
+1652  0A76  19          	add	hl, de
+1653  0A77  E5          	push	hl
+1654  0A78  DD 5E FC    	ld	e,(ix-4)
+1655  0A7B  DD 56 FD    	ld	d,(ix-3)
+1656  0A7E  D5          	push	de
+1657  0A7F  DD 5E FA    	ld	e,(ix-6)
+1658  0A82  DD 56 FB    	ld	d,(ix-5)
+1659  0A85  D5          	push	de
+1660  0A86  DD 5E E4    	ld	e,(ix-28)
+1661  0A89  DD 56 E5    	ld	d,(ix-27)
+1662  0A8C  D5          	push	de
+1663  0A8D  DD 5E E2    	ld	e,(ix-30)
+1664  0A90  DD 56 E3    	ld	d,(ix-29)
+1665  0A93  D5          	push	de
+1666  0A94  CD 00 00    	call	___fsmul_callee
+1667  0A97  4D          	ld	c, l
+1668  0A98  44          	ld	b, h
+1669  0A99  E1          	pop	hl
+1670  0A9A  E5          	push	hl
+1671  0A9B  E5          	push	hl
+1672  0A9C  DD 6E F4    	ld	l,(ix-12)
+1673  0A9F  DD 66 F5    	ld	h,(ix-11)
+1674  0AA2  E3          	ex	(sp), hl
+1675  0AA3  E5          	push	hl
+1676  0AA4  DD 6E F2    	ld	l,(ix-14)
+1677  0AA7  DD 66 F3    	ld	h,(ix-13)
+1678  0AAA  E3          	ex	(sp), hl
+1679  0AAB  D5          	push	de
+1680  0AAC  C5          	push	bc
+1681  0AAD  CD 00 00    	call	___fsmul_callee
+1682  0AB0  4D          	ld	c, l
+1683  0AB1  44          	ld	b, h
+1684  0AB2  E1          	pop	hl
+1685  0AB3  71          	ld	(hl), c
+1686  0AB4  23          	inc	hl
+1687  0AB5  70          	ld	(hl), b
+1688  0AB6  23          	inc	hl
+1689  0AB7  73          	ld	(hl), e
+1690  0AB8  23          	inc	hl
+1691  0AB9  72          	ld	(hl), d
+1692  0ABA  DD 7E E0    	ld	a,(ix-32)
+1693  0ABD  C6 0C       	add	a,0x0c
+1694  0ABF  5F          	ld	e, a
+1695  0AC0  DD 7E E1    	ld	a,(ix-31)
+1696  0AC3  CE 00       	adc	a,0x00
+1697  0AC5  57          	ld	d, a
+1698  0AC6  21 06 00    	ld	hl,6
+1699  0AC9  39          	add	hl, sp
+1700  0ACA  01 04 00    	ld	bc,0x0004
+1701  0ACD  ED B0       	ldir
+1702  0ACF  DD F9       	ld	sp, ix
+1703  0AD1  DD E1       	pop	ix
+1704  0AD3  E1          	pop	hl
+1705  0AD4  F1          	pop	af
+1706  0AD5  F1          	pop	af
+1707  0AD6  E9          	jp	(hl)
+1708  0AD7              	SECTION code_compiler
+1709  0AD7              ;	---------------------------------
+1710  0AD7              ; Function eccentricAnomaly
+1711  0AD7              ; ---------------------------------
+1712  0AD7              _eccentricAnomaly:
+1713  0AD7  DD E5       	push	ix
+1714  0AD9  DD 21 00 00 	ld	ix,0
+1715  0ADD  DD 39       	add	ix,sp
+1716  0ADF  21 F4 FF    	ld	hl, -12
+1717  0AE2  39          	add	hl, sp
+1718  0AE3  F9          	ld	sp, hl
+1719  0AE4  DD 6E 0A    	ld	l,(ix+10)
+1720  0AE7  DD 66 0B    	ld	h,(ix+11)
+1721  0AEA  E5          	push	hl
+1722  0AEB  DD 6E 08    	ld	l,(ix+8)
+1723  0AEE  DD 66 09    	ld	h,(ix+9)
+1724  0AF1  E5          	push	hl
+1725  0AF2  21 8E 3C    	ld	hl,0x3c8e
+1726  0AF5  E5          	push	hl
+1727  0AF6  21 35 FA    	ld	hl,0xfa35
+1728  0AF9  E5          	push	hl
+1729  0AFA  CD 00 00    	call	___fsmul_callee
+1730  0AFD  DD 75 F8    	ld	(ix-8),l
+1731  0B00  DD 74 F9    	ld	(ix-7),h
+1732  0B03  DD 73 FA    	ld	(ix-6),e
+1733  0B06  DD 72 FB    	ld	(ix-5),d
+1734  0B09  DD 6E F8    	ld	l,(ix-8)
+1735  0B0C  DD 66 F9    	ld	h,(ix-7)
+1736  0B0F  DD 5E FA    	ld	e,(ix-6)
+1737  0B12  DD 56 FB    	ld	d,(ix-5)
+1738  0B15  CD 00 00    	call	_sin_fastcall
+1739  0B18  D5          	push	de
+1740  0B19  E5          	push	hl
+1741  0B1A  DD 6E 06    	ld	l,(ix+6)
+1742  0B1D  DD 66 07    	ld	h,(ix+7)
+1743  0B20  E5          	push	hl
+1744  0B21  DD 6E 04    	ld	l,(ix+4)
+1745  0B24  DD 66 05    	ld	h,(ix+5)
+1746  0B27  E5          	push	hl
+1747  0B28  CD 00 00    	call	___fsmul_callee
+1748  0B2B  DD 75 FC    	ld	(ix-4),l
+1749  0B2E  DD 74 FD    	ld	(ix-3),h
+1750  0B31  DD 73 FE    	ld	(ix-2),e
+1751  0B34  DD 72 FF    	ld	(ix-1),d
+1752  0B37  DD 6E F8    	ld	l,(ix-8)
+1753  0B3A  DD 66 F9    	ld	h,(ix-7)
+1754  0B3D  DD 5E FA    	ld	e,(ix-6)
+1755  0B40  DD 56 FB    	ld	d,(ix-5)
+1756  0B43  CD 00 00    	call	_cos_fastcall
+1757  0B46  D5          	push	de
+1758  0B47  E5          	push	hl
+1759  0B48  DD 6E 06    	ld	l,(ix+6)
+1760  0B4B  DD 66 07    	ld	h,(ix+7)
+1761  0B4E  E5          	push	hl
+1762  0B4F  DD 6E 04    	ld	l,(ix+4)
+1763  0B52  DD 66 05    	ld	h,(ix+5)
+1764  0B55  E5          	push	hl
+1765  0B56  CD 00 00    	call	___fsmul_callee
+1766  0B59  01 80 3F    	ld	bc,0x3f80
+1767  0B5C  C5          	push	bc
+1768  0B5D  01 00 00    	ld	bc,0x0000
+1769  0B60  C5          	push	bc
+1770  0B61  D5          	push	de
+1771  0B62  E5          	push	hl
+1772  0B63  CD 00 00    	call	___fsadd_callee
+1773  0B66  D5          	push	de
+1774  0B67  E5          	push	hl
+1775  0B68  DD 6E FE    	ld	l,(ix-2)
+1776  0B6B  DD 66 FF    	ld	h,(ix-1)
+1777  0B6E  E5          	push	hl
+1778  0B6F  DD 6E FC    	ld	l,(ix-4)
+1779  0B72  DD 66 FD    	ld	h,(ix-3)
+1780  0B75  E5          	push	hl
+1781  0B76  CD 00 00    	call	___fsmul_callee
+1782  0B79  D5          	push	de
+1783  0B7A  E5          	push	hl
+1784  0B7B  DD 6E 0A    	ld	l,(ix+10)
+1785  0B7E  DD 66 0B    	ld	h,(ix+11)
+1786  0B81  E5          	push	hl
+1787  0B82  DD 6E 08    	ld	l,(ix+8)
+1788  0B85  DD 66 09    	ld	h,(ix+9)
+1789  0B88  E5          	push	hl
+1790  0B89  CD 00 00    	call	___fsadd_callee
+1791  0B8C  E3          	ex	(sp), hl
+1792  0B8D  DD 73 F6    	ld	(ix-10),e
+1793  0B90  DD 72 F7    	ld	(ix-9),d
+1794  0B93              l_eccentricAnomaly_00101:
+1795  0B93  D1          	pop	de
+1796  0B94  E1          	pop	hl
+1797  0B95  E5          	push	hl
+1798  0B96  D5          	push	de
+1799  0B97  EB          	ex	de,hl
+1800  0B98  E1          	pop	hl
+1801  0B99  E5          	push	hl
+1802  0B9A  D5          	push	de
+1803  0B9B  E5          	push	hl
+1804  0B9C  21 8E 3C    	ld	hl,0x3c8e
+1805  0B9F  E5          	push	hl
+1806  0BA0  21 35 FA    	ld	hl,0xfa35
+1807  0BA3  E5          	push	hl
+1808  0BA4  CD 00 00    	call	___fsmul_callee
+1809  0BA7  DD 75 F8    	ld	(ix-8),l
+1810  0BAA  DD 74 F9    	ld	(ix-7),h
+1811  0BAD  DD 73 FA    	ld	(ix-6),e
+1812  0BB0  DD 72 FB    	ld	(ix-5),d
+1813  0BB3  DD 6E F8    	ld	l,(ix-8)
+1814  0BB6  DD 66 F9    	ld	h,(ix-7)
+1815  0BB9  DD 5E FA    	ld	e,(ix-6)
+1816  0BBC  DD 56 FB    	ld	d,(ix-5)
+1817  0BBF  CD 00 00    	call	_sin_fastcall
+1818  0BC2  D5          	push	de
+1819  0BC3  E5          	push	hl
+1820  0BC4  DD 6E 06    	ld	l,(ix+6)
+1821  0BC7  DD 66 07    	ld	h,(ix+7)
+1822  0BCA  E5          	push	hl
+1823  0BCB  DD 6E 04    	ld	l,(ix+4)
+1824  0BCE  DD 66 05    	ld	h,(ix+5)
+1825  0BD1  E5          	push	hl
+1826  0BD2  CD 00 00    	call	___fsmul_callee
+1827  0BD5  D5          	push	de
+1828  0BD6  E5          	push	hl
+1829  0BD7  21 65 42    	ld	hl,0x4265
+1830  0BDA  E5          	push	hl
+1831  0BDB  21 E1 2E    	ld	hl,0x2ee1
+1832  0BDE  E5          	push	hl
+1833  0BDF  CD 00 00    	call	___fsmul_callee
+1834  0BE2  D5          	push	de
+1835  0BE3  E5          	push	hl
+1836  0BE4  DD 6E F6    	ld	l,(ix-10)
+1837  0BE7  DD 66 F7    	ld	h,(ix-9)
+1838  0BEA  E5          	push	hl
+1839  0BEB  DD 6E F4    	ld	l,(ix-12)
+1840  0BEE  DD 66 F5    	ld	h,(ix-11)
+1841  0BF1  E5          	push	hl
+1842  0BF2  CD 00 00    	call	___fssub_callee
+1843  0BF5  4D          	ld	c, l
+1844  0BF6  44          	ld	b, h
+1845  0BF7  DD 6E 0A    	ld	l,(ix+10)
+1846  0BFA  DD 66 0B    	ld	h,(ix+11)
+1847  0BFD  E5          	push	hl
+1848  0BFE  DD 6E 08    	ld	l,(ix+8)
+1849  0C01  DD 66 09    	ld	h,(ix+9)
+1850  0C04  E5          	push	hl
+1851  0C05  D5          	push	de
+1852  0C06  C5          	push	bc
+1853  0C07  CD 00 00    	call	___fssub_callee
+1854  0C0A  DD 75 FC    	ld	(ix-4),l
+1855  0C0D  DD 74 FD    	ld	(ix-3),h
+1856  0C10  DD 73 FE    	ld	(ix-2),e
+1857  0C13  DD 72 FF    	ld	(ix-1),d
+1858  0C16  DD 6E F8    	ld	l,(ix-8)
+1859  0C19  DD 66 F9    	ld	h,(ix-7)
+1860  0C1C  DD 5E FA    	ld	e,(ix-6)
+1861  0C1F  DD 56 FB    	ld	d,(ix-5)
+1862  0C22  CD 00 00    	call	_cos_fastcall
+1863  0C25  D5          	push	de
+1864  0C26  E5          	push	hl
+1865  0C27  DD 6E 06    	ld	l,(ix+6)
+1866  0C2A  DD 66 07    	ld	h,(ix+7)
+1867  0C2D  E5          	push	hl
+1868  0C2E  DD 6E 04    	ld	l,(ix+4)
+1869  0C31  DD 66 05    	ld	h,(ix+5)
+1870  0C34  E5          	push	hl
+1871  0C35  CD 00 00    	call	___fsmul_callee
+1872  0C38  D5          	push	de
+1873  0C39  E5          	push	hl
+1874  0C3A  21 80 3F    	ld	hl,0x3f80
+1875  0C3D  E5          	push	hl
+1876  0C3E  21 00 00    	ld	hl,0x0000
+1877  0C41  E5          	push	hl
+1878  0C42  CD 00 00    	call	___fssub_callee
+1879  0C45  D5          	push	de
+1880  0C46  E5          	push	hl
+1881  0C47  DD 6E FE    	ld	l,(ix-2)
+1882  0C4A  DD 66 FF    	ld	h,(ix-1)
+1883  0C4D  E5          	push	hl
+1884  0C4E  DD 6E FC    	ld	l,(ix-4)
+1885  0C51  DD 66 FD    	ld	h,(ix-3)
+1886  0C54  E5          	push	hl
+1887  0C55  CD 00 00    	call	___fsdiv_callee
+1888  0C58  E5          	push	hl
+1889  0C59  D5          	push	de
+1890  0C5A  D5          	push	de
+1891  0C5B  E5          	push	hl
+1892  0C5C  DD 4E F6    	ld	c,(ix-10)
+1893  0C5F  DD 46 F7    	ld	b,(ix-9)
+1894  0C62  C5          	push	bc
+1895  0C63  DD 4E F4    	ld	c,(ix-12)
+1896  0C66  DD 46 F5    	ld	b,(ix-11)
+1897  0C69  C5          	push	bc
+1898  0C6A  CD 00 00    	call	___fssub_callee
+1899  0C6D  DD 75 FC    	ld	(ix-4),l
+1900  0C70  DD 74 FD    	ld	(ix-3),h
+1901  0C73  DD 73 FE    	ld	(ix-2),e
+1902  0C76  DD 72 FF    	ld	(ix-1),d
+1903  0C79  D1          	pop	de
+1904  0C7A  E1          	pop	hl
+1905  0C7B  DD 7E FC    	ld	a,(ix-4)
+1906  0C7E  DD 77 F4    	ld	(ix-12),a
+1907  0C81  DD 7E FD    	ld	a,(ix-3)
+1908  0C84  DD 77 F5    	ld	(ix-11),a
+1909  0C87  DD 7E FE    	ld	a,(ix-2)
+1910  0C8A  DD 77 F6    	ld	(ix-10),a
+1911  0C8D  DD 7E FF    	ld	a,(ix-1)
+1912  0C90  DD 77 F7    	ld	(ix-9),a
+1913  0C93  CD 00 00    	call	_fabs_fastcall
+1914  0C96  01 83 3A    	ld	bc,0x3a83
+1915  0C99  C5          	push	bc
+1916  0C9A  01 6F 12    	ld	bc,0x126f
+1917  0C9D  C5          	push	bc
+1918  0C9E  D5          	push	de
+1919  0C9F  E5          	push	hl
+1920  0CA0  CD 00 00    	call	___fslt_callee
+1921  0CA3  CB 45       	bit	0, l
+1922  0CA5  CA 93 0B    	jp	Z, l_eccentricAnomaly_00101
+1923  0CA8  E1          	pop	hl
+1924  0CA9  E5          	push	hl
+1925  0CAA  DD 5E F6    	ld	e,(ix-10)
+1926  0CAD  DD 56 F7    	ld	d,(ix-9)
+1927  0CB0  DD F9       	ld	sp, ix
+1928  0CB2  DD E1       	pop	ix
+1929  0CB4  C1          	pop	bc
+1930  0CB5  F1          	pop	af
+1931  0CB6  F1          	pop	af
+1932  0CB7  F1          	pop	af
+1933  0CB8  F1          	pop	af
+1934  0CB9  C5          	push	bc
+1935  0CBA  C9          	ret
+1936  0CBB              	SECTION code_compiler
+1937  0CBB              ;	---------------------------------
+1938  0CBB              ; Function addCartesianCoordinates
+1939  0CBB              ; ---------------------------------
+1940  0CBB              _addCartesianCoordinates:
+1941  0CBB  DD E5       	push	ix
+1942  0CBD  DD 21 00 00 	ld	ix,0
+1943  0CC1  DD 39       	add	ix,sp
+1944  0CC3  21 F6 FF    	ld	hl, -10
+1945  0CC6  39          	add	hl, sp
+1946  0CC7  F9          	ld	sp, hl
+1947  0CC8  DD 7E 04    	ld	a,(ix+4)
+1948  0CCB  DD 77 F6    	ld	(ix-10),a
+1949  0CCE  DD 7E 05    	ld	a,(ix+5)
+1950  0CD1  DD 77 F7    	ld	(ix-9),a
+1951  0CD4  D1          	pop	de
+1952  0CD5  D5          	push	de
+1953  0CD6  21 06 00    	ld	hl,6
+1954  0CD9  39          	add	hl, sp
+1955  0CDA  EB          	ex	de, hl
+1956  0CDB  01 04 00    	ld	bc,0x0004
+1957  0CDE  ED B0       	ldir
+1958  0CE0  DD 7E 06    	ld	a,(ix+6)
+1959  0CE3  DD 77 F8    	ld	(ix-8),a
+1960  0CE6  DD 7E 07    	ld	a,(ix+7)
+1961  0CE9  DD 77 F9    	ld	(ix-7),a
+1962  0CEC  DD 6E F8    	ld	l,(ix-8)
+1963  0CEF  DD 66 F9    	ld	h,(ix-7)
+1964  0CF2  4E          	ld	c, (hl)
+1965  0CF3  23          	inc	hl
+1966  0CF4  46          	ld	b, (hl)
+1967  0CF5  23          	inc	hl
+1968  0CF6  5E          	ld	e, (hl)
+1969  0CF7  23          	inc	hl
+1970  0CF8  56          	ld	d, (hl)
+1971  0CF9  D5          	push	de
+1972  0CFA  C5          	push	bc
+1973  0CFB  DD 6E FE    	ld	l,(ix-2)
+1974  0CFE  DD 66 FF    	ld	h,(ix-1)
+1975  0D01  E5          	push	hl
+1976  0D02  DD 6E FC    	ld	l,(ix-4)
+1977  0D05  DD 66 FD    	ld	h,(ix-3)
+1978  0D08  E5          	push	hl
+1979  0D09  CD 00 00    	call	___fsadd_callee
+1980  0D0C  4D          	ld	c, l
+1981  0D0D  44          	ld	b, h
+1982  0D0E  E1          	pop	hl
+1983  0D0F  E5          	push	hl
+1984  0D10  71          	ld	(hl), c
+1985  0D11  23          	inc	hl
+1986  0D12  70          	ld	(hl), b
+1987  0D13  23          	inc	hl
+1988  0D14  73          	ld	(hl), e
+1989  0D15  23          	inc	hl
+1990  0D16  72          	ld	(hl), d
+1991  0D17  DD 7E F6    	ld	a,(ix-10)
+1992  0D1A  C6 04       	add	a,0x04
+1993  0D1C  DD 77 FA    	ld	(ix-6),a
+1994  0D1F  DD 7E F7    	ld	a,(ix-9)
+1995  0D22  CE 00       	adc	a,0x00
+1996  0D24  DD 77 FB    	ld	(ix-5),a
+1997  0D27  DD 5E FA    	ld	e,(ix-6)
+1998  0D2A  DD 56 FB    	ld	d,(ix-5)
+1999  0D2D  21 06 00    	ld	hl,6
+2000  0D30  39          	add	hl, sp
+2001  0D31  EB          	ex	de, hl
+2002  0D32  01 04 00    	ld	bc,0x0004
+2003  0D35  ED B0       	ldir
+2004  0D37  E1          	pop	hl
+2005  0D38  C1          	pop	bc
+2006  0D39  C5          	push	bc
+2007  0D3A  E5          	push	hl
+2008  0D3B  21 04 00    	ld	hl,4
+2009  0D3E  09          	add	hl, bc
+2010  0D3F  4E          	ld	c, (hl)
+2011  0D40  23          	inc	hl
+2012  0D41  46          	ld	b, (hl)
+2013  0D42  23          	inc	hl
+2014  0D43  5E          	ld	e, (hl)
+2015  0D44  23          	inc	hl
+2016  0D45  56          	ld	d, (hl)
+2017  0D46  D5          	push	de
+2018  0D47  C5          	push	bc
+2019  0D48  DD 6E FE    	ld	l,(ix-2)
+2020  0D4B  DD 66 FF    	ld	h,(ix-1)
+2021  0D4E  E5          	push	hl
+2022  0D4F  DD 6E FC    	ld	l,(ix-4)
+2023  0D52  DD 66 FD    	ld	h,(ix-3)
+2024  0D55  E5          	push	hl
+2025  0D56  CD 00 00    	call	___fsadd_callee
+2026  0D59  4D          	ld	c, l
+2027  0D5A  44          	ld	b, h
+2028  0D5B  DD 6E FA    	ld	l,(ix-6)
+2029  0D5E  DD 66 FB    	ld	h,(ix-5)
+2030  0D61  71          	ld	(hl), c
+2031  0D62  23          	inc	hl
+2032  0D63  70          	ld	(hl), b
+2033  0D64  23          	inc	hl
+2034  0D65  73          	ld	(hl), e
+2035  0D66  23          	inc	hl
+2036  0D67  72          	ld	(hl), d
+2037  0D68  DD 7E F6    	ld	a,(ix-10)
+2038  0D6B  C6 08       	add	a,0x08
+2039  0D6D  DD 77 FE    	ld	(ix-2),a
+2040  0D70  DD 7E F7    	ld	a,(ix-9)
+2041  0D73  CE 00       	adc	a,0x00
+2042  0D75  DD 77 FF    	ld	(ix-1),a
+2043  0D78  DD 5E FE    	ld	e,(ix-2)
+2044  0D7B  DD 56 FF    	ld	d,(ix-1)
+2045  0D7E  21 04 00    	ld	hl,4
+2046  0D81  39          	add	hl, sp
+2047  0D82  EB          	ex	de, hl
+2048  0D83  01 04 00    	ld	bc,0x0004
+2049  0D86  ED B0       	ldir
+2050  0D88  E1          	pop	hl
+2051  0D89  C1          	pop	bc
+2052  0D8A  C5          	push	bc
+2053  0D8B  E5          	push	hl
+2054  0D8C  21 08 00    	ld	hl,8
+2055  0D8F  09          	add	hl, bc
+2056  0D90  4E          	ld	c, (hl)
+2057  0D91  23          	inc	hl
+2058  0D92  46          	ld	b, (hl)
+2059  0D93  23          	inc	hl
+2060  0D94  5E          	ld	e, (hl)
+2061  0D95  23          	inc	hl
+2062  0D96  56          	ld	d, (hl)
+2063  0D97  D5          	push	de
+2064  0D98  C5          	push	bc
+2065  0D99  DD 6E FC    	ld	l,(ix-4)
+2066  0D9C  DD 66 FD    	ld	h,(ix-3)
+2067  0D9F  E5          	push	hl
+2068  0DA0  DD 6E FA    	ld	l,(ix-6)
+2069  0DA3  DD 66 FB    	ld	h,(ix-5)
+2070  0DA6  E5          	push	hl
+2071  0DA7  CD 00 00    	call	___fsadd_callee
+2072  0DAA  4D          	ld	c, l
+2073  0DAB  44          	ld	b, h
+2074  0DAC  DD 6E FE    	ld	l,(ix-2)
+2075  0DAF  DD 66 FF    	ld	h,(ix-1)
+2076  0DB2  71          	ld	(hl), c
+2077  0DB3  23          	inc	hl
+2078  0DB4  70          	ld	(hl), b
+2079  0DB5  23          	inc	hl
+2080  0DB6  73          	ld	(hl), e
+2081  0DB7  23          	inc	hl
+2082  0DB8  72          	ld	(hl), d
+2083  0DB9  DD F9       	ld	sp, ix
+2084  0DBB  DD E1       	pop	ix
+2085  0DBD  E1          	pop	hl
+2086  0DBE  F1          	pop	af
+2087  0DBF  F1          	pop	af
+2088  0DC0  E9          	jp	(hl)
+2089  0DC1              	SECTION IGNORE
+2090  0000              
