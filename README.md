@@ -24,6 +24,10 @@ Once ReGIS library is available then one of the below compilation lines can be u
     zcc +rc2014 -subtype=cpm -v -m --list --am9511 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motionapu_cpm -create-app
 ```
 
+```sh
+    zcc +yaz180 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion32_cpm -create-app
+```
+
 # Credits
 
 Based on the work of [Paul Schlyter](http://www.stjarnhimlen.se/english.php).
