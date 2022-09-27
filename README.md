@@ -6,7 +6,7 @@ A rough calculation of planetary motion - to test ReGIS graphics and floating po
 
 # Purpose
 
-To test various floating point packages available for the RC2014 and other z88dk supported targets.
+To test various floating point packages available for the CP/M, RC2014 and other z88dk supported targets.
 
 # Usage
 
@@ -16,17 +16,23 @@ For instructions on how to do this, and to enable xterm to support ReGIS [please
 Once ReGIS library is available then one of the below compilation lines can be used to prepare the motion binary.
 
 ```sh
-    zcc +rc2014 -subtype=cpm -clib=new -v -m --list -O2 -lm -llib/rc2014/regis @planet_motion.lst -o motionnew_cpm -create-app
-
-    zcc +rc2014 -subtype=cpm -v -m --list  -lm -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion48_cpm -create-app
-    zcc +rc2014 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion32_cpm -create-app
-
-    zcc +rc2014 -subtype=cpm -v -m --list --am9511 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motionapu_cpm -create-app
+    zcc +rc2014 -subtype=cpm -clib=new -v -m --list -O2 -lm -llib/rc2014/regis @planet_motion.lst -o motion_new -create-app
+    zcc +rc2014 -subtype=cpm -v -m --list -lm -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_48 -create-app
+    zcc +rc2014 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
+    zcc +rc2014 -subtype=cpm -v -m --list --am9511 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_apu -create-app
 ```
 
 ```sh
-    zcc +yaz180 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion32_cpm -create-app
+    zcc +yaz180 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
 ```
+
+```sh
+    zcc +cpm -clib=new -v -m --list -O2 -lm -llib/rc2014/regis @planet_motion.lst -o motion_new -create-app
+    zcc +cpm -clib=sdcc_iy -v -m --list -lm -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_48 -create-app
+    zcc +cpm -clib=sdcc_iy -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
+    zcc +cpm -clib=sdcc_iy -v -m --list --am9511 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_apu -create-app
+```
+
 
 # Credits
 

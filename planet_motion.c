@@ -2,27 +2,38 @@
 
     build with:
 
-    zcc +rc2014 -subtype=cpm -clib=new -v -m --list -O2 -lm -llib/rc2014/regis @planet_motion.lst -o motionnew_cpm -create-app
+    zcc +rc2014 -subtype=cpm -clib=new -v -m --list -O2 -lm -llib/rc2014/regis @planet_motion.lst -o motion_new -create-app
 
-    zcc +rc2014 -subtype=cpm -v -m --list  -lm -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion48_cpm -create-app
-    zcc +rc2014 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion32_cpm -create-app
+    zcc +rc2014 -subtype=cpm -v -m --list -lm -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_48 -create-app
+    zcc +rc2014 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
 
-    zcc +rc2014 -subtype=cpm -v -m --list --am9511 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motionapu_cpm -create-app
+    zcc +rc2014 -subtype=cpm -v -m --list --am9511 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_apu -create-app
 
  */
 
 /*
-    zcc +yaz180 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion32_cpm -create-app
-
+    zcc +yaz180 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
  */
 
+/*
+    zcc +cpm -clib=sdcc_iy -v -m --list -lm -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_48 -create-app
+    zcc +cpm -clib=sdcc_iy -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
+
+    zcc +cpm -clib=sdcc_iy -v -m --list --am9511 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_apu -create-app
+ */
 
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
 #include <z80.h>
 
+#if __RC2014
 #include <lib/rc2014/regis.h>
+#elif __YAZ180
+#include <lib/yaz180/regis.h>
+#elif __CPM
+#include <lib/cpm/regis.h>
+#endif
 
 #include "planet_motion.h"
 #include "multi_apu.h"
@@ -220,4 +231,3 @@ int main()
     }
     return 0;
 }
-
