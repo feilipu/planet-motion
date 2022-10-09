@@ -39,16 +39,16 @@
  */
 
 /*
-    zcc +yaz180 -subtype=cpm -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
+    zcc +yaz180 -subtype=cpm -v -m --list --math32 -llib/yaz180/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
  */
 
 /*
-    zcc +cpm -clib=sdcc_iy -v -m --list -lm -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_48 -create-app
-    zcc +cpm -clib=sdcc_iy -v -m --list --math32 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
+    zcc +cpm -clib=sdcc_iy -v -m --list -lm -llib/cpm/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_48 -create-app
+    zcc +cpm -clib=sdcc_iy -v -m --list --math32 -llib/cpm/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_32 -create-app
 
-    zcc +cpm -clib=new -v -m --list -O2 --opt-code-speed=all --math32 -llib/rc2014/regis @planet_motion.lst -o motion_new -create-app
+    zcc +cpm -clib=new -v -m --list -O2 --opt-code-speed=all --math32 -llib/cpm/regis @planet_motion.lst -o motion_new -create-app
 
-    zcc +cpm -clib=sdcc_iy -v -m --list --am9511 -llib/rc2014/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_apu -create-app
+    zcc +cpm -clib=sdcc_iy -v -m --list --am9511 -llib/cpm/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_apu -create-app
  */
 
 #include <stdint.h>
