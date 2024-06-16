@@ -165,12 +165,12 @@ cartesian_coordinates_t theSun, thePlanet;
 int main()
 {
     uint16_t d;
-    FLOAT sun_x;
-    FLOAT sun_y;
+    uint16_t sun_x;
+    uint16_t sun_y;
     char s[10];
 
-//  for (d = 8766; d < (8766+(1*365)+1); ++d)                                       // January 1st, 2024 + 1 year
-    for (d = 8766; d < (8766+20); ++d)                                               // January 1st, 2024 + 20 days
+    for (d = 8766; d < (8766+(1*365)+1); ++d)                                       // January 1st, 2024 + 1 year
+//  for (d = 8766; d < (8766+20); ++d)                                               // January 1st, 2024 + 20 days
     {
         window_new( &mywindow, 768, 480, stdout);                                   // open command list
         window_clear( &mywindow );
@@ -259,7 +259,7 @@ int main()
         draw_abs( &mywindow, 10, 450 );
         draw_text( &mywindow, s, 2);                                                // draw date
 
-        window_close( &mywindow );                                                 // close window command list
+        window_close( &mywindow );                                                  // close window command list
     }
 
     return 0;
