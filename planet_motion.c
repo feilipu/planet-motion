@@ -49,14 +49,17 @@
     zcc +cpm -clib=new -v -m --list -O2 --opt-code-speed=all --math32 -llib/cpm/regis @planet_motion.lst -o motion_new -create-app
 
     zcc +cpm -clib=sdcc_iy -v -m --list --am9511 -llib/cpm/regis --max-allocs-per-node100000 @planet_motion.lst -o motion_apu -create-app
+
+    zcc +cpm -clib=8085 -v -m --list -O2 -DAMALLOC --am9511 -l../../libsrc/_DEVELOPMENT/lib/sccz80/lib/cpm/regis_8085 @planet_motion.lst -o motion85 -create-app
  */
 
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
-#include <z80.h>
 
-#if __RC2014
+#if __8085
+#include <_DEVELOPMENT/sccz80/lib/cpm/regis.h>
+#elif __RC2014
 #include <lib/rc2014/regis.h>
 #elif __YAZ180
 #include <lib/yaz180/regis.h>
@@ -67,7 +70,7 @@
 #include "planet_motion.h"
 #include "multi_apu.h"
 
-#pragma printf = "%s %c %d"     // enables %s, %c, %d only
+#pragma printf = "%s %c %u %0d"     // enables %s, %c, %u, %d (formatted) only
 
 #define SCALE_AU            48
 
@@ -90,7 +93,6 @@ const planet_t moon =     { "Moon", \
                             0.054900, 0.0, \
                             115.3654, 13.0649929509, \
                             (1738/6378) };
-
 
 const planet_t mercury =  { "Mercury", \
                             48.3313, 3.24587e-5, \
@@ -167,9 +169,11 @@ int main()
     FLOAT sun_y;
     char s[10];
 
-    for (d = 7671; d < (7868+(4*365)+1); ++d)                                       // January 1st, 2021 + 4 years
+//  for (d = 8766; d < (8766+(1*365)+1); ++d)                                       // January 1st, 2024 + 1 year
+    for (d = 8766; d < (8766+20); ++d)                                               // January 1st, 2024 + 20 days
     {
-        window_new( &mywindow, 768, 480 );                                          // open command list
+        window_new( &mywindow, 768, 480, stdout);                                   // open command list
+        window_clear( &mywindow );
 
         theSun.day = (float)d;
 
@@ -255,8 +259,8 @@ int main()
         draw_abs( &mywindow, 10, 450 );
         draw_text( &mywindow, s, 2);                                                // draw date
 
-        window_write( &mywindow );                                                  // write out window to screen
-        window_close( &mywindow );                                                  // close command list
+        window_close( &mywindow );                                                 // close window command list
     }
+
     return 0;
 }

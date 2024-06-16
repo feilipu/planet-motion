@@ -57,7 +57,7 @@ extern "C" {
 #define ATAN        atan
 #define ATAN2       atan2
 
-#if defined(__MATH_MATH32)
+#if defined(__MATH_MATH32) || defined(__MATH_AM9511)
     #define SQR(x)  sqr(x)
 #else
     #define SQR(x)  ((x)*(x))
@@ -76,7 +76,7 @@ typedef struct cartesian_coordinates_s {
     FLOAT day;
 } cartesian_coordinates_t;
 
-typedef struct planet_s {
+typedef struct planet_s {   // See  http://www.stjarnhimlen.se/comp/ppcomp.html#4
     char * name;            // name of the object, e.g. "Mars".
     FLOAT N0, Nc;           // N0 = longitude of the ascending node (deg).  Nc = rate of change in deg/day.
     FLOAT i0, ic;           // inclination to the ecliptic (deg).
